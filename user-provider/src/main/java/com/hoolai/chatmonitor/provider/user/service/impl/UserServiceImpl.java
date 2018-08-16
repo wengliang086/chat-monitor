@@ -10,8 +10,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void validateUser(Long uid) {
+        /*
+         * 验证：
+         * 1、uid是否存在 用户表中
+         * 2、是否被封号
+         */
         if (uid == null || uid < 1000) {
             throw new HException(HExceptionEnum.UID_NOT_FIND);
+        }
+        if (uid < 2000) {
+            throw new HException(HExceptionEnum.UID_ALREADY_FREEZED);
         }
     }
 }

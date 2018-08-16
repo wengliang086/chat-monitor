@@ -12,7 +12,7 @@ public enum HExceptionEnum implements ReturnCode {
     UNKNOW_ERROR(-1, "未知错误"),
     UID_NOT_FIND(2, "UID 不存在"),
     SENSITIVE_WORD_FIND(3, "存在敏感词汇"),
-    TIME_ERROR(4, "时间错误"),
+    UID_ALREADY_FREEZED(4, "该用户已经被冻结"),
     TIME_TYPE_ERROR(5, "时间类型错误"),
     APP_ID_ERROR(6, "appid错误"),
 
