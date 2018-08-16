@@ -30,7 +30,7 @@
             <artifactId>process-provider-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hoolai.chatmonitor</groupId>
+            <groupId>com.hoolai.chatmonitor.common</groupId>
             <artifactId>returnvalue</artifactId>
         </dependency>
         <dependency>

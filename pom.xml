@@ -33,24 +33,24 @@
     </properties>
 
     <modules>
+        <module>common</module>
         <module>user-provider</module>
         <module>user-provider-api</module>
         <module>process-provider-api</module>
         <module>process-provider</module>
         <module>open-api</module>
         <module>admin</module>
-        <module>common/mybatis-generator-extend</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.hoolai.chatmonitor</groupId>
+                <groupId>com.hoolai.chatmonitor.common</groupId>
                 <artifactId>log</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hoolai.chatmonitor</groupId>
+                <groupId>com.hoolai.chatmonitor.common</groupId>
                 <artifactId>returnvalue</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -65,7 +65,7 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hoolai.chatmonitor</groupId>
+                <groupId>com.hoolai.chatmonitor.common</groupId>
                 <artifactId>mybatis-generator-extend</artifactId>
                 <version>${project.version}</version>
             </dependency>
