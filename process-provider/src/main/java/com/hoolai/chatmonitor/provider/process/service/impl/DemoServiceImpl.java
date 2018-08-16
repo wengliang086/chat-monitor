@@ -1,7 +1,7 @@
-package com.hoolai.chatmonitor.provider.service;
+package com.hoolai.chatmonitor.provider.process.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.hoolai.chatmonitor.DemoService;
+import com.hoolai.chatmonitor.provider.process.service.DemoService;
 
 import java.util.Random;
 

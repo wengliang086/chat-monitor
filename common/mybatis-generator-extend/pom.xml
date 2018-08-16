@@ -11,6 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mybatis-generator-extend</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>../log</module>
+    </modules>
 
     <dependencies>
         <dependency>

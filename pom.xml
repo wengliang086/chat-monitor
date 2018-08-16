@@ -29,9 +29,12 @@
         <dubbo.version>2.6.2</dubbo.version>
         <dubbo.starter.version>1.0.0</dubbo.starter.version>
         <curator.version>2.7.1</curator.version>
+        <swagger2.version>2.7.0</swagger2.version>
     </properties>
 
     <modules>
+        <module>user-provider</module>
+        <module>user-provider-api</module>
         <module>process-provider-api</module>
         <module>process-provider</module>
         <module>open-api</module>
@@ -41,6 +44,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.hoolai.chatmonitor</groupId>
+                <artifactId>log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hoolai.chatmonitor</groupId>
+                <artifactId>returnvalue</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hoolai.chatmonitor</groupId>
+                <artifactId>user-provider-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.hoolai.chatmonitor</groupId>
                 <artifactId>process-provider-api</artifactId>
@@ -123,6 +141,22 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.46</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.44</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

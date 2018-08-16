@@ -1,4 +1,4 @@
-package com.hoolai.chatmonitor;
+package com.hoolai.chatmonitor.provider.process.service;
 
 public interface DemoService {
 
