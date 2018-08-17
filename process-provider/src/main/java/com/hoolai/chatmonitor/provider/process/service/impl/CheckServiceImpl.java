@@ -42,7 +42,6 @@ public class CheckServiceImpl implements CheckService {
                 // TODO 做记录
                 return;
             case ILLEGAL:
-                // TODO 封号处理
                 throw new HException(HExceptionEnum.SENSITIVE_WORD_FIND);
         }
     }

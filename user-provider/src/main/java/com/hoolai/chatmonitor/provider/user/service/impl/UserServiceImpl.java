@@ -2,6 +2,7 @@ package com.hoolai.chatmonitor.provider.user.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
+import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.provider.user.service.UserService;
 
@@ -16,10 +17,16 @@ public class UserServiceImpl implements UserService {
          * 2、是否被封号
          */
         if (uid == null || uid < 1000) {
-            throw new HException(HExceptionEnum.UID_NOT_FIND);
+//            throw new HException(HExceptionEnum.UID_NOT_FIND);
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
         }
         if (uid < 2000) {
             throw new HException(HExceptionEnum.UID_ALREADY_FREEZED);
         }
+    }
+
+    @Override
+    public void freeze(Long uid) throws HException {
+
     }
 }

@@ -46,4 +46,22 @@ public class HException extends RuntimeException implements ReturnCode {
                 "returnCode=" + returnCode +
                 '}';
     }
+
+    public static class HExceptionBuilder {
+
+        private HException hException;
+
+        private HExceptionBuilder(ReturnCode returnCode) {
+            hException = new HException(returnCode);
+        }
+
+        public HException build() {
+            return hException;
+        }
+
+        public static HExceptionBuilder newBuilder(ReturnCode returnCode) {
+            return new HExceptionBuilder(returnCode);
+        }
+
+    }
 }
