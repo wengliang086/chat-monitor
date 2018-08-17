@@ -186,7 +186,7 @@ public class Generator {
                             javac.run(null, null, null, "-g", "-verbose", "-d", targetDirectory, daoImplFile.getAbsolutePath());
                             Generator.class.getClassLoader().loadClass(daoPackage + ".mybatis.impl." + tc.getDomainObjectName() + "DaoImpl");
                         }
-                        DaoTestCaseCodeGenerator.generate(tc);
+//                        DaoTestCaseCodeGenerator.generate(tc);
                     }
                 }
             }
