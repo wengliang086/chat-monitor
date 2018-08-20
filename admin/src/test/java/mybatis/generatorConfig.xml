@@ -28,10 +28,15 @@
         <!--<table schema="db_user" tableName="u_login_info" domainObjectName="UserLoginInfo">
             <generatedKey column="uid" sqlStatement="MySql" identity="true"/>
         </table>-->
-        <table schema="db_user" tableName="u_login_info" domainObjectName="UserLoginInfo">
+        <table schema="chat_monitor" tableName="admin_game" domainObjectName="AdminGame">
+            <generatedKey column="game_id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="chat_monitor" tableName="admin_group" domainObjectName="AdminGroup">
+            <generatedKey column="group_id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="chat_monitor" tableName="admin_user" domainObjectName="AdminUser">
             <generatedKey column="uid" sqlStatement="MySql" identity="true"/>
         </table>
-        <table schema="db_user" tableName="u_register_info" domainObjectName="UserRegisterInfo"/>
 
     </context>
 </generatorConfiguration>
