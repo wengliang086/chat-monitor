@@ -28,6 +28,9 @@
         <table schema="chat_monitor" tableName="m_suspicious" domainObjectName="MsgSuspicious">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+        <table schema="chat_monitor" tableName="m_words" domainObjectName="MsgIllegalWord">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>

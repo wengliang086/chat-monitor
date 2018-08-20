@@ -30,7 +30,7 @@ public class CheckServiceImpl implements CheckService {
     private MsgSuspiciousDao msgSuspiciousDao;
 
     @Override
-    public void msgCheck(String msg) {
+    public void msgCheck(Long uid, long gameId, String gameUid, String msg) {
         if (Strings.isEmpty(msg)) {
             return;
         }
@@ -47,9 +47,9 @@ public class CheckServiceImpl implements CheckService {
             case SUSPICIOUS:
                 MsgSuspicious t = new MsgSuspicious();
                 t.setCreateTime(new Date());
-                t.setUid(222L);
+                t.setUid(uid);
                 t.setMsg(msg);
-                t.setProductId(1122);
+                t.setGameId(gameId);
                 msgSuspiciousDao.save(t);
                 return;
             case ILLEGAL:

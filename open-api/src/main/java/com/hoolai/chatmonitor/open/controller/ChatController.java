@@ -32,12 +32,12 @@ public class ChatController {
     })
     @ApiOperation(value = "聊天内容检查", notes = "备注：游戏根据返回码决定该消息是否继续发送")
     @GetMapping
-    public String chatMonitor(Long uid, String msg) {
+    public String chatMonitor(long gameId, String gameUid, String msg) {
         // 1、检查用户
-        userService.validateUser(uid);
+        Long uid = userService.validateUser(gameId, gameUid);
         // 2、分析聊天
         try {
-            checkService.msgCheck(msg);
+            checkService.msgCheck(uid, gameId, gameUid, msg);
         } catch (HException e) {
             if (e.getCode() == HExceptionEnum.SENSITIVE_WORD_FIND.getCode()) {
                 // 封号处理

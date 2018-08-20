@@ -316,63 +316,63 @@ public class MsgSuspiciousExample {
             return (Criteria) this;
         }
 
-        public Criteria andProductIdIsNull() {
-            addCriterion("product_id is null");
+        public Criteria andGameIdIsNull() {
+            addCriterion("game_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdIsNotNull() {
-            addCriterion("product_id is not null");
+        public Criteria andGameIdIsNotNull() {
+            addCriterion("game_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdEqualTo(Integer value) {
-            addCriterion("product_id =", value, "productId");
+        public Criteria andGameIdEqualTo(Long value) {
+            addCriterion("game_id =", value, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdNotEqualTo(Integer value) {
-            addCriterion("product_id <>", value, "productId");
+        public Criteria andGameIdNotEqualTo(Long value) {
+            addCriterion("game_id <>", value, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdGreaterThan(Integer value) {
-            addCriterion("product_id >", value, "productId");
+        public Criteria andGameIdGreaterThan(Long value) {
+            addCriterion("game_id >", value, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("product_id >=", value, "productId");
+        public Criteria andGameIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("game_id >=", value, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdLessThan(Integer value) {
-            addCriterion("product_id <", value, "productId");
+        public Criteria andGameIdLessThan(Long value) {
+            addCriterion("game_id <", value, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdLessThanOrEqualTo(Integer value) {
-            addCriterion("product_id <=", value, "productId");
+        public Criteria andGameIdLessThanOrEqualTo(Long value) {
+            addCriterion("game_id <=", value, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdIn(List<Integer> values) {
-            addCriterion("product_id in", values, "productId");
+        public Criteria andGameIdIn(List<Long> values) {
+            addCriterion("game_id in", values, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdNotIn(List<Integer> values) {
-            addCriterion("product_id not in", values, "productId");
+        public Criteria andGameIdNotIn(List<Long> values) {
+            addCriterion("game_id not in", values, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdBetween(Integer value1, Integer value2) {
-            addCriterion("product_id between", value1, value2, "productId");
+        public Criteria andGameIdBetween(Long value1, Long value2) {
+            addCriterion("game_id between", value1, value2, "gameId");
             return (Criteria) this;
         }
 
-        public Criteria andProductIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("product_id not between", value1, value2, "productId");
+        public Criteria andGameIdNotBetween(Long value1, Long value2) {
+            addCriterion("game_id not between", value1, value2, "gameId");
             return (Criteria) this;
         }
 
@@ -503,6 +503,196 @@ public class MsgSuspiciousExample {
 
         public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
             addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Byte value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Byte value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Byte value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Byte value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Byte> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Byte> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Byte value1, Byte value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsIsNull() {
+            addCriterion("illegal_words is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsIsNotNull() {
+            addCriterion("illegal_words is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsEqualTo(String value) {
+            addCriterion("illegal_words =", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsNotEqualTo(String value) {
+            addCriterion("illegal_words <>", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsGreaterThan(String value) {
+            addCriterion("illegal_words >", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsGreaterThanOrEqualTo(String value) {
+            addCriterion("illegal_words >=", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsLessThan(String value) {
+            addCriterion("illegal_words <", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsLessThanOrEqualTo(String value) {
+            addCriterion("illegal_words <=", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsLike(String value) {
+            addCriterion("illegal_words like", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsNotLike(String value) {
+            addCriterion("illegal_words not like", value, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsIn(List<String> values) {
+            addCriterion("illegal_words in", values, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsNotIn(List<String> values) {
+            addCriterion("illegal_words not in", values, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsBetween(String value1, String value2) {
+            addCriterion("illegal_words between", value1, value2, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andIllegalWordsNotBetween(String value1, String value2) {
+            addCriterion("illegal_words not between", value1, value2, "illegalWords");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidIsNull() {
+            addCriterion("op_uid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidIsNotNull() {
+            addCriterion("op_uid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidEqualTo(Long value) {
+            addCriterion("op_uid =", value, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidNotEqualTo(Long value) {
+            addCriterion("op_uid <>", value, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidGreaterThan(Long value) {
+            addCriterion("op_uid >", value, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidGreaterThanOrEqualTo(Long value) {
+            addCriterion("op_uid >=", value, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidLessThan(Long value) {
+            addCriterion("op_uid <", value, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidLessThanOrEqualTo(Long value) {
+            addCriterion("op_uid <=", value, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidIn(List<Long> values) {
+            addCriterion("op_uid in", values, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidNotIn(List<Long> values) {
+            addCriterion("op_uid not in", values, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidBetween(Long value1, Long value2) {
+            addCriterion("op_uid between", value1, value2, "opUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpUidNotBetween(Long value1, Long value2) {
+            addCriterion("op_uid not between", value1, value2, "opUid");
             return (Criteria) this;
         }
     }
