@@ -40,6 +40,25 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ReturnValue notFount(RuntimeException e) {
         log.error("运行时异常:", e);
-        return new ReturnValue<>(HExceptionEnum.SYSTEM_EXCEPTION);
+        HException hException = HException.HExceptionBuilder.newBuilder(HExceptionEnum.SYSTEM_EXCEPTION, e.getMessage()).build();
+        return new ReturnValue<>(hException);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ReturnValue exception(Exception e) {
+        log.error("异常:", e);
+        HException hException = HException.HExceptionBuilder.newBuilder(HExceptionEnum.SYSTEM_EXCEPTION, e.getMessage()).build();
+        return new ReturnValue<>(hException);
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ReturnValue error(Throwable e) {
+        log.error("错误:", e);
+        HException hException = HException.HExceptionBuilder.newBuilder(HExceptionEnum.SYSTEM_EXCEPTION, e.getMessage()).build();
+        return new ReturnValue<>(hException);
     }
 }
