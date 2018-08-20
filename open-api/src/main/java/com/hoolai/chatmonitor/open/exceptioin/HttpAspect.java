@@ -44,7 +44,7 @@ public class HttpAspect {
     @Around("log()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object proceed = proceedingJoinPoint.proceed();
-        ReturnValue<Object> result = new ReturnValue();
+        ReturnValue<Object> result = new ReturnValue<>();
         result.setValue(proceed);
         return JSON.toJSONString(result);
     }

@@ -45,7 +45,6 @@ public class CheckServiceImpl implements CheckService {
                 // do nothing
                 return;
             case SUSPICIOUS:
-                // TODO 做记录
                 MsgSuspicious t = new MsgSuspicious();
                 t.setCreateTime(new Date());
                 t.setUid(222L);
