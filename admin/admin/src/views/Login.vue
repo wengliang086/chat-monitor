@@ -55,7 +55,7 @@
             requestLogin(loginParams).then(data => {
               this.logining = false;
               //NProgress.done();
-                console.info(data.code)
+                console.info(data)
               let { msg, code, user } = data;
               if (code !== 200) {
                 this.$message({

@@ -26,9 +26,9 @@ spring:
       maxOpenPreparedStatements: 20
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.hoolai.chatmonitor.provider.process.dao.mybatis.vo
+  type-aliases-package: com.hoolai.chatmonitor.open.dao.mybatis.vo
 
 # 打印sql
 logging:
   level:
-    com.hoolai.chatmonitor.provider.process.dao.mybatis.mapper: debug
+    com.hoolai.chatmonitor.open.dao.mybatis.mapper: debug

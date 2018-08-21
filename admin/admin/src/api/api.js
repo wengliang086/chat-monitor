@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-let base = 'http://127.0.0.1:8082/springboot-wechat/superadmin/listarea';
-
-export const requestLogin = params => { return axios.post(`${base}`, params).then(res => res.data); };
+let base = 'http://127.0.0.1:8080/test';
+export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
+// let base = '';
+// export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
 
 export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
 
