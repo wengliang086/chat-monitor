@@ -8,6 +8,7 @@ public interface UserLoginInfoDao extends Dao<UserLoginInfo,Long>{
 
 	
 	////*******自定义开始********//
+    UserLoginInfo getByGameInfo(long gameId, String gameUid);
 	//**********自定义结束*****////
 
 }

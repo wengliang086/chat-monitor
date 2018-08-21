@@ -4,5 +4,5 @@ import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 
 public interface CheckService {
 
-    void msgCheck(String msg) throws HException;
+    void msgCheck(Long uid, long gameId, String gameUid, String msg) throws HException;
 }

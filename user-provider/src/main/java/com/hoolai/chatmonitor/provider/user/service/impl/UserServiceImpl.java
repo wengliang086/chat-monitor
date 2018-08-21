@@ -23,21 +23,25 @@ public class UserServiceImpl implements UserService {
     private UserFreezeDao userFreezeDao;
 
     @Override
-    public void validateUser(Long uid) {
+    public Long validateUser(long gameId, String gameUid) {
         /*
          * 验证：
          * 1、uid是否存在 用户表中
          * 2、是否被封号
          */
-        UserLoginInfo userLoginInfo = userLoginInfoDao.get(uid);
+        UserLoginInfo userLoginInfo = userLoginInfoDao.getByGameInfo(gameId, gameUid);
         if (userLoginInfo == null) {
-//            throw new HException(HExceptionEnum.UID_NOT_FIND);
-            throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
+            userLoginInfo = new UserLoginInfo();
+            userLoginInfo.setCreateTime(new Date());
+            userLoginInfo.setGameId(gameId);
+            userLoginInfo.setGameUid(gameUid);
+            userLoginInfoDao.save(userLoginInfo);
         }
-        UserFreeze userFreeze = userFreezeDao.get(uid);
+        UserFreeze userFreeze = userFreezeDao.get(userLoginInfo.getUid());
         if (userFreeze != null) {
             throw new HException(HExceptionEnum.UID_ALREADY_FREEZED);
         }
+        return userLoginInfo.getUid();
     }
 
     @Override

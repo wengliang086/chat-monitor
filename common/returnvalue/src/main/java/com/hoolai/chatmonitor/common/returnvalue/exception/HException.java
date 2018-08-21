@@ -18,7 +18,12 @@ public class HException extends RuntimeException implements ReturnCode {
 
     public HException(String message, Throwable cause) {
         super(message, cause);
-        this.returnCode = new DefaultReturnCode(HExceptionEnum.SYSTEM_EXCEPTION);
+        HExceptionEnum he = HExceptionEnum.SYSTEM_EXCEPTION;
+        this.returnCode = new DefaultReturnCode(he.getGroup(), he.getCode(), message);
+    }
+
+    public HException(String group, Integer code, String msg) {
+        this.returnCode = new DefaultReturnCode(group, code, msg);
     }
 
     public HException(Throwable cause) {
@@ -55,12 +60,20 @@ public class HException extends RuntimeException implements ReturnCode {
             hException = new HException(returnCode);
         }
 
+        private HExceptionBuilder(ReturnCode returnCode, String customDesc) {
+            hException = new HException(returnCode.getGroup(), returnCode.getCode(), customDesc);
+        }
+
         public HException build() {
             return hException;
         }
 
         public static HExceptionBuilder newBuilder(ReturnCode returnCode) {
             return new HExceptionBuilder(returnCode);
+        }
+
+        public static HExceptionBuilder newBuilder(ReturnCode returnCode, String customDesc) {
+            return new HExceptionBuilder(returnCode, customDesc);
         }
 
     }
