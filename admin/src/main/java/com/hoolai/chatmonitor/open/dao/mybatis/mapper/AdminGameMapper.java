@@ -1,7 +1,7 @@
-package com.hoolai.chatmonitor.provider.admin.dao.mybatis.mapper;
+package com.hoolai.chatmonitor.open.dao.mybatis.mapper;
 
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGame;
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGameExample;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGameExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

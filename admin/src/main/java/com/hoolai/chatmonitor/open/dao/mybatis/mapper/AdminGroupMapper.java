@@ -1,7 +1,7 @@
-package com.hoolai.chatmonitor.provider.admin.dao.mybatis.mapper;
+package com.hoolai.chatmonitor.open.dao.mybatis.mapper;
 
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGroup;
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGroupExample;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroupExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

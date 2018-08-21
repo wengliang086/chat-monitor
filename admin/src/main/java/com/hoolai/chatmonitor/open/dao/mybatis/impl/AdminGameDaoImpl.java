@@ -1,8 +1,8 @@
-package com.hoolai.chatmonitor.provider.admin.dao.mybatis.impl;
+package com.hoolai.chatmonitor.open.dao.mybatis.impl;
 
-import com.hoolai.chatmonitor.provider.admin.dao.AdminGameDao;
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.mapper.AdminGameMapper;
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGame;
+import com.hoolai.chatmonitor.open.dao.AdminGameDao;
+import com.hoolai.chatmonitor.open.dao.mybatis.mapper.AdminGameMapper;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import java.lang.Long;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;

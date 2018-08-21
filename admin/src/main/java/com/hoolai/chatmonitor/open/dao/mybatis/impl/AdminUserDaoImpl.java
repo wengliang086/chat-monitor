@@ -1,12 +1,12 @@
-package com.hoolai.chatmonitor.provider.admin.dao.mybatis.impl;
+package com.hoolai.chatmonitor.open.dao.mybatis.impl;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
 
-import com.hoolai.chatmonitor.provider.admin.dao.AdminUserDao;
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.mapper.AdminUserMapper;
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.dao.AdminUserDao;
+import com.hoolai.chatmonitor.open.dao.mybatis.mapper.AdminUserMapper;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import java.lang.Long;
 
 @Repository

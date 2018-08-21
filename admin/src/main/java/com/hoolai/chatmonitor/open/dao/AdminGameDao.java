@@ -1,6 +1,6 @@
-package com.hoolai.chatmonitor.provider.admin.dao;
+package com.hoolai.chatmonitor.open.dao;
 
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGame;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import java.lang.Long;
 
 

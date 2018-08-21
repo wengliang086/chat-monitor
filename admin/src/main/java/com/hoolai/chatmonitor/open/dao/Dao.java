@@ -1,4 +1,4 @@
-package com.hoolai.chatmonitor.provider.admin.dao;
+package com.hoolai.chatmonitor.open.dao;
 
 
 

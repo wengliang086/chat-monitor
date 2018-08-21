@@ -1,4 +1,4 @@
-package com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo;
+package com.hoolai.chatmonitor.open.dao.mybatis.vo;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
-package com.hoolai.chatmonitor.provider.admin.dao;
+package com.hoolai.chatmonitor.open.dao;
 
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import java.lang.Long;
 
 public interface AdminUserDao extends Dao<AdminUser,Long>{

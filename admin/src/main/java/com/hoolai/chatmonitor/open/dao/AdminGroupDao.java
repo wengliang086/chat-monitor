@@ -1,6 +1,6 @@
-package com.hoolai.chatmonitor.provider.admin.dao;
+package com.hoolai.chatmonitor.open.dao;
 
-import com.hoolai.chatmonitor.provider.admin.dao.mybatis.vo.AdminGroup;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
 import java.lang.Integer;
 
 
