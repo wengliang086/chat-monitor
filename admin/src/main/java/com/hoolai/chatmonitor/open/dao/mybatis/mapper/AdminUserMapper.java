@@ -2,7 +2,10 @@ package com.hoolai.chatmonitor.open.dao.mybatis.mapper;
 
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUserExample;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 
@@ -96,6 +99,6 @@ public interface AdminUserMapper {
     int updateByPrimaryKey(AdminUser record);
 
 
-	       ////*******自定义开始********/
-        //***********自定义结束****////
+	////*******自定义开始********/
+    //***********自定义结束****////
 }

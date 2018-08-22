@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 import com.hoolai.chatmonitor.open.dao.AdminUserDao;
 import com.hoolai.chatmonitor.open.dao.mybatis.mapper.AdminUserMapper;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUserExample;
+
 import java.lang.Long;
+import java.util.List;
 
 @Repository
 public class AdminUserDaoImpl implements AdminUserDao {
@@ -33,6 +36,30 @@ public class AdminUserDaoImpl implements AdminUserDao {
 	@Override
 	public void delete(Long uid) {
 		adminUserMapper.deleteByPrimaryKey(uid);
+	}
+
+	@Override
+	public AdminUser getByAccountAndPwd(String account, String password) {
+		AdminUserExample loginInfoExample = new AdminUserExample();
+		loginInfoExample.createCriteria().andAccountEqualTo(account).andPasswordEqualTo(password);
+		return getByExample(loginInfoExample);
+	}
+	
+	private AdminUser getByExample(AdminUserExample loginInfoExample) {
+		List<AdminUser> loginInfoList = adminUserMapper.selectByExample(loginInfoExample);
+		if (null == loginInfoList || loginInfoList.isEmpty()) {
+			return null;
+		}
+		return loginInfoList.get(0);
+	}
+
+	@Override
+	public AdminUser getByPassport(String account, String email,
+			String phone) {	
+		
+		AdminUserExample loginInfoExample = new AdminUserExample();
+		loginInfoExample.createCriteria().andAccountEqualTo(account);
+		return getByExample(loginInfoExample);
 	}
 	
 	 
