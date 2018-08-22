@@ -13,6 +13,7 @@ public class HException extends RuntimeException implements ReturnCode {
     }
 
     public HException(ReturnCode returnCode) {
+    	super(returnCode.getMsg());
         this.returnCode = returnCode;
     }
 
