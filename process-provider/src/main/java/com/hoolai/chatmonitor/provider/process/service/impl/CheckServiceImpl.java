@@ -1,6 +1,8 @@
 package com.hoolai.chatmonitor.provider.process.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.hoolai.chatmonitor.common.returnvalue.DefaultReturnCode;
+import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.provider.process.dao.MsgSuspiciousDao;
@@ -60,18 +62,44 @@ public class CheckServiceImpl implements CheckService {
     }
 
     //获取可疑信息列表
-	@Override
-	public void list(Long uid, long gameId, String gameUid, String msg)
-			throws HException {
-		
-		
+    public ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId,
+			 String msg) throws HException {
+    	
+    	MsgSuspicious property=new MsgSuspicious();
+    	property.setUid(uid);
+    	property.setGameId(gameId);
+    	property.setMsg(msg);
+    	List<MsgSuspicious> list=msgSuspiciousDao.list(property); 
+    	
+    	ReturnValue<List<MsgSuspicious>> result=new ReturnValue<List<MsgSuspicious>>();
+    	result.setValue(list);
+    	
+		return result;
 	}
 
 	//人工审核可疑信息
 	@Override
-	public void msgSure(Long uid, Byte status, String illegalWords, Long opUid)
+	public ReturnValue<MsgSuspicious> msgSure(Long id, String illegalWords, Long opUid)
 			throws HException {
 		
+		if(id==null || id==0l){
+			throw new HException( new DefaultReturnCode(null,-1,"suspicious_id_is_null") );
+		}
+		
+		MsgSuspicious property=new MsgSuspicious();
+		property.setId(id);
+		property.setStatus(Strings.isNotEmpty(illegalWords)?(byte)1:(byte)-1);//默认可疑：null；   illegal：-1；  正常：1
+		property.setIllegalWords(illegalWords);
+		property.setOpUid(opUid);
+		
+		msgSuspiciousDao.update(property);		
+		
+		ReturnValue<MsgSuspicious> result=new ReturnValue<MsgSuspicious>();
+    	result.setValue(property);
+    	
+    	return result;
 		
 	}
+
+
 }
