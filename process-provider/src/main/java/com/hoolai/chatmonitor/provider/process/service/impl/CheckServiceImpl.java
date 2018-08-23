@@ -9,11 +9,13 @@ import com.hoolai.chatmonitor.provider.process.domain.WordsResultEnum;
 import com.hoolai.chatmonitor.provider.process.domain.handlers.IPreHandler;
 import com.hoolai.chatmonitor.provider.process.domain.handlers.IWordsHandler;
 import com.hoolai.chatmonitor.provider.process.service.CheckService;
+
 import org.apache.logging.log4j.util.Strings;
 import org.apdplat.word.WordSegmenter;
 import org.apdplat.word.segmentation.Word;
 
 import javax.annotation.Resource;
+
 import java.util.Date;
 import java.util.List;
 
@@ -56,4 +58,20 @@ public class CheckServiceImpl implements CheckService {
                 throw new HException(HExceptionEnum.SENSITIVE_WORD_FIND);
         }
     }
+
+    //获取可疑信息列表
+	@Override
+	public void list(Long uid, long gameId, String gameUid, String msg)
+			throws HException {
+		
+		
+	}
+
+	//人工审核可疑信息
+	@Override
+	public void msgSure(Long uid, Byte status, String illegalWords, Long opUid)
+			throws HException {
+		
+		
+	}
 }
