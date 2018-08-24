@@ -9,7 +9,7 @@ import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
 public interface CheckService {
 
     void msgCheck(Long uid, long gameId, String gameUid, String msg) throws HException;
-    ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId, String msg) throws HException;
+    ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId, String msg,List<Long> gameIds) throws HException;
     ReturnValue<MsgSuspicious> msgSure(Long id, String illegalWords,Long opUid) throws HException;
 
 }

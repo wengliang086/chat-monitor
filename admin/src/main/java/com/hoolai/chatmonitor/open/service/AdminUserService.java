@@ -37,5 +37,5 @@ public interface AdminUserService {
 	ReturnValue<AdminUser> register(String account, String password, String email, String phone, Integer groupId) throws HException;
 
 	//更新用户信息
-	ReturnValue<AdminUser> updateLoginInfo(Long uid, String account, String password, String email, String phone,Integer groupId) throws HException;
+	ReturnValue<AdminUser> updateLoginInfo(Long uid, String password, String email, String phone,Integer groupId) throws HException;
 }

@@ -43,20 +43,27 @@ public class MsgSuspiciousDaoImpl implements MsgSuspiciousDao {
 	}
 
 	@Override
-	public List<MsgSuspicious> list(MsgSuspicious property) {
+	public List<MsgSuspicious> list(MsgSuspicious property,List<Long> gameIds) {
 		
 		MsgSuspiciousExample example = new MsgSuspiciousExample();
 		MsgSuspiciousExample.Criteria ca = example.createCriteria();
 		
-		if (property.getGameId() != null && property.getGameId() != 0L) {
-			ca.andGameIdEqualTo(property.getGameId());
-		}
+		
 		if (!Strings.isNullOrEmpty(property.getMsg())) {
-			ca.andMsgLike(property.getMsg());
+			ca.andMsgLike("%"+property.getMsg()+"%");
 		}
 		if (property.getUid() != null && property.getUid() != 0L) {
 			ca.andUidEqualTo(property.getUid());
 		}
+		
+		if (gameIds!= null && gameIds.size()>0) {
+			ca.andGameIdIn(gameIds);
+		}else if (property.getGameId() != null && property.getGameId() != 0L) {
+			ca.andGameIdEqualTo(property.getGameId());
+		}else{
+			//null
+		}
+		
 		example.setOrderByClause("status asc,create_time asc");
 		return msgSuspiciousMapper.selectByExample(example);
 	}

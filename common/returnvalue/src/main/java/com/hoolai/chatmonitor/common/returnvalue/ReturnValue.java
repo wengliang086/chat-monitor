@@ -1,6 +1,6 @@
 package com.hoolai.chatmonitor.common.returnvalue;
 
-public class ReturnValue<T> extends DefaultReturnCode {
+public class ReturnValue<T> extends DefaultReturnCode implements java.io.Serializable{
 
     /**
      * 具体的内容.

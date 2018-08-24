@@ -63,13 +63,13 @@ public class CheckServiceImpl implements CheckService {
 
     //获取可疑信息列表
     public ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId,
-			 String msg) throws HException {
+			 String msg,List<Long> gameIds) throws HException {
     	
     	MsgSuspicious property=new MsgSuspicious();
     	property.setUid(uid);
     	property.setGameId(gameId);
     	property.setMsg(msg);
-    	List<MsgSuspicious> list=msgSuspiciousDao.list(property); 
+    	List<MsgSuspicious> list=msgSuspiciousDao.list(property,gameIds); 
     	
     	ReturnValue<List<MsgSuspicious>> result=new ReturnValue<List<MsgSuspicious>>();
     	result.setValue(list);
@@ -86,10 +86,17 @@ public class CheckServiceImpl implements CheckService {
 			throw new HException( new DefaultReturnCode(null,-1,"suspicious_id_is_null") );
 		}
 		
-		MsgSuspicious property=new MsgSuspicious();
-		property.setId(id);
-		property.setStatus(Strings.isNotEmpty(illegalWords)?(byte)1:(byte)-1);//默认可疑：null；   illegal：-1；  正常：1
-		property.setIllegalWords(illegalWords);
+		MsgSuspicious property=msgSuspiciousDao.get(id);
+		if(property==null){
+			throw new HException( new DefaultReturnCode(null,-1,"suspicious_not_exist") );
+		}
+		
+		property.setStatus((byte)1);//正常：1
+		if(Strings.isNotEmpty(illegalWords)){
+			property.setStatus((byte)-1);//illegal：-1
+			property.setIllegalWords(illegalWords);
+		}
+		
 		property.setOpUid(opUid);
 		
 		msgSuspiciousDao.update(property);		

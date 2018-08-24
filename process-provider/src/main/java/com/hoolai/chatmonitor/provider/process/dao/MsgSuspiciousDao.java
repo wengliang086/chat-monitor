@@ -9,7 +9,7 @@ public interface MsgSuspiciousDao extends Dao<MsgSuspicious,Long>{
 
 	
 	////*******自定义开始********//
-	List<MsgSuspicious> list(MsgSuspicious property);
+	List<MsgSuspicious> list(MsgSuspicious property,List<Long> gameId);
 	//**********自定义结束*****////
 
 }

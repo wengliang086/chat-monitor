@@ -10,7 +10,7 @@ import com.hoolai.chatmonitor.open.service.AdminGroupService;
 
 
 @RestController
-@RequestMapping("admin/group")
+@RequestMapping("group")
 public class AdminGroupController {
 
 	@Resource

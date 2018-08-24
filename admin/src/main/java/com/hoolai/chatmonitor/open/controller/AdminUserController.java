@@ -14,7 +14,7 @@ import com.hoolai.chatmonitor.open.service.AdminUserService;
 
 
 @RestController
-@RequestMapping("admin/user")
+@RequestMapping("user")
 public class AdminUserController {
 
 	@Resource
@@ -33,7 +33,13 @@ public class AdminUserController {
 	}
 	
 	
-	@RequestMapping("loginByAccount")//根据账号密码登录
+	/**根据账号密码登录
+	 * 
+	 * @param account 账号 (必填)
+	 * @param password 密码(必填)
+	 * 
+	 * */
+	@RequestMapping("loginByAccount")
 	public ReturnValue<AdminUser> login(HttpServletRequest request,String account, String password) {
 
 		ReturnValue<AdminUser> returnVal=adminUserService.loginByAccount(account, password);	    		    
@@ -42,19 +48,38 @@ public class AdminUserController {
 	 }
 	
 	
-	@GetMapping("register")//新增新用户
+	/**新增新用户
+	 * 
+	 * @param account 账号 (必填)
+	 * @param password 密码(可选) 默认:123456
+	 * @param email 邮箱 (可选)
+	 * @param phone 手机号(可选)
+	 * @param groupId 用户组(必填)
+	 * 
+	 * */
+	@GetMapping("register")
 	public ReturnValue<AdminUser> register(HttpServletRequest request,String account, String password,String email, String phone, Integer groupId) {
 
 		ReturnValue<AdminUser> returnVal=adminUserService.register(account, password, email, phone, groupId);	    		    
         return returnVal;
 	 }
 	
-	@GetMapping("updateUserInfo")//更改用户
-	public ReturnValue<AdminUser> updateUserInfo(HttpServletRequest request,Long uid,String account, String password,String email, String phone, Integer groupId) {
+	
+	/**更改用户
+	 * 
+	 * @param uid admin_user中的uid(必填)
+	 * @param password 密码(可选) 
+	 * @param email 邮箱 (可选)
+	 * @param phone 手机号(可选)
+	 * @param groupId 用户组(可选)
+	 * 
+	 * */
+	@GetMapping("updateUserInfo")
+	public ReturnValue<AdminUser> updateUserInfo(HttpServletRequest request,Long uid, String password,String email, String phone, Integer groupId) {
 
-		ReturnValue<AdminUser> returnVal=adminUserService.updateLoginInfo(uid, account, password, email, phone, groupId);	    		    
+		ReturnValue<AdminUser> returnVal=adminUserService.updateLoginInfo(uid, password, email, phone, groupId);	    		    
 		AdminUser user=LoginContext.getLoginUser(request);
-		if(user!=null && user.getUid()==uid){
+		if(user!=null && null!=returnVal.getValue() && user.getUid()==returnVal.getValue().getUid()) {
 			LoginContext.setAdminUser(request, returnVal.getValue());//更新用户在缓存中的信息
 		}
 		    

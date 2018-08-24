@@ -9,9 +9,13 @@ import javax.annotation.Resource;
 
 
 
+
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+
+
 
 
 
@@ -23,7 +27,9 @@ import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
+import com.hoolai.chatmonitor.open.dao.AdminGroupDao;
 import com.hoolai.chatmonitor.open.dao.AdminUserDao;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.service.AdminUserService;
 
@@ -34,6 +40,9 @@ public class AdminUserServiceImpl implements AdminUserService{
 	
 	@Resource
 	private AdminUserDao adminUserDao;
+	
+	@Resource
+	private AdminGroupDao adminGropuDao;
 	
 	//根据uid获取用户信息
 	@Override
@@ -89,9 +98,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	    // 帐号可以输入邮箱格式，如果是邮箱格式帐号的话，两列都存
 	    if (isEmail(account) && Strings.isNullOrEmpty(email)) {
 	    	email = account;
-	    }
-	    
-	    checkPassword(password);//检查密码的合法性
+	    }	    	   
 		
 	    AdminUser loginInfo = adminUserDao.getByPassport(account, null, null);//根据账号查找是否已经存在过了
 
@@ -99,7 +106,16 @@ public class AdminUserServiceImpl implements AdminUserService{
 			return createLoginResult ("ACCOUNT_ALREDAY_EXIST");
 		}
 		
+		if(Strings.isNullOrEmpty(password)){
+			password="123456";
+		}else{
+			checkPassword(password);//检查密码的合法性
+		}
+		
 		password = encryPassword(password);
+		
+		existGroup(groupId);
+		
 		AdminUser registerInfo = new AdminUser();
 		registerInfo.setAccount(account);
 		registerInfo.setEmail(email);
@@ -140,36 +156,50 @@ public class AdminUserServiceImpl implements AdminUserService{
 		}
 		return false;
 	}
+	
+	private void existGroup(Integer groupId){
+		
+		if(groupId==null || groupId==0){
+			throw new HException( new DefaultReturnCode(null,-1,"group_id_is_null") );
+		}
+		
+		AdminGroup group=adminGropuDao.get(groupId);
+		if(group==null){
+			throw new HException( new DefaultReturnCode(null,-1,"group_not_exist") );
+		}
+	}
 
 	//修改用户信息
 	@Override
-	public ReturnValue<AdminUser> updateLoginInfo(Long uid, String account,
+	public ReturnValue<AdminUser> updateLoginInfo(Long uid,
 			String password, String email, String phone, Integer groupId)
 			throws HException {
 		
-
-		if (Strings.isNullOrEmpty(account)) {
-			throw HExceptionBuilder.newBuilder(new DefaultReturnCode(null,-1,"ACCOUNT_IS_EMPTY")).build();
-		}
-		
-		 AdminUser userInfo = adminUserDao.getByPassport(account, null, null);//根据账号查找
+		 AdminUser userInfo = adminUserDao.get(uid);
 		 if(userInfo==null){
 			 return createLoginResult ("ACCOUNT_INFO_NOT_FOUND");
 		 }
 
 	    // 帐号可以输入邮箱格式，如果是邮箱格式帐号的话，两列都存
-	    if (isEmail(account) && Strings.isNullOrEmpty(email)) {
-	    	email = account;
+	    if (Strings.isNullOrEmpty(email) && isEmail(userInfo.getAccount())) {
+	    	email = userInfo.getAccount();
 	    }
 	    
-	    checkPassword(password);//检查密码的合法性
-		
-		password = encryPassword(password);
-		//userInfo.setEmail(email);
-		userInfo.setPassword(password);
-		//userInfo.setPhone(phone);
-		userInfo.setGroupId(groupId);
-		adminUserDao.update(userInfo);//新用户入库
+	    if(!Strings.isNullOrEmpty(password)){
+	    	checkPassword(password);//检查密码的合法性
+	    	password = encryPassword(password);
+			userInfo.setPassword(password);
+	    }
+	   
+	    if(!(null==groupId || groupId==0)){
+			existGroup(groupId);//检测group是否存
+			userInfo.setGroupId(groupId);
+		}		
+						
+		userInfo.setEmail(Strings.isNullOrEmpty(email)?userInfo.getEmail():email);
+		userInfo.setPhone(Strings.isNullOrEmpty(phone)?userInfo.getPhone():phone);
+
+		adminUserDao.update(userInfo);//修改用户
 	    
 		return createLoginResult(userInfo);
 	}
