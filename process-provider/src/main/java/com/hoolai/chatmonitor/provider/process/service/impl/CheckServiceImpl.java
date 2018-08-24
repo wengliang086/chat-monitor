@@ -61,11 +61,13 @@ public class CheckServiceImpl implements CheckService {
         }
     }
 
-    //获取可疑信息列表
-    public ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId,
-			 String msg,List<Long> gameIds) throws HException {
-    	
-    	MsgSuspicious property=new MsgSuspicious();
+
+	//可疑信息列表
+	@Override
+	public ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId,
+			String msg, List<Long> gameIds) throws HException {
+		
+		MsgSuspicious property=new MsgSuspicious();
     	property.setUid(uid);
     	property.setGameId(gameId);
     	property.setMsg(msg);
@@ -107,6 +109,7 @@ public class CheckServiceImpl implements CheckService {
     	return result;
 		
 	}
+
 
 
 }
