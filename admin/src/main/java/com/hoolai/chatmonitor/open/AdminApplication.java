@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @MapperScan("com.hoolai.chatmonitor.open.dao.mybatis.mapper")
 @SpringBootApplication
-public class OpenApiApplication extends WebMvcConfigurationSupport {
+public class AdminApplication extends WebMvcConfigurationSupport {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -21,6 +21,6 @@ public class OpenApiApplication extends WebMvcConfigurationSupport {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(OpenApiApplication.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 }

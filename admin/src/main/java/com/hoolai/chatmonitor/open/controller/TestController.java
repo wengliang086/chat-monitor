@@ -20,7 +20,7 @@ public class TestController {
         return "ok";
     }
 
-    @PostMapping("login")
+    @RequestMapping("login")
     public String login() {
         JSONObject o = new JSONObject();
         o.put("code", 200);
