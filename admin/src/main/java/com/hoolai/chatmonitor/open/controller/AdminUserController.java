@@ -2,6 +2,7 @@ package com.hoolai.chatmonitor.open.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,7 @@ public class AdminUserController {
 	 * @param password 密码(必填)
 	 * 
 	 * */
+	@CrossOrigin
 	@RequestMapping("loginByAccount")
 	public ReturnValue<AdminUser> login(HttpServletRequest request,String account, String password) {
 
