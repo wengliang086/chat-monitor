@@ -24,7 +24,6 @@ import com.hoolai.chatmonitor.open.service.AdminGameService;
 @Transactional
 public class AdminGameServiceImpl implements AdminGameService{
 
-	
 	@Resource
 	private AdminGameDao adminGameDao;
 	
@@ -32,16 +31,13 @@ public class AdminGameServiceImpl implements AdminGameService{
 	private AdminGroupDao adminGropuDao;
 
 	@Override
-	public ReturnValue<AdminGame> add(Long gameId,String gameName,Integer groupId) throws HException {
-		
-		
+	public ReturnValue<AdminGame> add(String gameName,Integer groupId) throws HException {
 		if(Strings.isNullOrEmpty(gameName)){
 			throw new HException( new DefaultReturnCode(null,-1,"group_name_is_null") );
 		}
 		existGroup(groupId);//检测group是否存
 		
 		AdminGame game=new AdminGame();
-		game.setGameId(gameId);
 		game.setGameName(gameName);
 		game.setGroupId(groupId);
 		adminGameDao.save(game);
