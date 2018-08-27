@@ -4,10 +4,10 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="游戏名称"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" v-on:click="getUsers">查询</el-button>
+					<el-button type="primary" v-on:click="getGames">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="handleAdd">新增</el-button>
@@ -16,22 +16,16 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="games" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column type="index" width="160">
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="gameId" label="游戏ID" width="220" sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="gameName" label="游戏名称" width="220" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
-			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
-			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
-			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column label="操作" width="180">
 				<template scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -41,7 +35,7 @@
 
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
-			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
+			<!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
 			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
 			</el-pagination>
 		</el-col>
@@ -49,22 +43,10 @@
 		<!--编辑界面-->
 		<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
 			<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="姓名" prop="name">
-					<el-input v-model="editForm.name" auto-complete="off"></el-input>
+				<el-form-item label="游戏名称" prop="gameName">
+					<el-input v-model="editForm.gameName" auto-complete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="性别">
-					<el-radio-group v-model="editForm.sex">
-						<el-radio class="radio" :label="1">男</el-radio>
-						<el-radio class="radio" :label="0">女</el-radio>
-					</el-radio-group>
-				</el-form-item>
-				<el-form-item label="年龄">
-					<el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
-				</el-form-item>
-				<el-form-item label="生日">
-					<el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth"></el-date-picker>
-				</el-form-item>
-				<el-form-item label="地址">
+				<el-form-item label="描述">
 					<el-input type="textarea" v-model="editForm.addr"></el-input>
 				</el-form-item>
 			</el-form>
@@ -75,24 +57,12 @@
 		</el-dialog>
 
 		<!--新增界面-->
-		<el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
+		<el-dialog title="新增游戏" v-model="addFormVisible" :close-on-click-modal="false">
 			<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-				<el-form-item label="姓名" prop="name">
-					<el-input v-model="addForm.name" auto-complete="off"></el-input>
+				<el-form-item label="游戏名称" prop="gameName">
+					<el-input v-model="addForm.gameName" auto-complete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="性别">
-					<el-radio-group v-model="addForm.sex">
-						<el-radio class="radio" :label="1">男</el-radio>
-						<el-radio class="radio" :label="0">女</el-radio>
-					</el-radio-group>
-				</el-form-item>
-				<el-form-item label="年龄">
-					<el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
-				</el-form-item>
-				<el-form-item label="生日">
-					<el-date-picker type="date" placeholder="选择日期" v-model="addForm.birth"></el-date-picker>
-				</el-form-item>
-				<el-form-item label="地址">
+				<el-form-item label="描述">
 					<el-input type="textarea" v-model="addForm.addr"></el-input>
 				</el-form-item>
 			</el-form>
@@ -107,15 +77,15 @@
 <script>
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
-	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+	import { getGameListPage, removeGame, batchRemoveGame, editGame, addGame } from '../../api/api';
 
 	export default {
 		data() {
 			return {
 				filters: {
-					name: ''
+					gameName: ''
 				},
-				users: [],
+				games: [],
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -124,14 +94,14 @@
 				editFormVisible: false,//编辑界面是否显示
 				editLoading: false,
 				editFormRules: {
-					name: [
+					gameName: [
 						{ required: true, message: '请输入姓名', trigger: 'blur' }
 					]
 				},
 				//编辑界面数据
 				editForm: {
 					id: 0,
-					name: '',
+					gameName: '',
 					sex: -1,
 					age: 0,
 					birth: '',
@@ -141,13 +111,13 @@
 				addFormVisible: false,//新增界面是否显示
 				addLoading: false,
 				addFormRules: {
-					name: [
+					gameName: [
 						{ required: true, message: '请输入姓名', trigger: 'blur' }
 					]
 				},
 				//新增界面数据
 				addForm: {
-					name: '',
+					gameName: '',
 					sex: -1,
 					age: 0,
 					birth: '',
@@ -163,19 +133,20 @@
 			},
 			handleCurrentChange(val) {
 				this.page = val;
-				this.getUsers();
+				this.getGames();
 			},
 			//获取用户列表
-			getUsers() {
+			getGames() {
 				let para = {
 					page: this.page,
 					name: this.filters.name
 				};
 				this.listLoading = true;
 				//NProgress.start();
-				getUserListPage(para).then((res) => {
-					this.total = res.data.total;
-					this.users = res.data.users;
+				getGameListPage(para).then((res) => {
+					// console.info(res.data.value)
+					this.total = res.data.value.length;
+					this.games = res.data.value;
 					this.listLoading = false;
 					//NProgress.done();
 				});
@@ -188,14 +159,14 @@
 					this.listLoading = true;
 					//NProgress.start();
 					let para = { id: row.id };
-					removeUser(para).then((res) => {
+					removeGame(para).then((res) => {
 						this.listLoading = false;
 						//NProgress.done();
 						this.$message({
 							message: '删除成功',
 							type: 'success'
 						});
-						this.getUsers();
+						this.getGames();
 					});
 				}).catch(() => {
 
@@ -210,11 +181,7 @@
 			handleAdd: function () {
 				this.addFormVisible = true;
 				this.addForm = {
-					name: '',
-					sex: -1,
-					age: 0,
-					birth: '',
-					addr: ''
+					gameName: ''
 				};
 			},
 			//编辑
@@ -225,8 +192,10 @@
 							this.editLoading = true;
 							//NProgress.start();
 							let para = Object.assign({}, this.editForm);
-							para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-							editUser(para).then((res) => {
+							// para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
+							let params = "gameId=" + para.gameId + "&name=" + para.gameName + "&groupId=" + 1;
+							console.info(params);
+							editGame(params).then((res) => {
 								this.editLoading = false;
 								//NProgress.done();
 								this.$message({
@@ -235,7 +204,7 @@
 								});
 								this.$refs['editForm'].resetFields();
 								this.editFormVisible = false;
-								this.getUsers();
+								this.getGames();
 							});
 						});
 					}
@@ -249,8 +218,10 @@
 							this.addLoading = true;
 							//NProgress.start();
 							let para = Object.assign({}, this.addForm);
-							para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-							addUser(para).then((res) => {
+							// para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
+							let params = "gameId=1&name=" + para.gameName + "&groupId=" + 1;
+							console.info(params);
+							addGame(params).then((res) => {
 								this.addLoading = false;
 								//NProgress.done();
 								this.$message({
@@ -259,7 +230,13 @@
 								});
 								this.$refs['addForm'].resetFields();
 								this.addFormVisible = false;
-								this.getUsers();
+								this.getGames();
+							}).catch(error => {
+								this.addLoading = false;
+								this.$message({
+									message: '网络错误',
+									type: 'error'
+								})
 							});
 						});
 					}
@@ -277,14 +254,14 @@
 					this.listLoading = true;
 					//NProgress.start();
 					let para = { ids: ids };
-					batchRemoveUser(para).then((res) => {
+					batchRemoveGame(para).then((res) => {
 						this.listLoading = false;
 						//NProgress.done();
 						this.$message({
 							message: '删除成功',
 							type: 'success'
 						});
-						this.getUsers();
+						this.getGames();
 					});
 				}).catch(() => {
 
@@ -292,7 +269,7 @@
 			}
 		},
 		mounted() {
-			this.getUsers();
+			this.getGames();
 		}
 	}
 

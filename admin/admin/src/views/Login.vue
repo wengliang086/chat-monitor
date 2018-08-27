@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import { requestLogin } from '../api/api';
+  import { requestLogin, requestLoginPost, requestLoginPost2 } from '../api/api';
   //import NProgress from 'nprogress'
   export default {
     data() {
@@ -24,7 +24,7 @@
         logining: false,
         ruleForm2: {
           account: 'admin',
-          checkPass: '123456'
+          checkPass: '111111'
         },
         rules2: {
           account: [
@@ -50,22 +50,29 @@
             //_this.$router.replace('/table');
             this.logining = true;
             //NProgress.start();
-            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-            console.info(this.ruleForm2.checkPass)
-            requestLogin(loginParams).then(data => {
+            var loginParams = 'account=' + this.ruleForm2.account + "&password=" + this.ruleForm2.checkPass;
+            // console.info(this.ruleForm2.checkPass)
+            requestLoginPost(loginParams).then(data => {
               this.logining = false;
-              //NProgress.done();
-                console.info(data)
-              let { msg, code, user } = data;
-              if (code !== 200) {
+              // NProgress.done();
+              // console.info(data)
+              let { msg, code, value } = data;
+              if (code !== 1) {
                 this.$message({
                   message: msg,
                   type: 'error'
                 });
               } else {
-                sessionStorage.setItem('user', JSON.stringify(user));
-                this.$router.push({ path: '/table' });
+                sessionStorage.setItem('user', JSON.stringify(value));
+                this.$router.push({ path: '/game' });
               }
+            }).catch(error => {
+              this.logining = false;
+              console.info(error);
+                this.$message({
+                  message: '网络错误',
+                  type: 'error'
+                });
             });
           } else {
             console.log('error submit!!');
