@@ -2,7 +2,10 @@ package com.hoolai.chatmonitor.provider.process.dao.mybatis.mapper;
 
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspiciousExample;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 
@@ -97,5 +100,7 @@ public interface MsgSuspiciousMapper {
 
 
 	       ////*******自定义开始********/
+    List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(@Param("account") String account,@Param("gameName") String gameName,@Param("msg") String msg,@Param("status") Byte status,@Param("gameId") Integer gameId,@Param("groupId") Integer groupId);
+
         //***********自定义结束****////
 }

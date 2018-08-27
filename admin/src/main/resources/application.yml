@@ -27,6 +27,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.hoolai.chatmonitor.open.dao.mybatis.vo
+  configuration:
+    call-setters-on-nulls: true
+      
 
 # 打印sql
 logging:

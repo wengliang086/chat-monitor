@@ -283,4 +283,26 @@
       group_id = #{groupId,jdbcType=INTEGER}
     where uid = #{uid,jdbcType=BIGINT}
   </update>
+  
+  
+  
+	<select id="selectUserMapList" resultType="java.util.HashMap">  
+	   SELECT u.uid,u.account,u.email,u.phone,grou.group_id,grou.group_name,game.game_id,game.game_name 
+	FROM admin_user u LEFT JOIN  admin_group grou ON u.group_id=grou.group_id 
+	LEFT JOIN admin_game game ON grou.group_id=game.group_id WHERE 1=1 
+	  <if test="account != null and account != ''">
+       and  u.account like '%${account}%'
+      </if>
+       <if test="email != null and email != ''">
+       and  u.email like '%${email}%'
+      </if>
+       <if test="phone != null and phone != ''">
+       and  u.phone like '%${phone}%'
+      </if>
+      <if test="groupId != null and groupId != 0">
+       and u.group_id=${groupId} 
+      </if>
+	ORDER BY game.game_id DESC
+	</select>  
+
 </mapper>

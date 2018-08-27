@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service(timeout = 10000, retries = 0)
 public class CheckServiceImpl implements CheckService {
@@ -108,6 +109,19 @@ public class CheckServiceImpl implements CheckService {
     	
     	return result;
 		
+	}
+
+	//可疑信息列表(更详细的，比如说包含了gamename、审核状态说明、操作人)
+	@Override
+	public ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> selectSuspiciousMapList(String account,
+			String gameName, String msg,Byte status, Integer gameId, Integer groupId)
+			throws HException {
+		
+		List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> list=msgSuspiciousDao.selectSuspiciousMapList( account,
+				 gameName, msg, status,  gameId,  groupId);
+		ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal=new ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>>();
+		returnVal.setValue(list);
+		return returnVal;
 	}
 
 

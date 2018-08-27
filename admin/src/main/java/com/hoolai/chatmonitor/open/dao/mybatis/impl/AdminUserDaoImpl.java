@@ -11,6 +11,7 @@ import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUserExample;
 
 import java.lang.Long;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class AdminUserDaoImpl implements AdminUserDao {
@@ -61,9 +62,19 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		loginInfoExample.createCriteria().andAccountEqualTo(account);
 		return getByExample(loginInfoExample);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectUserMapList(String account, String email,
+			String phone, Integer groupId) {
+		
+		return adminUserMapper.selectUserMapList(account, email, phone, groupId);
+	}
 	
 	 
 	////*******自定义开始********//
+	
+	
+	
 	//**********自定义结束*****////
 	
 }

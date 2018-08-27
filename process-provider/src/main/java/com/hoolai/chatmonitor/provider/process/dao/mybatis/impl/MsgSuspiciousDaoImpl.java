@@ -8,6 +8,7 @@ import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspiciousExamp
 
 import java.lang.Long;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -66,6 +67,12 @@ public class MsgSuspiciousDaoImpl implements MsgSuspiciousDao {
 		
 		example.setOrderByClause("status asc,create_time asc");
 		return msgSuspiciousMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(String account,
+			String gameName, String msg,Byte status, Integer gameId, Integer groupId) {
+		return msgSuspiciousMapper.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);
 	}
 	
 	 
