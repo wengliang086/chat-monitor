@@ -4,8 +4,12 @@ import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
 
+import java.util.List;
+
 
 public interface AdminGroupService {
+
+	List<AdminGroup> list(String name) throws HException;
 		
 	//新增用户组
 	ReturnValue<AdminGroup> add(String groupName) throws HException;
