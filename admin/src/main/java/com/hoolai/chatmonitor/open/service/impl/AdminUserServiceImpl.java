@@ -1,6 +1,8 @@
 package com.hoolai.chatmonitor.open.service.impl;
 
 
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -11,9 +13,11 @@ import javax.annotation.Resource;
 
 
 
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+
 
 
 
@@ -202,6 +206,16 @@ public class AdminUserServiceImpl implements AdminUserService{
 		adminUserDao.update(userInfo);//修改用户
 	    
 		return createLoginResult(userInfo);
+	}
+
+	//用户列表
+	@Override
+	public ReturnValue<List<Map<String, Object>>> selectUserMapList(
+			String account, String email, String phone, Integer groupId) {
+		List<Map<String, Object>> list=adminUserDao.selectUserMapList(account, email, phone, groupId);
+		ReturnValue<List<Map<String, Object>>> returnVal=new ReturnValue<List<Map<String, Object>>>();
+		returnVal.setValue(list);
+		return returnVal;
 	}
 
 }

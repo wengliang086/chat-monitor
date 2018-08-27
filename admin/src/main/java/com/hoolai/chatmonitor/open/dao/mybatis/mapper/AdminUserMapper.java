@@ -100,5 +100,6 @@ public interface AdminUserMapper {
 
 
 	////*******自定义开始********/
+    List<Map<String,Object>> selectUserMapList(@Param("account") String account,@Param("email") String email,@Param("phone") String phone,@Param("groupId") Integer groupId);
     //***********自定义结束****////
 }

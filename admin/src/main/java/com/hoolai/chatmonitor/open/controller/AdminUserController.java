@@ -1,4 +1,7 @@
 package com.hoolai.chatmonitor.open.controller;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,6 +91,29 @@ public class AdminUserController {
         return returnVal;
 	 }
 	
-	
+	/**用户列表
+	 * 
+	 * @param groupId groupId (可选)
+	 * @param account account (可选)
+	 * @param email email (可选)
+	 * @param phone phone (可选)
+	 * 
+	 * */
+	@GetMapping("list")
+	public ReturnValue<List<Map<String,Object>>> list(HttpServletRequest request,Integer groupId,String account,String email,String phone) {
+		
+		if( (groupId==null || groupId==0) ){
+			
+			AdminUser user=LoginContext.getLoginUser(request);
+			
+			if(!user.getAccount().equals("admin")){
+				groupId=user.getGroupId();
+			}			
+		}
+		
+		ReturnValue<List<Map<String,Object>>> gameVal=adminUserService.selectUserMapList(account, email, phone, groupId);     
+       
+		return gameVal;
+	 }
 
 }

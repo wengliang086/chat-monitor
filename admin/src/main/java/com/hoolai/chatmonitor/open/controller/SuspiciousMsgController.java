@@ -3,6 +3,7 @@ package com.hoolai.chatmonitor.open.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,6 +81,36 @@ public class SuspiciousMsgController {
 		
 		if(returnVal.getValue()==null || returnVal.getValue().size()==0){
 			return new ReturnValue<List<MsgSuspicious>>(new DefaultReturnCode(null,-1,"没有查到匹配的信息"));
+		}
+		
+		return returnVal;
+	 }
+	
+	
+    /**查询详细的可疑信息列表（例如包括game_name、operator、status说明。。）
+	 * 
+	 * @param account 可根据admin_user中的account查询 (可选)
+	 * @param gameName 可根据admin_game中的game_name查询(可选)
+	 * @param msg 可根据m_suspicious中的msg模糊查询(可选)
+	 * @param status 可根据m_suspicious中的status查询(可选)
+	 * @param groupId 可根据admin_game中的group_id查询(可选)非admin用户只能查询自己group下的游戏的可疑信息
+	 * @param gameId 可根据m_suspicious中的game_id查询(可选)
+	 * 
+	 * */
+	@GetMapping("listDetail")
+	public ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> listDetail(HttpServletRequest request,String account,String gameName,Byte status,Integer gameId,Integer groupId,String msg) {
+
+		AdminUser user=LoginContext.getLoginUser(request);//获取当前用户		
+		
+		if(!user.getAccount().equals("admin")){//普通操作用户只能看自己组下的game的可疑信息
+			groupId=user.getGroupId();
+		}
+
+		ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal=checkService.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);
+
+		
+		if(returnVal.getValue()==null || returnVal.getValue().size()==0){
+			return new ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>>(new DefaultReturnCode(null,-1,"没有查到匹配的信息"));
 		}
 		
 		return returnVal;

@@ -1,5 +1,8 @@
 package com.hoolai.chatmonitor.open.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
@@ -38,4 +41,7 @@ public interface AdminUserService {
 
 	//更新用户信息
 	ReturnValue<AdminUser> updateLoginInfo(Long uid, String password, String email, String phone,Integer groupId) throws HException;
+	
+	//后台操作用户列表
+	ReturnValue<List<Map<String,Object>>> selectUserMapList(String account,String email,String phone,Integer groupId);
 }
