@@ -27,7 +27,7 @@
 		</el-table-column>
 		<el-table-column label="操作" width="180">
 			<template scope="scope">
-				<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+				<el-button size="small" @click="showEditGroupDialog(scope.$index, scope.row)">编辑</el-button>
 				<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 			</template>
 		</el-table-column>
@@ -42,7 +42,7 @@
 
 	<!--编辑界面-->
 	<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-		<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+		<el-form :model="editForm" label-width="96px" :rules="editFormRules" ref="editForm">
 			<el-form-item label="用户组名称" prop="groupName">
 				<el-input v-model="editForm.groupName" auto-complete="off"></el-input>
 			</el-form-item>
@@ -58,7 +58,7 @@
 
 	<!--新增界面-->
 	<el-dialog title="新增用户组" v-model="addFormVisible" :close-on-click-modal="false">
-		<el-form :model="addForm" label-width="90px" :rules="addFormRules" ref="addForm">
+		<el-form :model="addForm" label-width="96px" :rules="addFormRules" ref="addForm">
 			<el-form-item label="用户组名称" prop="groupName">
 				<el-input v-model="addForm.groupName" auto-complete="off"></el-input>
 			</el-form-item>
@@ -76,7 +76,7 @@
 
 <script>
 import util from "../../common/js/util";
-import { getGroupList, addGroup } from "../../api/api";
+import { getGroupList, addGroup, editGroup } from "../../api/api";
 
 export default {
   data() {
@@ -93,7 +93,7 @@ export default {
       addFormVisible: false, //新增界面是否显示
       addLoading: false,
       addFormRules: {
-        gameName: [{ required: true, message: "请输入姓名", trigger: "blur" }]
+        groupName: [{ required: true, message: "请输用户组名", trigger: "blur" }]
       },
       addForm: {
         groupName: ""
@@ -102,7 +102,7 @@ export default {
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormRules: {
-        gameName: [{ required: true, message: "请输入姓名", trigger: "blur" }]
+        groupName: [{ required: true, message: "请输用户组名", trigger: "blur" }]
       },
       editForm: {
         groupName: ""
@@ -129,12 +129,48 @@ export default {
     selsChange(sels) {
       this.sels = sels;
 	},
+	//显示编辑界面
+	showEditGroupDialog(index, row) {
+		this.editFormVisible = true;
+		this.editForm = Object.assign({}, row);
+	},
+	//显示新增界面
 	showAddGroupDialog() {
 		this.addFormVisible = true;
 		this.addForm = {
 			groupName: ''
 		}
 	},
+    editSubmit() {
+      this.$refs.editForm.validate(valid => {
+        if (valid) {
+          this.$confirm("确认提交吗？", "提示", {}).then(() => {
+            this.addLoading = true;
+			let para = Object.assign({}, this.editForm);
+            let params = "groupId=" + para.groupId + "&name=" + para.groupName;
+            // console.info(params);
+            editGroup(params)
+              .then(res => {
+                this.addLoading = false;
+                this.$message({
+                  message: "提交成功",
+                  type: "success"
+				});
+				this.$refs['editForm'].resetFields();
+				this.editFormVisible = false;
+				this.getGroupList();
+              })
+              .catch(error => {
+                this.addLoading = false;
+                this.$message({
+                  message: "网络错误",
+                  type: "error"
+                });
+              });
+          });
+        }
+      });
+    },
     addSubmit() {
       this.$refs.addForm.validate(valid => {
         if (valid) {
