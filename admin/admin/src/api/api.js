@@ -36,3 +36,7 @@ export const addGame = params => { return axios.get(`${base}/game/add?` + params
  * group相关
  */
 export const getGroupList = params => { return axios.get(`${base}/group/list`, { params: params }); };
+
+export const addGroup = params => { return axios.get(`${base}/group/add?` + params); };
+
+export const editGroup = params => { return axios.get(`${base}/group/update?` + params); };

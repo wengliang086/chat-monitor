@@ -1,5 +1,7 @@
 package com.hoolai.chatmonitor.common.returnvalue;
 
+import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
+
 public class ReturnValue<T> extends DefaultReturnCode implements java.io.Serializable{
 
     /**
@@ -9,6 +11,11 @@ public class ReturnValue<T> extends DefaultReturnCode implements java.io.Seriali
 
     public ReturnValue() {
         super();
+    }
+
+    public ReturnValue(T value) {
+        this(HExceptionEnum.SUCCESS);
+        this.value = value;
     }
 
     public ReturnValue(ReturnCode returnCode) {
