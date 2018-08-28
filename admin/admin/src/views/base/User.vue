@@ -77,17 +77,17 @@
 				<el-input v-model="addForm.email" auto-complete="off"></el-input>
 			</el-form-item>
 			<el-form-item label="密码" prop="pwd1">
-				<el-input v-model="addForm.pwd1" auto-complete="off"></el-input>
+				<el-input type="password" v-model="addForm.pwd1" auto-complete="off"></el-input>
 			</el-form-item>
 			<el-form-item label="密码确认" prop="pwd2">
-				<el-input v-model="addForm.pwd2" auto-complete="off"></el-input>
+				<el-input type="password" v-model="addForm.pwd2" auto-complete="off"></el-input>
 			</el-form-item>
 			<el-form-item label="是否管理员">
 				<el-switch v-model="addForm.admin"></el-switch>
 			</el-form-item>
 			<el-form-item label="所属用户组">
-				<el-select v-model="addForm.region" placeholder="请选择用户组">
-					<el-option v-for="item in addForm.groupArr" :label="item.group_name" :value="item.group_id" :key="item.group_id"></el-option>
+				<el-select v-model="addForm.selected" placeholder="请选择用户组">
+					<el-option v-for="(item, index) in addForm.groupArr" :label="item.group_name" :value="item.group_id" :key="index"></el-option>
 				</el-select>
 			</el-form-item>
 		</el-form>
@@ -105,6 +105,15 @@ import { getUserList, addUser, editUser } from "../../api/api";
 
 export default {
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.addForm.pwd1) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       listLoading: false,
       total: 0,
@@ -120,17 +129,44 @@ export default {
       addFormRules: {
         account: [
           { required: true, message: "请输用户名", trigger: "blur" },
-		  { min: 6, max: 20, message: "长度6到20" },
-		  { min: 6, max: 20, message: "长度6到20" },
+          { min: 6, max: 20, message: "长度6到20" }
         ],
-        phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
-        pwd1: [{ required: true, message: "请输密码", trigger: "blur" }],
-        pwd2: [{ required: true, message: "再次确认密码", trigger: "blur" }]
+        phone: [
+          { required: true, message: "请输入手机号码", trigger: "blur" },
+          // { pattern: /^1[34578]\d{9}$/, message: "请输入正确的手机号" },
+          {
+            validator: function(rule, value, callback) {
+              if (/^1[34578]\d{9}$/.test(value) == false) {
+                callback(new Error("请输入正确的手机号1"));
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur"
+          }
+        ],
+        email: [
+          {
+            pattern: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
+            message: "请输入正确的邮箱地址"
+          }
+        ],
+        pwd1: [
+          { required: true, message: "请输密码", trigger: "blur" },
+          { min: 6, max: 20, message: "长度6到20" }
+        ],
+        pwd2: [
+          { required: true, message: "再次确认密码", trigger: "blur" },
+          { validator: validatePass }
+        ]
       },
       addForm: {
         account: "",
         admin: false,
-        groupArr: []
+        groupArr: [],
+        pwd1: "",
+        pwd2: "",
+        selected: null
       },
 
       editFormVisible: false, //编辑界面是否显示
@@ -221,7 +257,18 @@ export default {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.addLoading = true;
             let para = Object.assign({}, this.addForm);
-            let params = "name=" + para.userName;
+            let params =
+              "account=" +
+              para.account +
+              "&phone=" +
+              para.phone +
+              "&password=" +
+              para.pwd1 +
+              "&groupId=" +
+              para.selected;
+            if (para.email) {
+              params += "&email=" + para.email;
+            }
             console.info(params);
             addUser(params)
               .then(res => {
