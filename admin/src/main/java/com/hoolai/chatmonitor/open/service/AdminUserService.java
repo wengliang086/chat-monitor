@@ -27,7 +27,7 @@ public interface AdminUserService {
 	 */
 	ReturnValue<AdminUser> loginByAccount(String account, String password) throws HException;
 	
-	/**
+	/*
 	 * @param account         账户名
 	 * @param password        密码
 	 * @param email           邮箱
@@ -35,12 +35,11 @@ public interface AdminUserService {
 	 * @return
 	 * @throws HException
 	 */
-	
 	//注册用户信息
-	ReturnValue<AdminUser> register(String account, String password, String email, String phone, Integer groupId) throws HException;
+	ReturnValue<AdminUser> register(AdminUser user) throws HException;
 
 	//更新用户信息
-	ReturnValue<AdminUser> updateLoginInfo(Long uid, String password, String email, String phone,Integer groupId) throws HException;
+	ReturnValue<AdminUser> updateLoginInfo(AdminUser user) throws HException;
 	
 	//后台操作用户列表
 	ReturnValue<List<Map<String,Object>>> selectUserMapList(String account,String email,String phone,Integer groupId);

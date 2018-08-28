@@ -93,7 +93,13 @@ export default {
       addFormVisible: false, //新增界面是否显示
       addLoading: false,
       addFormRules: {
-        groupName: [{ required: true, message: "请输用户组名", trigger: "blur" }]
+        groupName: [
+          { required: true, message: "请输用户组名", trigger: "blur" },
+          {
+            pattern: /^[\u4E00-\u9FA5]+$/,
+            message: "用户组名只能为中文"
+          }
+        ]
       },
       addForm: {
         groupName: ""
@@ -102,7 +108,9 @@ export default {
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormRules: {
-        groupName: [{ required: true, message: "请输用户组名", trigger: "blur" }]
+        groupName: [
+          { required: true, message: "请输用户组名", trigger: "blur" }
+        ]
       },
       editForm: {
         groupName: ""
@@ -128,25 +136,25 @@ export default {
     },
     selsChange(sels) {
       this.sels = sels;
-	},
-	//显示编辑界面
-	showEditGroupDialog(index, row) {
-		this.editFormVisible = true;
-		this.editForm = Object.assign({}, row);
-	},
-	//显示新增界面
-	showAddGroupDialog() {
-		this.addFormVisible = true;
-		this.addForm = {
-			groupName: ''
-		}
-	},
+    },
+    //显示编辑界面
+    showEditGroupDialog(index, row) {
+      this.editFormVisible = true;
+      this.editForm = Object.assign({}, row);
+    },
+    //显示新增界面
+    showAddGroupDialog() {
+      this.addFormVisible = true;
+      this.addForm = {
+        groupName: ""
+      };
+    },
     editSubmit() {
       this.$refs.editForm.validate(valid => {
         if (valid) {
           this.$confirm("确认提交吗？", "提示", {}).then(() => {
             this.addLoading = true;
-			let para = Object.assign({}, this.editForm);
+            let para = Object.assign({}, this.editForm);
             let params = "groupId=" + para.groupId + "&name=" + para.groupName;
             // console.info(params);
             editGroup(params)
@@ -155,10 +163,10 @@ export default {
                 this.$message({
                   message: "提交成功",
                   type: "success"
-				});
-				this.$refs['editForm'].resetFields();
-				this.editFormVisible = false;
-				this.getGroupList();
+                });
+                this.$refs["editForm"].resetFields();
+                this.editFormVisible = false;
+                this.getGroupList();
               })
               .catch(error => {
                 this.addLoading = false;
@@ -185,10 +193,10 @@ export default {
                 this.$message({
                   message: "提交成功",
                   type: "success"
-				});
-				this.$refs['addForm'].resetFields();
-				this.addFormVisible = false;
-				this.getGroupList();
+                });
+                this.$refs["addForm"].resetFields();
+                this.addFormVisible = false;
+                this.getGroupList();
               })
               .catch(error => {
                 this.addLoading = false;

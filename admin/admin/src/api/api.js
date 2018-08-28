@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let base = 'http://127.0.0.1:8080/admin';
+let base = '/api/admin';
 export const requestLoginPost = params => { return axios.post(`${base}/user/loginByAccount`, params).then(res => res.data); };
 export const requestLoginPost2 = params => {
     return axios({
@@ -40,3 +40,12 @@ export const getGroupList = params => { return axios.get(`${base}/group/list`, {
 export const addGroup = params => { return axios.get(`${base}/group/add?` + params); };
 
 export const editGroup = params => { return axios.get(`${base}/group/update?` + params); };
+
+/**
+ * user相关
+ */
+export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
+
+export const addUser = params => { return axios.get(`${base}/user/register?` + params); };
+
+export const editUser = params => { return axios.get(`${base}/user/updateUserInfo?` + params); };
