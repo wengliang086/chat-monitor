@@ -2,18 +2,14 @@ package com.hoolai.chatmonitor.open.service.impl;
 
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
-
-
 import com.google.common.base.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.hoolai.chatmonitor.common.returnvalue.DefaultReturnCode;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
+import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
+import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.dao.AdminGameDao;
 import com.hoolai.chatmonitor.open.dao.AdminGroupDao;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
@@ -33,7 +29,7 @@ public class AdminGameServiceImpl implements AdminGameService{
 	@Override
 	public ReturnValue<AdminGame> add(String gameName,Integer groupId) throws HException {
 		if(Strings.isNullOrEmpty(gameName)){
-			throw new HException( new DefaultReturnCode(null,-1,"group_name_is_null") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_IS_INVALID).build();
 		}
 		existGroup(groupId);//检测group是否存
 		
@@ -49,13 +45,13 @@ public class AdminGameServiceImpl implements AdminGameService{
 		
 		
 		if(gameId==null || gameId==0){
-			throw new HException( new DefaultReturnCode(null,-1,"game_id_is_null") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_ID_IS_NULL).build();
 		}
 		
 		AdminGame game=adminGameDao.get(gameId);
 		
 		if(game==null){
-			throw new HException( new DefaultReturnCode(null,-1,"game_not_exist") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_NOT_IEXIST).build();
 		}
 
 		game.setGameName(Strings.isNullOrEmpty(gameName)?game.getGameName():gameName);
@@ -73,12 +69,12 @@ public class AdminGameServiceImpl implements AdminGameService{
 	private void existGroup(Integer groupId){
 		
 		if(groupId==null || groupId==0){
-			throw new HException( new DefaultReturnCode(null,-1,"group_id_is_null") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_ID_IS_NULL).build();
 		}
 		
 		AdminGroup group=adminGropuDao.get(groupId);
 		if(group==null){
-			throw new HException( new DefaultReturnCode(null,-1,"group_not_exist") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_IEXIST).build();
 		}
 	}
 	

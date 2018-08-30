@@ -8,7 +8,6 @@ import com.hoolai.chatmonitor.open.service.AdminGroupService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,9 +21,13 @@ public class AdminGroupController {
     private AdminGroupService adminGroupService;
 
     @GetMapping("list")
-    public ReturnValue<List<AdminGroup>> list() {
-        List<AdminGroup> list = adminGroupService.list("");
-        return new ReturnValue<>(list);
+    public ReturnValue<List<AdminGroup>> list(String name) {
+        List<AdminGroup> list = adminGroupService.list(name);
+        
+        ReturnValue<List<AdminGroup>> returnVal = new ReturnValue<List<AdminGroup>>();
+        returnVal.setValue(list);
+        
+        return returnVal;
     }
 
     @GetMapping("add")//新增组

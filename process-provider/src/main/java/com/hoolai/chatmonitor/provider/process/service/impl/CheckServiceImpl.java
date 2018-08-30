@@ -1,9 +1,9 @@
 package com.hoolai.chatmonitor.provider.process.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.hoolai.chatmonitor.common.returnvalue.DefaultReturnCode;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
+import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.provider.process.dao.MsgSuspiciousDao;
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 @Service(timeout = 10000, retries = 0)
 public class CheckServiceImpl implements CheckService {
@@ -86,12 +86,12 @@ public class CheckServiceImpl implements CheckService {
 			throws HException {
 		
 		if(id==null || id==0l){
-			throw new HException( new DefaultReturnCode(null,-1,"suspicious_id_is_null") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.SUSPICIOUS_ID_IS_NULL).build();
 		}
 		
 		MsgSuspicious property=msgSuspiciousDao.get(id);
 		if(property==null){
-			throw new HException( new DefaultReturnCode(null,-1,"suspicious_not_exist") );
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.SUSPICIOUS_NOT_EXIST).build();
 		}
 		
 		property.setStatus((byte)1);//正常：1

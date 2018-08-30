@@ -2,7 +2,6 @@ package com.hoolai.chatmonitor.open.service.impl;
 
 
 import com.google.common.base.Strings;
-import com.hoolai.chatmonitor.common.returnvalue.DefaultReturnCode;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
@@ -37,7 +36,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     public ReturnValue<AdminUser> loginByUdid(long uid) throws HException {
         AdminUser loginInfo = adminUserDao.get(uid);
         if (loginInfo == null) {
-            return createLoginResult("UID_NOT_FIND");
+			throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
         }
         return createLoginResult(loginInfo);
     }
@@ -48,7 +47,7 @@ public class AdminUserServiceImpl implements AdminUserService {
             throws HException {
         AdminUser loginInfo = adminUserDao.getByAccountAndPwd(account, encryPassword(password));
         if (loginInfo == null) {
-            return createLoginResult("ACCOUNT_INFO_NOT_FOUND");
+        	throw HExceptionBuilder.newBuilder(HExceptionEnum.LOGIN_FAILED).build();
         }
         return createLoginResult(loginInfo);
     }
@@ -60,10 +59,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         return returnVal;
     }
 
-    private ReturnValue<AdminUser> createLoginResult(String msg) {
-        ReturnValue<AdminUser> returnVal = new ReturnValue<AdminUser>(new DefaultReturnCode(null, -1, msg));
-        return returnVal;
-    }
 
     //密码加密
     private String encryPassword(String password) {
@@ -79,13 +74,12 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public ReturnValue<AdminUser> register(AdminUser user) throws HException {
         String account = user.getAccount();
-        Long uid = user.getUid();
         String password = user.getPassword();
         String email = user.getEmail();
         String phone = user.getPhone();
         Integer groupId = user.getGroupId();
         if (Strings.isNullOrEmpty(account)) {
-            return createLoginResult("ACCOUNT_IS_NULL");
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.ACCOUNT_IS_INVALID).build();
         }
 
         checkAccount(account);
@@ -97,7 +91,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUser loginInfo = adminUserDao.getByPassport(account, null, null);//根据账号查找是否已经存在过了
 
         if (isAccountExist(loginInfo)) {
-            return createLoginResult("ACCOUNT_ALREDAY_EXIST");
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.ACCOUNT_ALREDAY_EXIST).build();
         }
 
         if (Strings.isNullOrEmpty(password)) {
@@ -124,7 +118,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     //判断账号是否合法
     private void checkAccount(String account) {
         if (Strings.isNullOrEmpty(account) || (!Pattern.matches("^[a-zA-Z][a-zA-z_0-9]*[a-zA-Z0-9]$", account))) {
-            throw HExceptionBuilder.newBuilder(new DefaultReturnCode(null, -1, "ACCOUNT_IS_INVALID")).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.ACCOUNT_IS_INVALID).build();
         }
     }
 
@@ -157,12 +151,12 @@ public class AdminUserServiceImpl implements AdminUserService {
     private void existGroup(Integer groupId) {
 
         if (groupId == null || groupId == 0) {
-            throw new HException(new DefaultReturnCode(null, -1, "group_id_is_null"));
+        	 throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_ID_IS_NULL).build();
         }
 
         AdminGroup group = adminGropuDao.get(groupId);
         if (group == null) {
-            throw new HException(new DefaultReturnCode(null, -1, "group_not_exist"));
+        	throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_IEXIST).build();
         }
     }
 
@@ -177,7 +171,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         Integer groupId = user.getGroupId();
         AdminUser userInfo = adminUserDao.get(uid);
         if (userInfo == null) {
-            return createLoginResult("ACCOUNT_INFO_NOT_FOUND");
+        	throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
         }
 
         // 帐号可以输入邮箱格式，如果是邮箱格式帐号的话，两列都存
