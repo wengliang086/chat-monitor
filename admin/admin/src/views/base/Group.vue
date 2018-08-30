@@ -127,8 +127,8 @@ export default {
       getGroupList("")
         .then(res => {
           this.listLoading = false;
-          this.groups = res.data.value;
-          this.total = res.data.value.length;
+          this.groups = res;
+          this.total = res.length;
         })
         .catch(error => {
           console.info(error);

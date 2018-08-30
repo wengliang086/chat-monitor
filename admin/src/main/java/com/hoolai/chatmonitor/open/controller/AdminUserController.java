@@ -2,6 +2,8 @@ package com.hoolai.chatmonitor.open.controller;
 
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
+import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
+import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.service.AdminUserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-
+@PermissionAnnotation(PermissionType.LOGINED)
 @RestController
 @RequestMapping("user")
 public class AdminUserController {
@@ -23,6 +25,7 @@ public class AdminUserController {
     @Resource
     private AdminUserService adminUserService;
 
+    @PermissionAnnotation(PermissionType.PUBLIC)
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request) {
         AdminUser loginUser = LoginContext.getLoginUser(request);
@@ -42,6 +45,7 @@ public class AdminUserController {
      * @param account  账号 (必填)
      * @param password 密码(必填)
      */
+    @PermissionAnnotation(PermissionType.PUBLIC)
     @CrossOrigin
     @RequestMapping("loginByAccount")
     public ReturnValue<AdminUser> login(HttpServletRequest request, String account, String password) {
@@ -61,6 +65,7 @@ public class AdminUserController {
      * @param groupId 用户组(必填)
      *
      * */
+    @PermissionAnnotation(PermissionType.PUBLIC)
     @GetMapping("register")
     public ReturnValue<AdminUser> register(AdminUser user) {
 

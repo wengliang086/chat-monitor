@@ -1,6 +1,8 @@
 package com.hoolai.chatmonitor.open.controller;
 
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
+import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
+import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
 import com.hoolai.chatmonitor.open.service.AdminGroupService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-
+@PermissionAnnotation(PermissionType.LOGINED)
 @RestController
 @RequestMapping("group")
 public class AdminGroupController {

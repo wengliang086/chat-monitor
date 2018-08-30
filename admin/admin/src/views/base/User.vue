@@ -189,8 +189,8 @@ export default {
       getUserList("")
         .then(res => {
           this.listLoading = false;
-          this.users = res.data.value;
-          this.total = res.data.value.length;
+          this.users = res;
+          this.total = res.length;
 
           var map = new Map();
           this.users.forEach(element => {

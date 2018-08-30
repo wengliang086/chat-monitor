@@ -2,6 +2,8 @@ package com.hoolai.chatmonitor.open.controller;
 
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
+import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
+import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.service.AdminGameService;
@@ -13,7 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-
+@PermissionAnnotation(PermissionType.LOGINED)
 @RestController
 @RequestMapping("game")
 public class AdminGameController {

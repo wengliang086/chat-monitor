@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
      * 拦截业务异常
      */
     @ExceptionHandler(HException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ReturnValue notFount(HException e) {
         log.error("业务异常:", e.toString());

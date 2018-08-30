@@ -1,23 +1,27 @@
 package com.hoolai.chatmonitor.open.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
+import com.hoolai.chatmonitor.open.auth.PermissionType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@PermissionAnnotation(PermissionType.LOGINED)
 @RestController
 @RequestMapping("test")
 public class TestController {
 
+    @PermissionAnnotation(PermissionType.PUBLIC)
     @GetMapping("ok")
     public String ok() {
         return "ok";
     }
 
-    @PostMapping("ok")
+    @GetMapping("ok1")
     public String ok1() {
-        return "ok";
+        return "ok1";
     }
 
     @RequestMapping("login")

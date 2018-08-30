@@ -1,25 +1,46 @@
 import axios from 'axios';
 
+axios.defaults.timeout = 5000
+// axios.defaults.baseURL = '/api/admin'
+
+axios.interceptors.request.use(requestConfig => {
+    requestConfig.headers.accessToken = sessionStorage.getItem('accessTokenKey');
+    return requestConfig;
+}, err => {
+    Promise.reject(err)
+})
+
+axios.interceptors.response.use(response => {
+    // console.log(response);
+    var code = response.data.code;
+    if (code === 1) {
+        return response.data.value;
+    } else if (code === 111) {
+        // 401 清除token信息并跳转到登录页面
+        sessionStorage.removeItem('accessTokenKey');
+        // 只有在当前路由不是登录页面才跳转
+        if (router.currentRoute.path !== 'login') {
+            // router.push({
+            router.replace({
+                path: '/login',
+                query: { redirect: router.currentRoute.path },
+            })
+        }
+    } else {
+        console.log(response);
+        return Promise.reject(response.data.msg)
+    }
+    return response;
+}, err => {
+    // console.log(err);
+    // let returnValue = JSON.parse(JSON.stringify(err.response.data));
+    // console.log(returnValue);
+    // return Promise.reject(returnValue.msg);
+    return Promise.reject(err.response.data.msg);
+})
+
 let base = '/api/admin';
-export const requestLoginPost = params => { return axios.post(`${base}/user/loginByAccount`, params).then(res => res.data); };
-export const requestLoginPost2 = params => {
-    return axios({
-        method: 'post',
-        mode: 'no-cors',
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-        credentials: true,
-        url: `${base}/user/loginByAccount`,
-        // data: {
-        //     'account':'111',
-        //     'password':'fdfsf'
-        // }
-        data: 'account=111&password=p111'
-    }).then(res => res.data);
-};
+export const requestLoginPost = params => { return axios.post(`${base}/user/loginByAccount`, params) };
 export const requestLogin = params => { return axios.get(`${base}/user/loginByAccount`, { params: params }).then(res => res.data); };
 /**
  * game相关

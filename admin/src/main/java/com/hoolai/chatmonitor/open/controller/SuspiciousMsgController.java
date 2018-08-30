@@ -9,6 +9,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
+import com.hoolai.chatmonitor.open.auth.PermissionType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,7 @@ import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
 import com.hoolai.chatmonitor.provider.process.service.CheckService;
 import com.hoolai.chatmonitor.provider.user.service.UserService;
 
-
+@PermissionAnnotation(PermissionType.LOGINED)
 @RestController
 @RequestMapping("suspicious")
 public class SuspiciousMsgController {

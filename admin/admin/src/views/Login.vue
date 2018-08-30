@@ -16,95 +16,91 @@
 </template>
 
 <script>
-  import { requestLogin, requestLoginPost, requestLoginPost2 } from '../api/api';
-  //import NProgress from 'nprogress'
-  export default {
-    data() {
-      return {
-        logining: false,
-        ruleForm2: {
-          account: 'admin',
-          checkPass: '111111'
-        },
-        rules2: {
-          account: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
-            //{ validator: validatePass }
-          ],
-          checkPass: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            //{ validator: validatePass2 }
-          ]
-        },
-        checked: true
-      };
-    },
-    methods: {
-      handleReset2() {
-        this.$refs.ruleForm2.resetFields();
+import { requestLogin, requestLoginPost, requestLoginPost2 } from "../api/api";
+//import NProgress from 'nprogress'
+export default {
+  data() {
+    return {
+      logining: false,
+      ruleForm2: {
+        account: "admin",
+        checkPass: "111111"
       },
-      handleSubmit2(ev) {
-        var _this = this;
-        this.$refs.ruleForm2.validate((valid) => {
-          if (valid) {
-            //_this.$router.replace('/table');
-            this.logining = true;
-            //NProgress.start();
-            var loginParams = 'account=' + this.ruleForm2.account + "&password=" + this.ruleForm2.checkPass;
-            // console.info(this.ruleForm2.checkPass)
-            requestLoginPost(loginParams).then(data => {
+      rules2: {
+        account: [
+          { required: true, message: "请输入账号", trigger: "blur" }
+        ],
+        checkPass: [
+          { required: true, message: "请输入密码", trigger: "blur" }
+        ]
+      },
+      checked: true
+    };
+  },
+  methods: {
+    handleReset2() {
+      this.$refs.ruleForm2.resetFields();
+    },
+    handleSubmit2(ev) {
+      var _this = this;
+      this.$refs.ruleForm2.validate(valid => {
+        if (valid) {
+          //_this.$router.replace('/table');
+          this.logining = true;
+          //NProgress.start();
+          var loginParams =
+            "account=" +
+            this.ruleForm2.account +
+            "&password=" +
+            this.ruleForm2.checkPass;
+          requestLoginPost(loginParams)
+            .then(value => {
               this.logining = false;
               // NProgress.done();
-              // console.info(data)
-              let { msg, code, value } = data;
-              if (code !== 1) {
-                this.$message({
-                  message: msg,
-                  type: 'error'
-                });
-              } else {
-                sessionStorage.setItem('user', JSON.stringify(value));
-                this.$router.push({ path: '/game' });
-              }
-            }).catch(error => {
+              console.info(value);
+              // let { msg, code, value } = data;
+              sessionStorage.setItem("accessTokenKey", "myMockSession");
+              sessionStorage.setItem("user", JSON.stringify(value));
+              this.$router.push({ path: "/game" });
+            })
+            .catch(error => {
               this.logining = false;
               console.info(error);
-                this.$message({
-                  message: '网络错误',
-                  type: 'error'
-                });
+              this.$message({
+                message: error,
+                type: "error"
+              });
             });
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      }
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     }
   }
-
+};
 </script>
 
 <style lang="scss" scoped>
-  .login-container {
-    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    background-clip: padding-box;
-    margin: 180px auto;
-    width: 350px;
-    padding: 35px 35px 15px 35px;
-    background: #fff;
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
-    .title {
-      margin: 0px auto 40px auto;
-      text-align: center;
-      color: #505458;
-    }
-    .remember {
-      margin: 0px 0px 35px 0px;
-    }
+.login-container {
+  /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin: 180px auto;
+  width: 350px;
+  padding: 35px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  .title {
+    margin: 0px auto 40px auto;
+    text-align: center;
+    color: #505458;
   }
+  .remember {
+    margin: 0px 0px 35px 0px;
+  }
+}
 </style>

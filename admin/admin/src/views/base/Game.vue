@@ -143,10 +143,10 @@
 				};
 				this.listLoading = true;
 				//NProgress.start();
-				getGameListPage(para).then((res) => {
+				getGameListPage(para).then((value) => {
 					// console.info(res.data.value)
-					this.total = res.data.value.length;
-					this.games = res.data.value;
+					this.total = value.length;
+					this.games = value;
 					this.listLoading = false;
 					//NProgress.done();
 				});
