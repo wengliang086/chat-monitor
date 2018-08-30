@@ -26,7 +26,9 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="suspiciousData" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="suspiciousData" highlight-current-row v-loading="listLoading" 
+		
+		 @selection-change="selsChange" style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
 		    <el-table-column type="index" width="60">
@@ -43,8 +45,6 @@
 			</el-table-column>
 			<el-table-column prop="gameName" label="游戏" width="120" sortable>
 			</el-table-column>
-			<!--<el-table-column prop="status" label="状态" width="120" sortable>
-			</el-table-column>-->
 			<el-table-column prop="statusDes" label="状态描述" width="120" sortable>
 			</el-table-column>
 			<!--<el-table-column prop="opUid" label="审核人id" width="120" sortable>
@@ -56,10 +56,11 @@
 
 			
 			<el-table-column label="操作" width="180">
-				<template scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">审核</el-button>
-					<!--<el-button type="danger" size="small" >删除</el-button>-->
+				<template  scope="scope" >
+					<el-button size="small" @click="handleEdit(scope.$index, scope.row,1)" v-if="Object.assign({},scope.row).status==null">审核</el-button>
+					<el-button size="small" @click="handleEdit(scope.$index, scope.row,0)" v-else>查看</el-button>
 				</template>
+
 			</el-table-column>
 		</el-table>
 
@@ -86,8 +87,8 @@
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click.native="editFormVisible = false">取消</el-button>
-				<el-button type="primary" @click.native="editSubmit(-1)" :loading="editLoading">违规</el-button>
-				<el-button type="primary" @click.native="editSubmit(1)">正常</el-button>
+				<el-button v-if="editForm.status==null"  type="primary" @click.native="editSubmit(-1)" :loading="editLoading">违规</el-button>
+				<el-button v-if="editForm.status==null"  type="primary" @click.native="editSubmit(1)">正常</el-button>
 			</div>
 		</el-dialog>
 
@@ -126,7 +127,10 @@
 				},
 
 				gameList: null,/**[{gameId: '1000',gameName: '焚天'}, {gameId: '1001',gameName: '勇者大作战'}}]*/
-						  value8:''
+				value8:'',
+				//owIndex: '-1',
+				//OrderIndexArr: [],
+				//hoverOrderArr: []
 
 			}
 		},
@@ -160,11 +164,10 @@
 			},
 
 			//显示编辑界面
-			handleEdit: function (index, row) {
+			handleEdit: function (index, row,action) {				
 				this.editFormVisible = true;
 				this.editForm = Object.assign({}, row);
 			},
-
 			getGame:function(option){				
 					this.filters.gameId=option;
 					this.getSuspiciousList();
@@ -212,10 +215,24 @@
 				this.listLoading = true;
 				getGameListPage().then((res) => {				
 					this.gameList=res.data.value;
-					console.log("this.gameList==="+res.data.value);
 					this.listLoading = false;
 				});
-			}
+			},
+
+			//cellMouseEnter: function (row, column, cell, event) {
+					/*this.rowIndex = row.rowIndex
+					this.hoverOrderArr = []
+					this.OrderIndexArr.forEach(function (element) {
+					if (element.indexOf(this.rowIndex) >= 0) {
+						this.hoverOrderArr = element
+					}
+					}, this);*/
+					//return cell.val;
+      		//},
+
+			//cellMouseLeave: function (row, column, cell, event) {
+				//this.rowIndex = '-1'
+			//}
 
 
 		},
