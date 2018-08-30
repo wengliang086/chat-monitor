@@ -6,6 +6,7 @@ import java.util.List;
 
 
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hoolai.chatmonitor.common.returnvalue.DefaultReturnCode;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
+import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
+import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
@@ -76,16 +79,11 @@ public class SuspiciousMsgController {
 				}
 			
 			}else{
-				return new ReturnValue<List<MsgSuspicious>>(new DefaultReturnCode(null,-1,"您所在的用户组下没有被分配产品,请联系管理员"));
+	        	throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_GAME).build();
 			}
 		}
 		
-		ReturnValue<List<MsgSuspicious>> returnVal=checkService.list(uid, gameId, msg,gameIds);//根据gameId获取可疑信息列表
-		
-		if(returnVal.getValue()==null || returnVal.getValue().size()==0){
-			return new ReturnValue<List<MsgSuspicious>>(new DefaultReturnCode(null,-1,"没有查到匹配的信息"));
-		}
-		
+		ReturnValue<List<MsgSuspicious>> returnVal=checkService.list(uid, gameId, msg,gameIds);//根据gameId获取可疑信息列表		
 		return returnVal;
 	 }
 	
@@ -109,13 +107,7 @@ public class SuspiciousMsgController {
 			groupId=user.getGroupId();
 		}*/
 
-		ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal=checkService.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);
-
-		
-		if(returnVal.getValue()==null || returnVal.getValue().size()==0){
-			return new ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>>(new DefaultReturnCode(null,-1,"没有查到匹配的信息"));
-		}
-		
+		ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal=checkService.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);		
 		return returnVal;
 	 }
 	
