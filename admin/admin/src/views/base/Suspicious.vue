@@ -97,7 +97,7 @@
 <script>
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
-	import {getSuspiciousList,editSuspicious } from '../../api/api';
+	import {getSuspiciousList,editSuspicious,getGameListPage } from '../../api/api';
 
 	export default {
 		data() {
@@ -210,8 +210,9 @@
 
 			getGameListPage:function(){//获取当前用户所在用户组下的所有游戏
 				this.listLoading = true;
-				getSuspiciousList().then((res) => {				
+				getGameListPage().then((res) => {				
 					this.gameList=res.data.value;
+					console.log("this.gameList==="+res.data.value);
 					this.listLoading = false;
 				});
 			}
