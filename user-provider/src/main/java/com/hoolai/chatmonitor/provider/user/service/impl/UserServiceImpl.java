@@ -46,10 +46,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void freeze(Long uid) throws HException {
-        UserFreeze userFreeze = new UserFreeze();
-        userFreeze.setFreezed(true);
-        userFreeze.setUid(uid);
-        userFreeze.setUpdateTime(new Date());
-        userFreezeDao.save(userFreeze);
+    	UserFreeze freeze=userFreezeDao.get(uid);
+    	
+    	if(freeze==null){//如果不为null，则之前冻结过  	
+	        UserFreeze userFreeze = new UserFreeze();
+	        userFreeze.setFreezed(true);
+	        userFreeze.setUid(uid);
+	        userFreeze.setUpdateTime(new Date());
+	        userFreezeDao.save(userFreeze);
+    	}
     }
 }

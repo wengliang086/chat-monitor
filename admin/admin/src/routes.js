@@ -5,6 +5,7 @@ import Main from './views/Main.vue'
 import Game from './views/base/Game.vue'
 import Group from './views/base/Group.vue'
 import User from './views/base/User.vue'
+import Suspicious from './views/base/Suspicious.vue'
 import ChangePassword from './views/systemManagement/ChangePassword.vue'
 import Logout from './views/systemManagement/Logout.vue'
 import Page6 from './views/nav3/Page6.vue'
@@ -34,6 +35,7 @@ let routes = [
             { path: '/game', component: Game, name: '游戏列表' },
             { path: '/group', component: Group, name: '用户组列表' },
             { path: '/user', component: User, name: '用户列表' },
+            { path: '/suspicious', component: Suspicious, name: '可疑信息' },
         ]
     },
     // {

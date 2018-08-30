@@ -49,3 +49,12 @@ export const getUserList = params => { return axios.get(`${base}/user/list`, { p
 export const addUser = params => { return axios.get(`${base}/user/register?` + params); };
 
 export const editUser = params => { return axios.get(`${base}/user/updateUserInfo?` + params); };
+
+/**
+ * suspicious相关
+ */
+export const getSuspiciousList = params => { return axios.get(`${base}/suspicious/listDetail`, { params: params }); };
+
+export const editSuspicious = params => { return axios.get(`${base}/suspicious/msgSure?` + params); };
+
+//export const editUser = params => { return axios.get(`${base}/user/updateUserInfo?` + params); };

@@ -1,6 +1,7 @@
 package com.hoolai.chatmonitor.provider.process.dao;
 
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgIllegalWord;
+
 import java.lang.Long;
 
 
