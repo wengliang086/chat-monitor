@@ -29,7 +29,7 @@ let routes = [
         path: '/',
         component: Home,
         name: '基础功能',
-        iconCls: 'el-icon-message',//图标样式class
+        iconCls: 'fa el-icon-message',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
             { path: '/game', component: Game, name: '游戏列表' },
