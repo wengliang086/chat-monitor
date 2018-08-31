@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 @Transactional
 public class AdminUserServiceImpl implements AdminUserService {
 
-
     @Resource
     private AdminUserDao adminUserDao;
 
@@ -33,32 +32,23 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     //根据uid获取用户信息
     @Override
-    public ReturnValue<AdminUser> loginByUdid(long uid) throws HException {
+    public AdminUser loginByUdid(long uid) throws HException {
         AdminUser loginInfo = adminUserDao.get(uid);
         if (loginInfo == null) {
-			throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
         }
-        return createLoginResult(loginInfo);
+        return loginInfo;
     }
 
     //根据账号、密码获取用户信息
     @Override
-    public ReturnValue<AdminUser> loginByAccount(String account, String password)
-            throws HException {
+    public AdminUser loginByAccount(String account, String password) throws HException {
         AdminUser loginInfo = adminUserDao.getByAccountAndPwd(account, encryPassword(password));
         if (loginInfo == null) {
-        	throw HExceptionBuilder.newBuilder(HExceptionEnum.LOGIN_FAILED).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.LOGIN_FAILED).build();
         }
-        return createLoginResult(loginInfo);
+        return loginInfo;
     }
-
-    //生成returnvalue
-    private ReturnValue<AdminUser> createLoginResult(AdminUser user) {
-        ReturnValue<AdminUser> returnVal = new ReturnValue<AdminUser>();
-        returnVal.setValue(user);
-        return returnVal;
-    }
-
 
     //密码加密
     private String encryPassword(String password) {
@@ -72,7 +62,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     //注册新用户信息
     @Override
-    public ReturnValue<AdminUser> register(AdminUser user) throws HException {
+    public AdminUser register(AdminUser user) throws HException {
         String account = user.getAccount();
         String password = user.getPassword();
         String email = user.getEmail();
@@ -81,7 +71,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         if (Strings.isNullOrEmpty(account)) {
             throw HExceptionBuilder.newBuilder(HExceptionEnum.ACCOUNT_IS_INVALID).build();
         }
-
         checkAccount(account);
         // 帐号可以输入邮箱格式，如果是邮箱格式帐号的话，两列都存
         if (isEmail(account) && Strings.isNullOrEmpty(email)) {
@@ -111,8 +100,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         registerInfo.setPhone(phone);
         registerInfo.setGroupId(groupId);
         adminUserDao.save(registerInfo);//新用户入库
-
-        return createLoginResult(registerInfo);
+        return registerInfo;
     }
 
     //判断账号是否合法
@@ -151,18 +139,18 @@ public class AdminUserServiceImpl implements AdminUserService {
     private void existGroup(Integer groupId) {
 
         if (groupId == null || groupId == 0) {
-        	 throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_ID_IS_NULL).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_ID_IS_NULL).build();
         }
 
         AdminGroup group = adminGropuDao.get(groupId);
         if (group == null) {
-        	throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_IEXIST).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_IEXIST).build();
         }
     }
 
     //修改用户信息
     @Override
-    public ReturnValue<AdminUser> updateLoginInfo(AdminUser user)
+    public AdminUser updateLoginInfo(AdminUser user)
             throws HException {
         Long uid = user.getUid();
         String password = user.getPassword();
@@ -171,7 +159,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         Integer groupId = user.getGroupId();
         AdminUser userInfo = adminUserDao.get(uid);
         if (userInfo == null) {
-        	throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.UID_NOT_FIND).build();
         }
 
         // 帐号可以输入邮箱格式，如果是邮箱格式帐号的话，两列都存
@@ -195,17 +183,17 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         adminUserDao.update(userInfo);//修改用户
 
-        return createLoginResult(userInfo);
+        return userInfo;
     }
 
     //用户列表
     @Override
-    public ReturnValue<List<Map<String, Object>>> selectUserMapList(
+    public List<Map<String, Object>> selectUserMapList(
             String account, String email, String phone, Integer groupId) {
         List<Map<String, Object>> list = adminUserDao.selectUserMapList(account, email, phone, groupId);
         ReturnValue<List<Map<String, Object>>> returnVal = new ReturnValue<List<Map<String, Object>>>();
         returnVal.setValue(list);
-        return returnVal;
+        return list;
     }
 
 }

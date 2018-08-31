@@ -1,6 +1,5 @@
 package com.hoolai.chatmonitor.open.controller;
 
-import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
@@ -39,7 +38,6 @@ public class AdminUserController {
         return new ModelAndView("user/login");
     }
 
-
     /**
      * 根据账号密码登录
      *
@@ -50,11 +48,10 @@ public class AdminUserController {
     @CrossOrigin
     @RequestMapping("loginByAccount")
     public UserLoginResponse loginByAccount(HttpServletRequest request, String account, String password) {
-        ReturnValue<AdminUser> returnVal = adminUserService.loginByAccount(account, password);
-        LoginContext.setAdminUser(request, returnVal.getValue());
-        return new UserLoginResponse(returnVal.getValue());
+        AdminUser adminUser = adminUserService.loginByAccount(account, password);
+        LoginContext.setAdminUser(request, adminUser);
+        return new UserLoginResponse(adminUser);
     }
-
 
     /*新增新用户
      *
@@ -67,10 +64,8 @@ public class AdminUserController {
      * */
     @PermissionAnnotation(PermissionType.PUBLIC)
     @GetMapping("register")
-    public ReturnValue<AdminUser> register(AdminUser user) {
-
-        ReturnValue<AdminUser> returnVal = adminUserService.register(user);
-        return returnVal;
+    public AdminUser register(AdminUser user) {
+        return adminUserService.register(user);
     }
 
 
@@ -84,15 +79,13 @@ public class AdminUserController {
      *
      * */
     @GetMapping("updateUserInfo")
-    public ReturnValue<AdminUser> updateUserInfo(HttpServletRequest request, AdminUser user) {
-
-        ReturnValue<AdminUser> returnVal = adminUserService.updateLoginInfo(user);
+    public AdminUser updateUserInfo(HttpServletRequest request, AdminUser user) {
+        AdminUser adminUser = adminUserService.updateLoginInfo(user);
         user = LoginContext.getLoginUser(request);
-        if (user != null && null != returnVal.getValue() && user.getUid() == returnVal.getValue().getUid()) {
-            LoginContext.setAdminUser(request, returnVal.getValue());//更新用户在缓存中的信息
+        if (user != null && null != adminUser && user.getUid() == adminUser.getUid()) {
+            LoginContext.setAdminUser(request, adminUser);//更新用户在缓存中的信息
         }
-
-        return returnVal;
+        return adminUser;
     }
 
     /**
@@ -104,16 +97,14 @@ public class AdminUserController {
      * @param phone   phone (可选)
      */
     @GetMapping("list")
-    public ReturnValue<List<Map<String, Object>>> list(HttpServletRequest request, Integer groupId, String account, String email, String phone) {
+    public List<Map<String, Object>> list(HttpServletRequest request, Integer groupId, String account, String email, String phone) {
 //        if ((groupId == null || groupId == 0)) {
 //            AdminUser user = LoginContext.getLoginUser(request);
 //            if (!user.getAccount().equals("admin")) {
 //                groupId = user.getGroupId();
 //            }
 //        }
-
-        ReturnValue<List<Map<String, Object>>> gameVal = adminUserService.selectUserMapList(account, email, phone, groupId);
-        return gameVal;
+        return adminUserService.selectUserMapList(account, email, phone, groupId);
     }
 
 }
