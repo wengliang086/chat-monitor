@@ -15,6 +15,7 @@ public enum HExceptionEnum implements ReturnCode {
     UID_ALREADY_FREEZED(4, "该用户已经被冻结"),
     TIME_TYPE_ERROR(5, "时间类型错误"),
     APP_ID_ERROR(6, "appid错误"),
+    PLEASE_LOGIN_FIRST(7, "请先登录！"),
 
     ACCOUNT_ALREDAY_EXIST("账户已经存在"),
     ACCOUNT_IS_INVALID("登陆账户必须只有字母、数字和下划线且必须以字母开头，不能以下划线结尾"),
@@ -41,17 +42,17 @@ public enum HExceptionEnum implements ReturnCode {
     NAME_ERROR("请输入姓名"),
     IDENTITY_CARD_ERROR("请输入正确的身份证号码！"),
     VALIDATE_CODE_OVERDUE("验证码已过期"),
-    
+
     //===============================
     GAME_IS_INVALID("游戏名称或者用户组不能为空"),
     GAME_ID_IS_NULL("游戏标识(gameId)不能为空"),
     GAME_NOT_IEXIST("游戏不存在"),
-    
+
     GROUP_ID_IS_NULL("用户组标识(Id)不能为空"),
     GROUP_NAME_IS_NULL("用户组名称不能为空"),
     GROUP_NOT_IEXIST("用户组不存在"),
     GROUP_NOT_GAME("您所在的用户组下没有被分配产品,请联系管理员"),
-    
+
     SUSPICIOUS_ID_IS_NULL("可疑信息标识不能为空"),
     SUSPICIOUS_NOT_EXIST("可疑信息不存在"),
     //===============================

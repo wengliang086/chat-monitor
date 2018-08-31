@@ -1,6 +1,5 @@
 package com.hoolai.chatmonitor.open.controller;
 
-import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
@@ -24,15 +23,13 @@ public class AdminGameController {
     private AdminGameService adminGameService;
 
     @GetMapping("add")
-    public ReturnValue<AdminGame> register(HttpServletRequest request, String name, Integer groupId) {
-        ReturnValue<AdminGame> returnVal = adminGameService.add(name, groupId);
-        return returnVal;
+    public AdminGame register(HttpServletRequest request, String name, Integer groupId) {
+        return adminGameService.add(name, groupId);
     }
 
     @GetMapping("update")
-    public ReturnValue<AdminGame> updateUserInfo(HttpServletRequest request, Long gameId, String name, Integer groupId) {
-        ReturnValue<AdminGame> returnVal = adminGameService.update(gameId, name, groupId);
-        return returnVal;
+    public AdminGame updateUserInfo(HttpServletRequest request, Long gameId, String name, Integer groupId) {
+        return adminGameService.update(gameId, name, groupId);
     }
 
     /**
@@ -41,14 +38,13 @@ public class AdminGameController {
      * @param name gameName (可选)
      */
     @GetMapping("list")
-    public ReturnValue<List<AdminGame>> list(HttpServletRequest request, String name) {
+    public List<AdminGame> list(HttpServletRequest request, String name) {
         AdminUser user = LoginContext.getLoginUser(request);
         int groupId = 0;
         if (user != null) {
             groupId = user.getGroupId();
         }
-        ReturnValue<List<AdminGame>> gameVal = adminGameService.get(null, name, groupId);
-        return gameVal;
+        return adminGameService.get(null, name, groupId);
     }
 
 }

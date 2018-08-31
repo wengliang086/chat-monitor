@@ -27,7 +27,7 @@ public class AdminGameServiceImpl implements AdminGameService{
 	private AdminGroupDao adminGropuDao;
 
 	@Override
-	public ReturnValue<AdminGame> add(String gameName,Integer groupId) throws HException {
+	public AdminGame add(String gameName,Integer groupId) throws HException {
 		if(Strings.isNullOrEmpty(gameName)){
 			throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_IS_INVALID).build();
 		}
@@ -37,13 +37,11 @@ public class AdminGameServiceImpl implements AdminGameService{
 		game.setGameName(gameName);
 		game.setGroupId(groupId);
 		adminGameDao.save(game);
-		return createLoginResult(game);
+		return game;
 	}
 
 	@Override
-	public ReturnValue<AdminGame> update(Long gameId,String gameName,Integer groupId) throws HException {
-		
-		
+	public AdminGame update(Long gameId,String gameName,Integer groupId) throws HException {
 		if(gameId==null || gameId==0){
 			throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_ID_IS_NULL).build();
 		}
@@ -63,7 +61,7 @@ public class AdminGameServiceImpl implements AdminGameService{
 		
 		adminGameDao.update(game);
 		
-		return createLoginResult(game);
+		return game;
 	}
 	
 	private void existGroup(Integer groupId){
@@ -77,29 +75,16 @@ public class AdminGameServiceImpl implements AdminGameService{
 			throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_IEXIST).build();
 		}
 	}
-	
-	
-	//生成returnvalue
-	private ReturnValue<AdminGame> createLoginResult(AdminGame game) {
-		ReturnValue<AdminGame> returnVal=new ReturnValue<AdminGame>();
-		returnVal.setValue(game);
-		return returnVal;
-	}
 
 	@Override
-	public ReturnValue<List<AdminGame>> get(Long gameId,String gameName,Integer groupId)
+	public List<AdminGame> get(Long gameId,String gameName,Integer groupId)
 			throws HException {
 		
 		AdminGame property=new AdminGame();
 		property.setGameId(gameId);
 		property.setGameName(gameName);
 		property.setGroupId(groupId);
-		
-		List<AdminGame> list=adminGameDao.get(property);
-		ReturnValue<List<AdminGame>> returnVal=new ReturnValue<List<AdminGame>>();
-		returnVal.setValue(list);
-		return returnVal;
+		return adminGameDao.get(property);
 	}
-	
 
 }

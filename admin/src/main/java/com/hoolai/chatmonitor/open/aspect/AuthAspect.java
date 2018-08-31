@@ -1,6 +1,6 @@
 package com.hoolai.chatmonitor.open.aspect;
 
-import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
+import com.alibaba.fastjson.JSON;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
@@ -22,13 +22,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Aspect
 @Component
 public class AuthAspect {
 
     private final Logger logger = LoggerFactory.getLogger(AuthAspect.class);
-    private ConcurrentHashSet<String> concurrentHashSet = new ConcurrentHashSet<>();
+    private ConcurrentHashMap<Long, String> concurrentHashSet = new ConcurrentHashMap<>();
 
     //    @Pointcut("@annotation(com.hoolai.chatmonitor.open.auth.PermissionAnnotation)")
     @Pointcut("execution(public * com.hoolai.chatmonitor.open.controller.*.*(..))")
@@ -50,10 +51,10 @@ public class AuthAspect {
 
     private void ddd(JoinPoint joinPoint, PermissionAnnotation annotation) {
         if (annotation.value() == PermissionType.LOGINED) {
-            logger.info("=======>>LOGINED");
-            doLoginCheck(joinPoint);
+//            logger.info("=======>>LOGINED");
+//            doLoginCheck(joinPoint);
         } else {
-            logger.info("=======>>PUBLIC");
+//            logger.info("=======>>PUBLIC");
         }
     }
 
@@ -64,9 +65,11 @@ public class AuthAspect {
         if (signature.getMethod().getName().equals("loginByAccount")) {
             ReturnValue<UserLoginResponse> rv = (ReturnValue<UserLoginResponse>) proceed;
             String accessToken = rv.getValue().getAccessToken();
-            concurrentHashSet.add(accessToken);
+            Long uid = rv.getValue().getUid();
+            concurrentHashSet.put(uid, accessToken);
+            logger.debug(JSON.toJSONString(concurrentHashSet));
         }
-        return proceed;
+        return JSON.toJSONString(new ReturnValue<>(proceed));
     }
 
     private void doLoginCheck(JoinPoint joinPoint) {
@@ -77,7 +80,7 @@ public class AuthAspect {
             accessToken = request.getParameter("accessToken");
         }
         if (!concurrentHashSet.contains(accessToken)) {
-            throw HException.HExceptionBuilder.newBuilder(HExceptionEnum.LOGIN_INFO_NOT_FOUND).build();
+            throw HException.HExceptionBuilder.newBuilder(HExceptionEnum.PLEASE_LOGIN_FIRST).build();
         }
     }
 }

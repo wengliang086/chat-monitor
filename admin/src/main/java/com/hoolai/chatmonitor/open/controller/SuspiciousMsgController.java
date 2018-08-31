@@ -65,21 +65,18 @@ public class SuspiciousMsgController {
 		
 		if(!user.getAccount().equals("admin")){//普通操作用户只能看自己组下的game
 		
-			ReturnValue<List<AdminGame>> gameVal=adminGameService.get(null,null,user.getGroupId());//根据当前用户的groupId获取gameId
+			List<AdminGame> gameList =adminGameService.get(null,null,user.getGroupId());//根据当前用户的groupId获取gameId
 			
-			if(null!=gameVal.getValue()){
+			if(null!=gameList){
 				
-				if(gameVal.getValue().size()==1){
-					gameId=gameVal.getValue().get(0).getGameId();
-					
+				if(gameList.size()==1){
+					gameId=gameList.get(0).getGameId();
 				}else{
-					
 					gameIds=new ArrayList<Long>();
-					for(AdminGame temp : gameVal.getValue()) {
+					for(AdminGame temp : gameList) {
 						gameIds.add(temp.getGameId());
 					}
 				}
-			
 			}else{
 	        	throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_GAME).build();
 			}

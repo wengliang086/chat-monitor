@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '../main'
 
 axios.defaults.timeout = 5000
 // axios.defaults.baseURL = '/api/admin'
@@ -19,8 +20,8 @@ axios.interceptors.response.use(response => {
     var code = response.data.code;
     if (code === 1) {
         return response.data.value;
-    } else if (code === 111) {
-        // 401 清除token信息并跳转到登录页面
+    } else if (code === 7) {
+        // 7 清除token信息并跳转到登录页面
         sessionStorage.removeItem('user');
         // 只有在当前路由不是登录页面才跳转
         if (router.currentRoute.path !== 'login') {

@@ -56,7 +56,7 @@
 
 			
 			<el-table-column label="操作" width="180">
-				<template  scope="scope" >
+				<template slot-scope="scope" >
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row,1)" v-if="Object.assign({},scope.row).status==null">审核</el-button>
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row,0)" v-else>查看</el-button>
 				</template>
