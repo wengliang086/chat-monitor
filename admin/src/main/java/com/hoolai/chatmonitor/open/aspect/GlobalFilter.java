@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Order(0)
-//@Component
+@Component
 @WebFilter(filterName = "", urlPatterns = "/*")
 public class GlobalFilter implements Filter {
 
@@ -31,7 +31,9 @@ public class GlobalFilter implements Filter {
         } catch (JSONException e) {
             parse = responseContent;
         }
-        servletResponse.getOutputStream().write(JSON.toJSONString(new ReturnValue<>(parse)).getBytes());
+        String jsonString = JSON.toJSONString(new ReturnValue<>(parse));
+        servletResponse.setContentLength(-1);
+        servletResponse.getOutputStream().write(jsonString.getBytes());
     }
 
     @Override
