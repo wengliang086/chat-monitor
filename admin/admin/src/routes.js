@@ -36,7 +36,8 @@ let routes = [
             { path: '/group', component: Group, name: '用户组列表' },
             { path: '/user', component: User, name: '用户列表' },
             { path: '/suspicious', component: Suspicious, name: '可疑信息' },
-        ]
+        ],
+        redirect: { path: "/game" }
     },
     // {
     //     path: '/',

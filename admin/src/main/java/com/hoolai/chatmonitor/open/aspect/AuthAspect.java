@@ -1,10 +1,15 @@
 package com.hoolai.chatmonitor.open.aspect;
 
+import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
+import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
+import com.hoolai.chatmonitor.open.model.UserLoginResponse;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -23,6 +28,7 @@ import java.lang.reflect.Method;
 public class AuthAspect {
 
     private final Logger logger = LoggerFactory.getLogger(AuthAspect.class);
+    private ConcurrentHashSet<String> concurrentHashSet = new ConcurrentHashSet<>();
 
     //    @Pointcut("@annotation(com.hoolai.chatmonitor.open.auth.PermissionAnnotation)")
     @Pointcut("execution(public * com.hoolai.chatmonitor.open.controller.*.*(..))")
@@ -51,6 +57,18 @@ public class AuthAspect {
         }
     }
 
+    @Around("loginCheck()")
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
+        Object proceed = proceedingJoinPoint.proceed();
+        if (signature.getMethod().getName().equals("loginByAccount")) {
+            ReturnValue<UserLoginResponse> rv = (ReturnValue<UserLoginResponse>) proceed;
+            String accessToken = rv.getValue().getAccessToken();
+            concurrentHashSet.add(accessToken);
+        }
+        return proceed;
+    }
+
     private void doLoginCheck(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
@@ -58,7 +76,7 @@ public class AuthAspect {
         if (accessToken == null) {
             accessToken = request.getParameter("accessToken");
         }
-        if (!"myMockSession".equals(accessToken)) {
+        if (!concurrentHashSet.contains(accessToken)) {
             throw HException.HExceptionBuilder.newBuilder(HExceptionEnum.LOGIN_INFO_NOT_FOUND).build();
         }
     }

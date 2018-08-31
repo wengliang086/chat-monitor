@@ -4,7 +4,11 @@ axios.defaults.timeout = 5000
 // axios.defaults.baseURL = '/api/admin'
 
 axios.interceptors.request.use(requestConfig => {
-    requestConfig.headers.accessToken = sessionStorage.getItem('accessTokenKey');
+    var user = sessionStorage.getItem('user');
+    if (user) {
+        user = JSON.parse(user);
+        requestConfig.headers.accessToken = user.accessToken;
+    }
     return requestConfig;
 }, err => {
     Promise.reject(err)
@@ -17,7 +21,7 @@ axios.interceptors.response.use(response => {
         return response.data.value;
     } else if (code === 111) {
         // 401 清除token信息并跳转到登录页面
-        sessionStorage.removeItem('accessTokenKey');
+        sessionStorage.removeItem('user');
         // 只有在当前路由不是登录页面才跳转
         if (router.currentRoute.path !== 'login') {
             // router.push({
@@ -32,7 +36,7 @@ axios.interceptors.response.use(response => {
     }
     return response;
 }, err => {
-    // console.log(err);
+    console.log(err);
     // let returnValue = JSON.parse(JSON.stringify(err.response.data));
     // console.log(returnValue);
     // return Promise.reject(returnValue.msg);

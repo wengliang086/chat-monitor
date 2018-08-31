@@ -17,6 +17,7 @@
 
 <script>
 import { requestLogin, requestLoginPost, requestLoginPost2 } from "../api/api";
+import sstore from '../vuex/simpleStore'
 //import NProgress from 'nprogress'
 export default {
   data() {
@@ -27,12 +28,8 @@ export default {
         checkPass: "111111"
       },
       rules2: {
-        account: [
-          { required: true, message: "请输入账号", trigger: "blur" }
-        ],
-        checkPass: [
-          { required: true, message: "请输入密码", trigger: "blur" }
-        ]
+        account: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        checkPass: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       checked: true
     };
@@ -57,9 +54,8 @@ export default {
             .then(value => {
               this.logining = false;
               // NProgress.done();
-              console.info(value);
+              // console.info(value);
               // let { msg, code, value } = data;
-              sessionStorage.setItem("accessTokenKey", "myMockSession");
               sessionStorage.setItem("user", JSON.stringify(value));
               this.$router.push({ path: "/game" });
             })
@@ -77,6 +73,13 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    // console.log(sstore.state);
+    // sstore.setTokenAction("addd111")
+    // console.log(sstore.state);
+    // sstore.clearTokenAction()
+    // console.log(sstore.state);
   }
 };
 </script>

@@ -151,9 +151,8 @@
 				this.listLoading = true;
 				//NProgress.start();
 				getSuspiciousList(para).then((res) => {
-					 console.info(res.data.value)
-					this.total =res.data.value==null?0:res.data.value.length;
-					this.suspiciousData = res.data.value;
+					this.total =res==null?0:res.length;
+					this.suspiciousData = res;
 					this.listLoading = false;
 					//NProgress.done();
 				});
@@ -214,7 +213,7 @@
 			getGameListPage:function(){//获取当前用户所在用户组下的所有游戏
 				this.listLoading = true;
 				getGameListPage().then((res) => {				
-					this.gameList=res.data.value;
+					this.gameList=res;
 					this.listLoading = false;
 				});
 			},
