@@ -22,13 +22,8 @@ public class AdminGroupController {
     private AdminGroupService adminGroupService;
 
     @GetMapping("list")
-    public ReturnValue<List<AdminGroup>> list(String name) {
-        List<AdminGroup> list = adminGroupService.list(name);
-
-        ReturnValue<List<AdminGroup>> returnVal = new ReturnValue<List<AdminGroup>>();
-        returnVal.setValue(list);
-
-        return returnVal;
+    public List<AdminGroup> list(String name) {
+        return adminGroupService.list(name);
     }
 
     @GetMapping("add")//新增组
