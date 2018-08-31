@@ -1,21 +1,22 @@
 package com.hoolai.chatmonitor.open.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
+ 
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+ 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hoolai.chatmonitor.common.returnvalue.DefaultReturnCode;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
@@ -29,12 +30,12 @@ import com.hoolai.chatmonitor.open.service.AdminGroupService;
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
 import com.hoolai.chatmonitor.provider.process.service.CheckService;
 import com.hoolai.chatmonitor.provider.user.service.UserService;
-
+ 
 @PermissionAnnotation(PermissionType.LOGINED)
 @RestController
 @RequestMapping("suspicious")
 public class SuspiciousMsgController {
-
+ 
 	@Resource
 	private AdminGameService adminGameService;
 	
@@ -58,7 +59,7 @@ public class SuspiciousMsgController {
 	 * */
 	@GetMapping("list")
 	public ReturnValue<List<MsgSuspicious>> list(HttpServletRequest request,Long uid,String msg,Long gameId) {
-
+ 
 		AdminUser user=LoginContext.getLoginUser(request);//获取当前用户
 		
 		List<Long> gameIds=null;//考虑多个game分配到同一用户组下
@@ -99,13 +100,13 @@ public class SuspiciousMsgController {
 	 * */
 	@GetMapping("listDetail")
 	public ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> listDetail(HttpServletRequest request,String account,String gameName,Byte status,Integer gameId,Integer groupId,String msg) {
-
+ 
 		/*AdminUser user=LoginContext.getLoginUser(request);//获取当前用户		
 		
 		if(!user.getAccount().equals("admin")){//普通操作用户只能看自己组下的game的可疑信息
 			groupId=user.getGroupId();
 		}*/
-
+ 
 		ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal=checkService.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);		
 		return returnVal;
 	 }
@@ -120,7 +121,7 @@ public class SuspiciousMsgController {
 	 * */
 	@GetMapping("msgSure")
 	public ReturnValue<MsgSuspicious> update(HttpServletRequest request,Long suspiciousId,String illegalWords) {
-
+ 
 		AdminUser user=LoginContext.getLoginUser(request);//获取当前用户
 		
 		if(user==null){//temp for test

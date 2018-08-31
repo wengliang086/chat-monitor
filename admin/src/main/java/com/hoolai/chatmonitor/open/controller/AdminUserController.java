@@ -49,10 +49,10 @@ public class AdminUserController {
     @PermissionAnnotation(PermissionType.PUBLIC)
     @CrossOrigin
     @RequestMapping("loginByAccount")
-    public ReturnValue<UserLoginResponse> loginByAccount(HttpServletRequest request, String account, String password) {
+    public UserLoginResponse loginByAccount(HttpServletRequest request, String account, String password) {
         ReturnValue<AdminUser> returnVal = adminUserService.loginByAccount(account, password);
         LoginContext.setAdminUser(request, returnVal.getValue());
-        return new ReturnValue<>(new UserLoginResponse(returnVal.getValue()));
+        return new UserLoginResponse(returnVal.getValue());
     }
 
 
