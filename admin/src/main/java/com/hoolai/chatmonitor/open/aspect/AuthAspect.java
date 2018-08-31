@@ -63,19 +63,17 @@ public class AuthAspect {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Object proceed = proceedingJoinPoint.proceed();
         if (signature.getMethod().getName().equals("loginByAccount")) {
-            
-        	//ReturnValue<UserLoginResponse> rv = (ReturnValue<UserLoginResponse>) proceed;        	
+
+        	//ReturnValue<UserLoginResponse> rv = (ReturnValue<UserLoginResponse>) proceed;
         	//String accessToken = rv.getValue().getAccessToken();
             //Long uid = rv.getValue().getUid();
-        	
+
         	UserLoginResponse temp=((UserLoginResponse)proceed);
         	Long uid = temp.getUid();
             concurrentHashSet.put(uid, temp.getAccessToken());
             logger.debug(JSON.toJSONString(concurrentHashSet));
         }
-        
         return proceed;
-      //return JSON.toJSONString(new ReturnValue<>(proceed));
     }
 
     private void doLoginCheck(JoinPoint joinPoint) {
