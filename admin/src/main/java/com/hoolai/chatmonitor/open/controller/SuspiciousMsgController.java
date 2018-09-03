@@ -3,11 +3,13 @@ package com.hoolai.chatmonitor.open.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
+import com.hoolai.chatmonitor.open.aspect.AuthAspect;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.model.UserLoginResponse;
 import com.hoolai.chatmonitor.open.service.AdminGameService;
 import com.hoolai.chatmonitor.open.service.AdminGroupService;
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
@@ -48,8 +50,7 @@ public class SuspiciousMsgController {
      */
     @GetMapping("list")
     public List<MsgSuspicious> list(HttpServletRequest request, Long uid, String msg, Long gameId) {
-        AdminUser user = LoginContext.getLoginUser(request);//获取当前用户
-
+        UserLoginResponse user = AuthAspect.get(request);;//获取当前用户
 
         List<Long> gameIds = null;//考虑多个game分配到同一用户组下
 
@@ -88,8 +89,8 @@ public class SuspiciousMsgController {
      */
     @GetMapping("listDetail")
     public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> listDetail(HttpServletRequest request, String account, String gameName, Byte status, Integer gameId, Integer groupId, String msg) {
-		
-    	AdminUser user=LoginContext.getLoginUser(request);//获取当前用户		
+
+        UserLoginResponse user = AuthAspect.get(request);//获取当前用户
 		
 		if(!user.getAccount().equals("admin")){//普通操作用户只能看自己组下的game的可疑信息
 			groupId=user.getGroupId();
@@ -106,18 +107,11 @@ public class SuspiciousMsgController {
      */
     @GetMapping("msgSure")
     public MsgSuspicious update(HttpServletRequest request, Long suspiciousId, String illegalWords) {
-        AdminUser user = LoginContext.getLoginUser(request);//获取当前用户
-
-        if (user == null) {//temp for test
-            user = new AdminUser();
-            user.setUid(1000l);
-        }
-
+        UserLoginResponse user = AuthAspect.get(request);//获取当前用户
         MsgSuspicious updateVal = checkService.msgSure(suspiciousId, illegalWords, user.getUid());
         if (updateVal.getStatus() == -1) {
             userService.freeze(updateVal.getUid());//冻结用户
         }
-
         return updateVal;
     }
 }

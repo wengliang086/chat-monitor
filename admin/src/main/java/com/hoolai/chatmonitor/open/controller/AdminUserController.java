@@ -1,6 +1,5 @@
 package com.hoolai.chatmonitor.open.controller;
 
-import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
@@ -28,13 +27,6 @@ public class AdminUserController {
     @PermissionAnnotation(PermissionType.PUBLIC)
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request) {
-        AdminUser loginUser = LoginContext.getLoginUser(request);
-        if (loginUser != null) {
-            String url = "main";
-            ModelAndView model = new ModelAndView(url);
-            model.addObject("loginUser", loginUser);
-            return model;
-        }
         return new ModelAndView("user/login");
     }
 
@@ -49,7 +41,6 @@ public class AdminUserController {
     @RequestMapping("loginByAccount")
     public UserLoginResponse loginByAccount(HttpServletRequest request, String account, String password) {
         AdminUser adminUser = adminUserService.loginByAccount(account, password);
-        LoginContext.setAdminUser(request, adminUser);
         return new UserLoginResponse(adminUser);
     }
 
@@ -81,10 +72,6 @@ public class AdminUserController {
     @GetMapping("updateUserInfo")
     public AdminUser updateUserInfo(HttpServletRequest request, AdminUser user) {
         AdminUser adminUser = adminUserService.updateLoginInfo(user);
-        user = LoginContext.getLoginUser(request);
-        if (user != null && null != adminUser && user.getUid() == adminUser.getUid()) {
-            LoginContext.setAdminUser(request, adminUser);//更新用户在缓存中的信息
-        }
         return adminUser;
     }
 

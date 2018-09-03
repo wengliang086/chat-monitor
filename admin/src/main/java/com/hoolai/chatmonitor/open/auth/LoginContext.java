@@ -11,7 +11,7 @@ import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 
 
 public class LoginContext {
-    
+    /*
     public final static String SESSION_NAME = "login_user";
     private static Map<String, Long> token_client = new HashMap<String, Long>();
     
@@ -53,5 +53,5 @@ public class LoginContext {
     	String token = request.getParameter("token");
     	if(token_client.containsKey(token))
     		token_client.remove(token);
-    }
+    }*/
 }

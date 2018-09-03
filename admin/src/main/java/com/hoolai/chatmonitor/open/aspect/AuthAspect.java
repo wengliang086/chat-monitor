@@ -1,6 +1,5 @@
 package com.hoolai.chatmonitor.open.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
@@ -27,10 +26,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AuthAspect {
 
+    public static final String ACCESS_TOKEN = "accessToken";
     private final Logger logger = LoggerFactory.getLogger(AuthAspect.class);
-    private ConcurrentHashMap<Long, String> concurrentHashSet = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, UserLoginResponse> concurrentHashSet = new ConcurrentHashMap<>();
 
-    //    @Pointcut("@annotation(com.hoolai.chatmonitor.open.auth.PermissionAnnotation)")
+    public static UserLoginResponse get(HttpServletRequest request) {
+        return concurrentHashSet.get(request.getHeader(ACCESS_TOKEN));
+    }
+
     @Pointcut("execution(public * com.hoolai.chatmonitor.open.controller.*.*(..))")
     public void loginCheck() {
     }
@@ -51,9 +54,7 @@ public class AuthAspect {
     private void ddd(JoinPoint joinPoint, PermissionAnnotation annotation) {
         if (annotation.value() == PermissionType.LOGINED) {
 //            logger.info("=======>>LOGINED");
-//            doLoginCheck(joinPoint);
-        } else {
-//            logger.info("=======>>PUBLIC");
+            doLoginCheck(joinPoint);
         }
     }
 
@@ -63,15 +64,9 @@ public class AuthAspect {
         Object proceed = proceedingJoinPoint.proceed();
 
         if (signature.getMethod().getName().equals("loginByAccount")) {
-
-            //ReturnValue<UserLoginResponse> rv = (ReturnValue<UserLoginResponse>) proceed;
-            //String accessToken = rv.getValue().getAccessToken();
-            //Long uid = rv.getValue().getUid();
-
-            UserLoginResponse temp = ((UserLoginResponse) proceed);
-            Long uid = temp.getUid();
-            concurrentHashSet.put(uid, temp.getAccessToken());
-            logger.debug(JSON.toJSONString(concurrentHashSet));
+            UserLoginResponse user = (UserLoginResponse) proceed;
+            concurrentHashSet.put(user.getAccessToken(), user);
+//            logger.debug(JSON.toJSONString(concurrentHashSet));
         }
         return proceed;
     }
@@ -79,11 +74,11 @@ public class AuthAspect {
     private void doLoginCheck(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        String accessToken = request.getHeader("accessToken");
+        String accessToken = request.getHeader(ACCESS_TOKEN);
         if (accessToken == null) {
-            accessToken = request.getParameter("accessToken");
+            accessToken = request.getParameter(ACCESS_TOKEN);
         }
-        if (!concurrentHashSet.contains(accessToken)) {
+        if (concurrentHashSet.get(accessToken) == null) {
             throw HException.HExceptionBuilder.newBuilder(HExceptionEnum.PLEASE_LOGIN_FIRST).build();
         }
     }

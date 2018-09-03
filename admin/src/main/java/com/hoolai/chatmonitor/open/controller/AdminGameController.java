@@ -1,11 +1,13 @@
 package com.hoolai.chatmonitor.open.controller;
 
+import com.hoolai.chatmonitor.open.aspect.AuthAspect;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.log.OperateLog;
+import com.hoolai.chatmonitor.open.model.UserLoginResponse;
 import com.hoolai.chatmonitor.open.service.AdminGameService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +44,8 @@ public class AdminGameController {
      */
     @GetMapping("list")
     public List<AdminGame> list(HttpServletRequest request, String name) {
-        AdminUser user = LoginContext.getLoginUser(request);
-        int groupId = 0;
+        UserLoginResponse user = AuthAspect.get(request);
+        Integer groupId = 0;
         if (user != null) {
             groupId = user.getGroupId();
         }
