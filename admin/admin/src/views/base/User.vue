@@ -50,12 +50,29 @@
 
 	<!--编辑界面-->
 	<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-		<el-form :model="editForm" label-width="96px" :rules="editFormRules" ref="editForm">
-			<el-form-item label="用户组名称" prop="userName">
-				<el-input v-model="editForm.userName" auto-complete="off"></el-input>
+		<el-form :inline="true" :model="editForm" label-width="96px" :rules="editFormRules" ref="editForm">
+			<el-form-item label="用户名称" prop="account">
+				<el-input v-model="editForm.account" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="描述">
-				<el-input type="textarea" v-model="editForm.addr"></el-input>
+			<el-form-item label="手机号码" prop="phone">
+				<el-input v-model="editForm.phone" auto-complete="off"></el-input>
+			</el-form-item>
+			<el-form-item label="邮箱地址" prop="email">
+				<el-input v-model="editForm.email" auto-complete="off"></el-input>
+			</el-form-item>
+			<el-form-item label="密码" prop="pwd1">
+				<el-input type="password" v-model="editForm.pwd1" auto-complete="off"></el-input>
+			</el-form-item>
+			<el-form-item label="密码确认" prop="pwd2">
+				<el-input type="password" v-model="editForm.pwd2" auto-complete="off"></el-input>
+			</el-form-item>
+			<el-form-item label="是否管理员">
+				<el-switch v-model="editForm.admin"></el-switch>
+			</el-form-item>
+			<el-form-item label="所属用户组">
+				<el-select v-model="editForm.selected" placeholder="请选择用户组">
+					<el-option v-for="(item, index) in editForm.groupArr" :label="item.group_name" :value="item.group_id" :key="index"></el-option>
+				</el-select>
 			</el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
@@ -172,10 +189,28 @@ export default {
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormRules: {
-        account: [{ required: true, message: "请输用户名", trigger: "blur" }]
+        account: [
+          { required: true, message: "请输用户名", trigger: "blur" },
+          { min: 6, max: 20, message: "长度6到20" }
+        ],
+        phone: [
+          { required: true, message: "请输入手机号码", trigger: "blur" },
+          { pattern: /^1[34578]\d{9}$/, message: "请输入正确的手机号" }
+        ],
+        email: [
+          {
+            pattern: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
+            message: "请输入正确的邮箱地址"
+          }
+        ]
       },
       editForm: {
-        account: ""
+        account: "",
+        admin: false,
+        groupArr: [],
+        pwd1: "",
+        pwd2: "",
+        selected: null
       }
     };
   },
@@ -216,6 +251,17 @@ export default {
     showEditUserDialog(index, row) {
       this.editFormVisible = true;
       this.editForm = Object.assign({}, row);
+      this.editForm.groupArr = this.addForm.groupArr;
+      // 小面两种写法，第一种是错误的，这里必须使用$set()赋值
+      // this.editForm.selected = this.editForm.group_id;
+      this.$set(this.editForm, "selected", this.editForm.group_id);
+      if (!this.editForm.group_id) {
+        // this.editForm.admin = true;
+        this.$set(this.editForm, "admin", true);
+      } else {
+        // this.editForm.admin = false;
+        this.$set(this.editForm, "admin", false);
+      }
     },
     //显示新增界面
     showAddUserDialog() {

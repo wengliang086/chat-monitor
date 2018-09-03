@@ -5,6 +5,7 @@ import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.log.OperateLog;
 import com.hoolai.chatmonitor.open.service.AdminGameService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,13 @@ public class AdminGameController {
     @Resource
     private AdminGameService adminGameService;
 
+    @OperateLog(value = "创建游戏", pKey = "gameId")
     @GetMapping("add")
     public AdminGame register(HttpServletRequest request, String name, Integer groupId) {
         return adminGameService.add(name, groupId);
     }
 
+    @OperateLog(value = "修改游戏", pKey = "gameId")
     @GetMapping("update")
     public AdminGame updateUserInfo(HttpServletRequest request, Long gameId, String name, Integer groupId) {
         return adminGameService.update(gameId, name, groupId);

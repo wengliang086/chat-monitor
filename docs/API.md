@@ -3,6 +3,10 @@
 ## 1、接口地址
 * http://x.x.x.x:8080/chat/
 
+```
+http://localhost:8081/chat?gameUid=2000&msg=aqwe%E9%9D%9E%E6%B3%95&gameId=1
+```
+
 ## 2、请求方式
 * GET
 
@@ -18,11 +22,13 @@
 
 * 示例：
 
-```
+```json
 // 成功
 {"code":1,"group":"hException","msg":"成功","value":"ok"}
+```
+```json
 // 失败
-{"group":"hException","code":3,"msg":"存在敏感词汇","value":null
+{"group":"hException","code":3,"msg":"存在敏感词汇","value":null}
 ```
 
 ## 5、错误码

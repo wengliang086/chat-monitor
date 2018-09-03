@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.assertj.core.util.Strings;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
