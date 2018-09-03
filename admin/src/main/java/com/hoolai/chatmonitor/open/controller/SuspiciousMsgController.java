@@ -4,23 +4,24 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.aspect.AuthAspect;
-import com.hoolai.chatmonitor.open.auth.LoginContext;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGame;
-import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.log.OperateLog;
 import com.hoolai.chatmonitor.open.model.UserLoginResponse;
 import com.hoolai.chatmonitor.open.service.AdminGameService;
 import com.hoolai.chatmonitor.open.service.AdminGroupService;
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.vo.MsgSuspicious;
 import com.hoolai.chatmonitor.provider.process.service.CheckService;
 import com.hoolai.chatmonitor.provider.user.service.UserService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,6 +106,7 @@ public class SuspiciousMsgController {
      * @param suspiciousId 可疑信息的标识(必填)
      * @param illegalWords 审核员审核可疑信息违规的依据关键词(可选)
      */
+    @OperateLog(value = "审核可疑信息", pKey = "suspiciousId")
     @GetMapping("msgSure")
     public MsgSuspicious update(HttpServletRequest request, Long suspiciousId, String illegalWords) {
         UserLoginResponse user = AuthAspect.get(request);//获取当前用户

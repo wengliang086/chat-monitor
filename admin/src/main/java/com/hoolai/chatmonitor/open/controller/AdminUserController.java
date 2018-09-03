@@ -3,8 +3,10 @@ package com.hoolai.chatmonitor.open.controller;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
+import com.hoolai.chatmonitor.open.log.OperateLog;
 import com.hoolai.chatmonitor.open.model.UserLoginResponse;
 import com.hoolai.chatmonitor.open.service.AdminUserService;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +56,7 @@ public class AdminUserController {
      * @param groupId 用户组(必填)
      *
      * */
+    @OperateLog(value = "用户新增")
     @PermissionAnnotation(PermissionType.PUBLIC)
     @GetMapping("register")
     public AdminUser register(AdminUser user) {
@@ -69,6 +73,7 @@ public class AdminUserController {
      * @param groupId 用户组(可选)
      *
      * */
+    @OperateLog(value = "用户信息更新", pKey = "uid")
     @GetMapping("updateUserInfo")
     public AdminUser updateUserInfo(HttpServletRequest request, AdminUser user) {
         AdminUser adminUser = adminUserService.updateLoginInfo(user);
