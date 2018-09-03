@@ -1,6 +1,5 @@
 package com.hoolai.chatmonitor.open.controller;
 
-import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
