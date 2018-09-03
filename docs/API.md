@@ -8,15 +8,28 @@
 
 ## 3、请求参数
 
-| 参数名称 | 类型 | 说明
-| ------------ | ------------ |
-| mobile | String | 手机号码
-| productId | Integer | 产品ID
-| accessToken | String | 使用MD5加密 productId+"."+requestTime+"."+productKey 返回十六进制32位小写字符串
-| requestTime | Long | 发出请求时的时间，单位毫秒。当服务器接受请求时，requestTime应该在当前时间的前五分钟之内， 否则请求失效。
+| 参数名称 | 类型 | 说明 |
+| ----- | ----- | ----- |
+| gameId | Long | 游戏ID |
+| gameUid | String | 游戏用户ID |
+| msg | String | 聊天内容 |
 
 ## 4、返回值
 
+* 示例：
+
+```
+// 成功
+{"code":1,"group":"hException","msg":"成功","value":"ok"}
+// 失败
+{"group":"hException","code":3,"msg":"存在敏感词汇","value":null
+```
 
 ## 5、错误码
 
+| code  | 说明 |
+| :-----:  | ----- |
+| 1  | 聊天内容合法 |
+| 2  | UID 不存在 |
+| 3  | 存在敏感词汇 |
+| 4  | 该用户已经被冻结 |

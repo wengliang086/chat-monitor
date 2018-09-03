@@ -2,10 +2,10 @@ package com.hoolai.chatmonitor.open.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,11 +25,18 @@ public class DefinedResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
 
-    	if(body instanceof String){
-    		return JSON.toJSONString(new ReturnValue<>(body));
-    	}
-    	
-        //System.out.println("body==="+body);
+        if (body == null || body instanceof ReturnValue) {
+            return body;
+        }
+
+        if (selectedConverterType.equals(StringHttpMessageConverter.class)) {
+            System.out.println(body + " " + returnType);
+        }
+
+        if (body instanceof String) {
+            return JSON.toJSONString(new ReturnValue<>(body));
+        }
+
         return new ReturnValue<>(body);
     }
 }

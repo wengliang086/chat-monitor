@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Order(0)
-@Component
+//@Component
 @WebFilter(filterName = "", urlPatterns = "/*")
 public class GlobalFilter implements Filter {
 
