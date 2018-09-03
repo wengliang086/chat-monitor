@@ -1,7 +1,6 @@
 package com.hoolai.chatmonitor.provider.process.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
@@ -65,24 +64,20 @@ public class CheckServiceImpl implements CheckService {
 
 	//可疑信息列表
 	@Override
-	public ReturnValue<List<MsgSuspicious>> list(Long uid, long gameId,
+	public List<MsgSuspicious> list(Long uid, long gameId,
 			String msg, List<Long> gameIds) throws HException {
 		
 		MsgSuspicious property=new MsgSuspicious();
     	property.setUid(uid);
     	property.setGameId(gameId);
     	property.setMsg(msg);
-    	List<MsgSuspicious> list=msgSuspiciousDao.list(property,gameIds); 
-    	
-    	ReturnValue<List<MsgSuspicious>> result=new ReturnValue<List<MsgSuspicious>>();
-    	result.setValue(list);
-    	
-		return result;
+    	return msgSuspiciousDao.list(property,gameIds); 
+
 	}
 
 	//人工审核可疑信息
 	@Override
-	public ReturnValue<MsgSuspicious> msgSure(Long id, String illegalWords, Long opUid)
+	public MsgSuspicious msgSure(Long id, String illegalWords, Long opUid)
 			throws HException {
 		
 		if(id==null || id==0l){
@@ -103,25 +98,18 @@ public class CheckServiceImpl implements CheckService {
 		property.setOpUid(opUid);
 		
 		msgSuspiciousDao.update(property);		
-		
-		ReturnValue<MsgSuspicious> result=new ReturnValue<MsgSuspicious>();
-    	result.setValue(property);
     	
-    	return result;
+    	return property;
 		
 	}
 
 	//可疑信息列表(更详细的，比如说包含了gamename、审核状态说明、操作人)
 	@Override
-	public ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> selectSuspiciousMapList(String account,
+	public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(String account,
 			String gameName, String msg,Byte status, Integer gameId, Integer groupId)
 			throws HException {
 		
-		List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> list=msgSuspiciousDao.selectSuspiciousMapList( account,
-				 gameName, msg, status,  gameId,  groupId);
-		ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal=new ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>>();
-		returnVal.setValue(list);
-		return returnVal;
+		return msgSuspiciousDao.selectSuspiciousMapList( account,gameName, msg, status,  gameId,  groupId);
 	}
 
 

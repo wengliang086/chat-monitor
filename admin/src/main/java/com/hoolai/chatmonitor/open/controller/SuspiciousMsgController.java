@@ -1,7 +1,6 @@
 package com.hoolai.chatmonitor.open.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.auth.LoginContext;
@@ -51,6 +50,7 @@ public class SuspiciousMsgController {
     public List<MsgSuspicious> list(HttpServletRequest request, Long uid, String msg, Long gameId) {
         AdminUser user = LoginContext.getLoginUser(request);//获取当前用户
 
+
         List<Long> gameIds = null;//考虑多个game分配到同一用户组下
 
         if (!user.getAccount().equals("admin")) {//普通操作用户只能看自己组下的game
@@ -72,8 +72,8 @@ public class SuspiciousMsgController {
             }
         }
 
-        ReturnValue<List<MsgSuspicious>> returnVal = checkService.list(uid, gameId, msg, gameIds);//根据gameId获取可疑信息列表
-        return returnVal.getValue();
+        List<MsgSuspicious> re= checkService.list(uid, gameId, msg, gameIds);//根据gameId获取可疑信息列表
+        return re;
     }
 
     /**
@@ -88,14 +88,14 @@ public class SuspiciousMsgController {
      */
     @GetMapping("listDetail")
     public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> listDetail(HttpServletRequest request, String account, String gameName, Byte status, Integer gameId, Integer groupId, String msg) {
-		/*AdminUser user=LoginContext.getLoginUser(request);//获取当前用户		
+		
+    	AdminUser user=LoginContext.getLoginUser(request);//获取当前用户		
 		
 		if(!user.getAccount().equals("admin")){//普通操作用户只能看自己组下的game的可疑信息
 			groupId=user.getGroupId();
-		}*/
+		}
 
-        ReturnValue<List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>> returnVal = checkService.selectSuspiciousMapList(account, gameName, msg, status, gameId, groupId);
-        return returnVal.getValue();
+        return checkService.selectSuspiciousMapList(account, gameName, msg, status, gameId, groupId);
     }
 
     /**
@@ -113,11 +113,11 @@ public class SuspiciousMsgController {
             user.setUid(1000l);
         }
 
-        ReturnValue<MsgSuspicious> updateVal = checkService.msgSure(suspiciousId, illegalWords, user.getUid());
-        if (updateVal.getValue().getStatus() == -1) {
-            userService.freeze(updateVal.getValue().getUid());//冻结用户
+        MsgSuspicious updateVal = checkService.msgSure(suspiciousId, illegalWords, user.getUid());
+        if (updateVal.getStatus() == -1) {
+            userService.freeze(updateVal.getUid());//冻结用户
         }
 
-        return updateVal.getValue();
+        return updateVal;
     }
 }

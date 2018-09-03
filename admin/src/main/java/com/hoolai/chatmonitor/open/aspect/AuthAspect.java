@@ -1,12 +1,14 @@
 package com.hoolai.chatmonitor.open.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.hoolai.chatmonitor.common.returnvalue.ReturnValue;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
+import com.hoolai.chatmonitor.open.dao.AdminLogDao;
+import com.hoolai.chatmonitor.open.log.OperateLogHelper;
 import com.hoolai.chatmonitor.open.model.UserLoginResponse;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,7 +22,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +32,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AuthAspect {
 
+	 @Resource
+	 private AdminLogDao adminLogDao;
+	
     private final Logger logger = LoggerFactory.getLogger(AuthAspect.class);
     private ConcurrentHashMap<Long, String> concurrentHashSet = new ConcurrentHashMap<>();
 
@@ -62,6 +69,7 @@ public class AuthAspect {
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Object proceed = proceedingJoinPoint.proceed();
+
         if (signature.getMethod().getName().equals("loginByAccount")) {
 
         	//ReturnValue<UserLoginResponse> rv = (ReturnValue<UserLoginResponse>) proceed;
@@ -73,6 +81,9 @@ public class AuthAspect {
             concurrentHashSet.put(uid, temp.getAccessToken());
             logger.debug(JSON.toJSONString(concurrentHashSet));
         }
+        
+        //记录操作日志
+        adminLogDao.save(OperateLogHelper.createOperatorLog(proceed,"extend1","extend2"));
         return proceed;
     }
 
@@ -87,4 +98,5 @@ public class AuthAspect {
             throw HException.HExceptionBuilder.newBuilder(HExceptionEnum.PLEASE_LOGIN_FIRST).build();
         }
     }
+    
 }
