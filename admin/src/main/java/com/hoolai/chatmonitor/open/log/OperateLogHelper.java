@@ -31,8 +31,8 @@ public class OperateLogHelper {
 		operateLog.setMethod(request.getServletPath());
 		operateLog.setResult(null==result?null:result instanceof String?result.toString():JSON.toJSONString(result));
 		operateLog.setOpData(new Date());
-		//operateLog.setExtend1(extend1);
-		//operateLog.setExtend2(extend2);
+		operateLog.setExtend1(extend1);
+		operateLog.setExtend2(extend2);
 		return operateLog;
 	}
 	

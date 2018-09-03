@@ -11,5 +11,5 @@ public @interface OperateLog {
 
     String value() default "";
 
-    String pKey() default "id";
+    String pKey() default "";
 }
