@@ -31,7 +31,13 @@ let routes = [
         name: '基础功能',
         iconCls: 'fa el-icon-message',//图标样式class
         children: [
-            { path: '/main', component: Main, name: '主页', hidden: true },
+            { path: '/main', component: Main, name: '主页', hidden: true, children: [
+                { path: '/main1', component: Main, name: '主页1', children: [
+                    { path: '/main11', component: Main, name: '主页11' },
+                    { path: '/main12', component: Main, name: '主页12' }
+                ] },
+                { path: '/main2', component: Main, name: '主页2' }
+            ] },
             { path: '/game', component: Game, name: '游戏列表' },
             { path: '/group', component: Group, name: '用户组列表' },
             { path: '/user', component: User, name: '用户列表' },
