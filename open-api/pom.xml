@@ -53,6 +53,18 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hoolai.chatmonitor.common</groupId>
+            <artifactId>mybatis-generator-extend</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
@@ -81,6 +93,14 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>mybatis/*</include>
+                </includes>
+            </testResource>
+        </testResources>
     </build>
 
 </project>

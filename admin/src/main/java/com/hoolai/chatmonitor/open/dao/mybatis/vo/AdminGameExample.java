@@ -325,6 +325,76 @@ public class AdminGameExample {
             return (Criteria) this;
         }
 
+        public Criteria andGameKeyIsNull() {
+            addCriterion("game_key is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyIsNotNull() {
+            addCriterion("game_key is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyEqualTo(String value) {
+            addCriterion("game_key =", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyNotEqualTo(String value) {
+            addCriterion("game_key <>", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyGreaterThan(String value) {
+            addCriterion("game_key >", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyGreaterThanOrEqualTo(String value) {
+            addCriterion("game_key >=", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyLessThan(String value) {
+            addCriterion("game_key <", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyLessThanOrEqualTo(String value) {
+            addCriterion("game_key <=", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyLike(String value) {
+            addCriterion("game_key like", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyNotLike(String value) {
+            addCriterion("game_key not like", value, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyIn(List<String> values) {
+            addCriterion("game_key in", values, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyNotIn(List<String> values) {
+            addCriterion("game_key not in", values, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyBetween(String value1, String value2) {
+            addCriterion("game_key between", value1, value2, "gameKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameKeyNotBetween(String value1, String value2) {
+            addCriterion("game_key not between", value1, value2, "gameKey");
+            return (Criteria) this;
+        }
+
         public Criteria andGroupIdIsNull() {
             addCriterion("group_id is null");
             return (Criteria) this;

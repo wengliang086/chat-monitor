@@ -43,7 +43,7 @@ public class AdminGroupServiceImpl implements AdminGroupService {
         AdminGroup group = adminGropuDao.get(groupId);
 
         if (group == null) {
-            throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_IEXIST).build();
+            throw HExceptionBuilder.newBuilder(HExceptionEnum.GROUP_NOT_EXIST).build();
         }
 
         if (Strings.isNullOrEmpty(groupName)) {

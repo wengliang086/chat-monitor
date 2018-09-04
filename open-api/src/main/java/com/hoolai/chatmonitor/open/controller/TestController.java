@@ -5,6 +5,7 @@ import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.provider.process.service.DemoService;
 import io.swagger.annotations.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,5 +58,10 @@ public class TestController {
         for (String s : split) {
             System.out.println(s);
         }
+        long gameId = 1009;
+        long requestTime = System.currentTimeMillis();
+        String gameKey = "ZTEZX2A32svw24i6";
+        String token = DigestUtils.md5Hex(gameId + "." + requestTime + "." + gameKey);
+        System.out.println("requestTime=" + requestTime + "&accessToken=" + token);
     }
 }

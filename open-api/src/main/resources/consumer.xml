@@ -12,5 +12,5 @@
     <!--<dubbo:registry address="multicast://224.5.6.7:1234"/>-->
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
 
-    <dubbo:reference interface="com.hoolai.chatmonitor.DemoService"/>
+    <dubbo:reference interface="com.hoolai.chatmonitor.provider.process.service.DemoService"/>
 </beans>

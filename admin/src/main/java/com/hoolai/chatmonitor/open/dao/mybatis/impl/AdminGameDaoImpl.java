@@ -41,12 +41,13 @@ public class AdminGameDaoImpl implements AdminGameDao {
 	public void delete(Long gameId) {
 		adminGameMapper.deleteByPrimaryKey(gameId);
 	}
-	
+
+	////*******自定义开始********//
 	@Override
 	public List<AdminGame> get(AdminGame property) {
 		AdminGameExample example = new AdminGameExample();
 		AdminGameExample.Criteria ca = example.createCriteria();
-		
+
 		if (property.getGameId() != null && property.getGameId() != 0L) {
 			ca.andGameIdEqualTo(property.getGameId());
 		}
@@ -56,14 +57,11 @@ public class AdminGameDaoImpl implements AdminGameDao {
 		if (property.getGroupId() != null && property.getGroupId() != 0L) {
 			ca.andGroupIdEqualTo(property.getGroupId());
 		}
-		
+
 		example.setOrderByClause("game_id");
 		return adminGameMapper.selectByExample(example);
-	
+
 	}
-	
-	 
-	////*******自定义开始********//
 	//**********自定义结束*****////
 	
 }

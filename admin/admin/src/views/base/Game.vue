@@ -25,6 +25,8 @@
 			</el-table-column>
 			<el-table-column prop="gameName" label="游戏名称" width="220" sortable>
 			</el-table-column>
+			<el-table-column prop="gameKey" label="游戏key" width="220">
+			</el-table-column>
 			<el-table-column label="操作" width="180">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>

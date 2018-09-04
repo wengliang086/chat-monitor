@@ -4,7 +4,7 @@
 * http://x.x.x.x:8080/chat/
 
 ```
-http://localhost:8081/chat?gameUid=2000&msg=aqwe%E9%9D%9E%E6%B3%95&gameId=1
+http://localhost:8081/chat?gameUid=2000&msg=aqwe&gameId=1009&requestTime=1536023565092&accessToken=5a688135eb4f09ae411affb9ae83c495
 ```
 
 ## 2、请求方式
@@ -17,6 +17,8 @@ http://localhost:8081/chat?gameUid=2000&msg=aqwe%E9%9D%9E%E6%B3%95&gameId=1
 | gameId | Long | 游戏ID |
 | gameUid | String | 游戏用户ID |
 | msg | String | 聊天内容 |
+| requestTime | Long | 时间戳，精确到毫秒 |
+| accessToken | String | 使用MD5加密 gameId+”.”+requestTime+”.”+gameKey 返回十六进制32位小写字符串 |
 
 ## 4、返回值
 
@@ -39,3 +41,5 @@ http://localhost:8081/chat?gameUid=2000&msg=aqwe%E9%9D%9E%E6%B3%95&gameId=1
 | 2  | UID 不存在 |
 | 3  | 存在敏感词汇 |
 | 4  | 该用户已经被冻结 |
+| 11  | gameId错误 |
+| 8  | accessToken验证失败 |
