@@ -29,7 +29,12 @@ mybatis:
   type-aliases-package: com.hoolai.chatmonitor.open.dao.mybatis.vo
   configuration:
     call-setters-on-nulls: true
-      
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  row-bounds-with-count: true        
 
 # 打印sql
 logging:

@@ -27,7 +27,12 @@ spring:
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.hoolai.chatmonitor.provider.process.dao.mybatis.vo
-
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  row-bounds-with-count: true  
 # 打印sql
 logging:
   level:

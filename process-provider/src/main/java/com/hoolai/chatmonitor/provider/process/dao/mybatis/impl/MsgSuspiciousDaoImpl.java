@@ -1,5 +1,7 @@
 package com.hoolai.chatmonitor.provider.process.dao.mybatis.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.hoolai.chatmonitor.provider.process.dao.MsgSuspiciousDao;
 import com.hoolai.chatmonitor.provider.process.dao.mybatis.mapper.MsgSuspiciousMapper;
@@ -43,6 +45,7 @@ public class MsgSuspiciousDaoImpl implements MsgSuspiciousDao {
 		msgSuspiciousMapper.deleteByPrimaryKey(id);
 	}
 
+	////*******自定义开始********//
 	@Override
 	public List<MsgSuspicious> list(MsgSuspicious property,List<Long> gameIds) {
 		
@@ -70,13 +73,19 @@ public class MsgSuspiciousDaoImpl implements MsgSuspiciousDao {
 	}
 
 	@Override
-	public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(String account,
-			String gameName, String msg,Byte status, Integer gameId, Integer groupId) {
-		return msgSuspiciousMapper.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);
-	}
+	public PageInfo<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(String account,
+			String gameName, String msg,Byte status, Integer gameId, Integer groupId,Integer pageNum,Integer pageSize) {
+		
+		pageNum=pageNum==null?0:pageNum;		
+		pageSize=pageSize==null?3:pageSize;
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> list= msgSuspiciousMapper.selectSuspiciousMapList(account, gameName, msg,status, gameId, groupId);
+		PageInfo<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> pageInfo = new PageInfo<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious>(list);  
 	
-	 
-	////*******自定义开始********//
+		return pageInfo;
+	}
 	
 	//**********自定义结束*****////
 	

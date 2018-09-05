@@ -67,8 +67,10 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
 			<!-- <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button> -->
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+			<el-pagination layout="total, sizes, prev, pager, next, jumper"  @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="pageSizes" :page-size="pageSize" :total="total" style="float:right;">
 			</el-pagination>
+
+
 		</el-col>	
 
 		
@@ -105,8 +107,10 @@
 			return {
 				filters: {msg:'',gameId:0},
 				suspiciousData: [],
-				total: 0,
-				page: 1,
+				total: 0,//总条目数
+				pageNum: 1,//
+				pageSize:5,
+				pageSizes:[5,10, 20, 30, 50],
 				listLoading: false,
 				sels: [],//列表选中列
 				
@@ -136,23 +140,29 @@
 		},
 
 		methods: {
-			
+
+			handleSizeChange(val) {
+				this.pageSize = val;
+				this.getSuspiciousList();
+			},
 			handleCurrentChange(val) {
-				this.page = val;
+				this.pageNum = val;
 				this.getSuspiciousList();
 			},
 			//获取用户列表
 			getSuspiciousList() {
 				let para = {
-					page: this.page,
+					pageNum:this.pageNum,
+					pageSize:this.pageSize,
 					msg: this.filters.msg,
 					gameId:this.filters.gameId
 				};
 				this.listLoading = true;
 				//NProgress.start();
 				getSuspiciousList(para).then((res) => {
-					this.total =res==null?0:res.length;
-					this.suspiciousData = res;
+					this.total=res.total;
+					this.currentpage=res.pageNum;
+					this.suspiciousData = res.list;
 					this.listLoading = false;
 					//NProgress.done();
 				});
@@ -212,7 +222,7 @@
 
 			getGameListPage:function(){//获取当前用户所在用户组下的所有游戏
 				this.listLoading = true;
-				getGameListPage().then((res) => {				
+				getGameListPage().then((res) => {		
 					this.gameList=res;
 					this.listLoading = false;
 				});

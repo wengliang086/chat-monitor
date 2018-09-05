@@ -1,6 +1,7 @@
 package com.hoolai.chatmonitor.provider.process.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.PageInfo;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
@@ -105,11 +106,11 @@ public class CheckServiceImpl implements CheckService {
 
 	//可疑信息列表(更详细的，比如说包含了gamename、审核状态说明、操作人)
 	@Override
-	public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(String account,
-			String gameName, String msg,Byte status, Integer gameId, Integer groupId)
+	public PageInfo<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> selectSuspiciousMapList(String account,
+			String gameName, String msg,Byte status, Integer gameId, Integer groupId,Integer pageNum,Integer pageSize)
 			throws HException {
 		
-		return msgSuspiciousDao.selectSuspiciousMapList( account,gameName, msg, status,  gameId,  groupId);
+		return msgSuspiciousDao.selectSuspiciousMapList( account,gameName, msg, status,  gameId,  groupId,pageNum,pageSize);
 	}
 
 

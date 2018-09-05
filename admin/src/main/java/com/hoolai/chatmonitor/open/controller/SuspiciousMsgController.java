@@ -1,6 +1,7 @@
 package com.hoolai.chatmonitor.open.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.github.pagehelper.PageInfo;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.aspect.AuthAspect;
@@ -89,15 +90,17 @@ public class SuspiciousMsgController {
      * @param gameId   可根据m_suspicious中的game_id查询(可选)
      */
     @GetMapping("listDetail")
-    public List<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> listDetail(HttpServletRequest request, String account, String gameName, Byte status, Integer gameId, Integer groupId, String msg) {
+    public PageInfo<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> listDetail(HttpServletRequest request,Integer pageNum,Integer pageSize, String account, String gameName, Byte status, Integer gameId, Integer groupId, String msg) {
 
         UserLoginResponse user = AuthAspect.get(request);//获取当前用户
 		
 		if(!user.getAccount().equals("admin")){//普通操作用户只能看自己组下的game的可疑信息
 			groupId=user.getGroupId();
 		}
-
-        return checkService.selectSuspiciousMapList(account, gameName, msg, status, gameId, groupId);
+		
+		PageInfo<com.hoolai.chatmonitor.provider.process.client.vo.MsgSuspicious> pageInfo=checkService.selectSuspiciousMapList(account, gameName, msg, status, gameId, groupId,pageNum,pageSize);
+		  		
+        return pageInfo;
     }
 
     /**
