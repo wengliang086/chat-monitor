@@ -25,20 +25,35 @@
 			</el-form>
 		</el-col>
 
-		<!--列表-->
+		<!--列表 @selection-change="selsChange"-->
 		<el-table :data="suspiciousData" highlight-current-row v-loading="listLoading" 
 		
-		 @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		  style="width: 100%;">
+
+			<!--<el-table-column type="selection" width="55"></el-table-column>
+		    <el-table-column type="index" width="60"></el-table-column>-->
+
+
+			<el-table-column prop="id" label="id" width="100" sortable></el-table-column>
+			
+			<el-table-column  label="可疑信息" width="120" sortable >
+				<template slot-scope="scope">
+					<el-popover trigger="hover" placement="right">
+						{{ scope.row.msg }}
+						<div slot="reference" class="msgC">{{ scope.row.msg}}</div>					
+					</el-popover>
+				</template>
 			</el-table-column>
-		    <el-table-column type="index" width="60">
+
+			<el-table-column label="可疑词" width="120" sortable>
+				<template slot-scope="scope">
+					<el-popover trigger="hover" placement="right">
+						{{ scope.row.illegalWords}}
+						<div slot="reference" class="msgC">{{ scope.row.illegalWords}}</div>	
+					</el-popover>
+				</template>
 			</el-table-column>
-			<!--<el-table-column prop="id" label="id" width="120" sortable>
-			</el-table-column>-->
-			<el-table-column prop="msg" label="可疑信息" width="120" sortable>
-			</el-table-column>
-			<el-table-column prop="illegalWords" label="可疑词" width="120" sortable>
-			</el-table-column>
+
 			<el-table-column prop="uid" label="uid" width="120" sortable>
 			</el-table-column>
 			<el-table-column prop="gameUid" label="游戏uid" width="120" sortable>
@@ -47,11 +62,13 @@
 			</el-table-column>
 			<el-table-column prop="statusDes" label="状态描述" width="120" sortable>
 			</el-table-column>
-			<!--<el-table-column prop="opUid" label="审核人id" width="120" sortable>
-			</el-table-column>-->
+			<!--<el-table-column prop="opUid" label="审核人id" width="120" sortable></el-table-column>-->
 			<el-table-column prop="opAccount" label="审核人" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="createTime" label="创建时间" width="120" sortable>
+			<el-table-column  label="创建时间" width="200" sortable>
+				<template slot-scope="scope" >
+				 	<i class="el-icon-time"></i>{{scope.row.createTime }}
+				</template>
 			</el-table-column>
 
 			
@@ -96,6 +113,15 @@
 
 	</section>
 </template>
+<style>
+	.msgC{ /*内容超长部分以省略号的形式展示*/		
+		line-height: 20px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+</style>
+
 
 <script>
 	import util from '../../common/js/util'
@@ -161,16 +187,15 @@
 				//NProgress.start();
 				getSuspiciousList(para).then((res) => {
 					this.total=res.total;
-					this.currentpage=res.pageNum;
 					this.suspiciousData = res.list;
 					this.listLoading = false;
 					//NProgress.done();
 				});
 			},
 			
-			selsChange: function (sels) {
-				this.sels = sels;
-			},
+			//selsChange: function (sels) {
+				//this.sels = sels;
+			//},
 
 			//显示编辑界面
 			handleEdit: function (index, row,action) {				
