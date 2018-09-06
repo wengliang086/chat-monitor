@@ -34,9 +34,12 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-  row-bounds-with-count: true        
+  row-bounds-with-count: true
 
 # 打印sql
 logging:
   level:
-    com.hoolai.chatmonitor.open.dao.mybatis.mapper: debug
+  - com.hoolai.chatmonitor.open.dao.mybatis.mapper: debug
+  - com.hoolai.chatmonitor: info
+  - root: info
+  file: logs/admin.log

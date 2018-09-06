@@ -37,4 +37,7 @@ mybatis:
 # 打印sql
 logging:
   level:
-    com.hoolai.chatmonitor.open.dao.mybatis.mapper: info
+  - com.hoolai.chatmonitor.open.dao.mybatis.mapper: info
+  - com.hoolai.chatmonitor: info
+  - root: info
+  file: logs/api.log
