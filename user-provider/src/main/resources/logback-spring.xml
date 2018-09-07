@@ -12,9 +12,7 @@
     <appender name="consoleLog1" class="ch.qos.logback.core.ConsoleAppender">
         <!--展示格式 layout-->
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d %highlight(%-5level) %magenta(${PID}) --- [ %15.15thread] %cyan(%logger{36}) %yellow([%M][%L]) :
-                %msg%n
-            </pattern>
+            <pattern>%d %highlight(%-5level) %magenta(${PID}) --- [ %15.15thread] %cyan(%logger{36}) %yellow([%M][%L]) : %msg%n</pattern>
         </layout>
         <!--过滤掉ERROR级别以下的日志不输出到文件中-->
         <!--
@@ -59,8 +57,7 @@
         <!--日志输出编码格式化-->
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%d %highlight(%-5level) %magenta(${PID}) --- [ %15.15thread] %contextName %cyan(%logger{36})
-                %yellow([%M][%L]) : %msg%n
+            <pattern>%d %highlight(%-5level) %magenta(${PID}) --- [ %15.15thread] %contextName %cyan(%logger{36}) %yellow([%M][%L]) : %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -83,8 +80,7 @@
         <!--日志输出编码格式化-->
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%d %highlight(%-5level) %magenta(${PID}) --- [ %15.15thread] %contextName %cyan(%logger{36})
-                %yellow([%M][%L]) : %msg%n
+            <pattern>%d %highlight(%-5level) %magenta(${PID}) --- [ %15.15thread] %contextName %cyan(%logger{36}) %yellow([%M][%L]) : %msg%n
             </pattern>
         </encoder>
     </appender>
