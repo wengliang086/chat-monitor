@@ -89,6 +89,8 @@
     <springProfile name="test,dev">
         <logger name="com.hoolai.chatmonitor" level="DEBUG" additivity="false">
             <appender-ref ref="consoleLog1"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileErrorLog"/>
         </logger>
     </springProfile>
 
@@ -96,6 +98,8 @@
     <springProfile name="online">
         <logger name="com.hoolai.chatmonitor" level="INFO" additivity="false">
             <appender-ref ref="consoleLog1"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileErrorLog"/>
         </logger>
     </springProfile>
 
