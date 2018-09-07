@@ -22,5 +22,11 @@ public class MyApplicationRunner implements ApplicationRunner {
             str = "生产";
         }
         logger.info("[ {} ] 环境启动成功！", str);
+
+        logger.trace("======trace");
+        logger.debug("======debug");
+        logger.info("======info");
+        logger.warn("======warn");
+        logger.error("======error");
     }
 }

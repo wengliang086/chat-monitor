@@ -87,7 +87,7 @@
 
     <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
     <springProfile name="test,dev">
-        <logger name="com.hoolai.chatmonitor" level="DEBUG" additivity="false">
+        <logger name="com.hoolai.chatmonitor.provider" level="DEBUG" additivity="false">
             <appender-ref ref="consoleLog1"/>
             <appender-ref ref="fileInfoLog"/>
             <appender-ref ref="fileErrorLog"/>
@@ -96,7 +96,7 @@
 
     <!-- 生产环境. -->
     <springProfile name="online">
-        <logger name="com.hoolai.chatmonitor" level="INFO" additivity="false">
+        <logger name="com.hoolai.chatmonitor.provider" level="INFO" additivity="false">
             <appender-ref ref="consoleLog1"/>
             <appender-ref ref="fileInfoLog"/>
             <appender-ref ref="fileErrorLog"/>
