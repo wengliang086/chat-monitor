@@ -1,0 +1,3 @@
+#! /bin/bash
+curl -XDELETE 'http://119.29.74.61:8081/app_logs/nginx'
+curl -XPUT 'http://119.29.74.61:8081/app_logs/_mapping/nginx' -d '{"properties":{"@timestamp":{"type":"date","format":"dateOptionalTime"},"@version":{"type":"string"},"agent":{"type":"string"},"bytes":{"type":"string"},"clientip":{"type":"string"},"host":{"type":"string"},"httpversion":{"type":"string"},"message":{"type":"string"},"method":{"type":"string"},"path":{"type":"string"},"queryString":{"type":"string"},"refer":{"type":"string"},"reponse_status":{"type":"string"},"spend_time":{"type":"string"},"tags":{"type":"string"},"timestamp":{"type":"string"},"type":{"type":"string"},"uri":{"type":"string", "index":"not_analyzed"}}}'
