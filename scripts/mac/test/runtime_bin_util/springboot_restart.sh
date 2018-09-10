@@ -52,6 +52,9 @@ echo "关闭 $project_name"
 stop $project_name
 echo "启动 $project_name"
 
+if [ ! -d $APP_LOGS/$project_name ]; then
+    mkdir -p $APP_LOGS/$project_name
+fi
 STDOUT_FILE=$APP_LOGS/$project_name/stdout.log
 nohup java -jar ${project_name}-1.0-SNAPSHOT.jar --spring.profiles.active=$profile >${STDOUT_FILE} 2>&1 &
 
