@@ -11,7 +11,7 @@ cd /root/bin
 #./jenkins.sh start
 
 cd /root/tools/sonarqube-4.5.4/bin/linux-x86-64/
- 
+
 ./sonar.sh start
 
 cd /root/common_modules/redis-2.8.13/src
@@ -22,12 +22,10 @@ rm -rf /root/bin/data/zookeeper_server.pid
 
 cd /root/common_modules/zookeeper-3.4.6/bin/
 
-
 ./zkServer.sh start
 
 cd /root/common_modules/dubbo-monitor-simple-2.5.3/bin/
 ./restart.sh
-
 
 cd /root/common_modules/dubbo-admin-tomcat-6/bin/
 ./startup.sh

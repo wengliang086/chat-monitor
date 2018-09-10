@@ -1,5 +1,8 @@
 #!/bin/sh
-basepath=$(cd `dirname $0`; pwd)
+basepath=$(
+	cd $(dirname $0)
+	pwd
+)
 cd $basepath
 
 source runtime_bin_util/util.sh
@@ -9,7 +12,7 @@ echo "1、更新"
 check "1、更新"
 
 echo "2、构建"
-./build.sh   $*
+./build.sh $*
 check "2、构建"
 
 echo "3、上传"
@@ -17,7 +20,7 @@ echo "3、上传"
 check "3、上传"
 
 echo "4、部署"
-./deploy.sh  $1
+./deploy.sh $1
 check "4、部署"
 
 echo "5、重启"

@@ -4,7 +4,7 @@ dir=/home/fastsdk/deploy_dev_sdk
 
 echo "params=$1"
 
-ssh fastsdk@119.29.21.153 > /dev/null 2>&1 << eeooff
+ssh fastsdk@119.29.21.153 >/dev/null 2>&1 <<eeooff
 
 echo "kkkkk"
 
