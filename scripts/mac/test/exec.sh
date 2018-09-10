@@ -27,6 +27,8 @@ fi
 
 if [ -d $base_project_name ]; then
 	cd $base_project_name
+	# 因为chmod的执行，导致scripts目录下的文件已经被更改
+	git reset --hard
 	git pull
 	check "Git Pull"
 else
