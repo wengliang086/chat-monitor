@@ -21,7 +21,8 @@ if [ "$2" = "online_tx" ]; then
 	profile="online_tx"
 fi
 
-mvn -f $process_dir/$base_project_name/pom.xml -Dprofile=$profile clean deploy
+#mvn -f $process_dir/$base_project_name/pom.xml -Dprofile=$profile clean deploy
+mvn -f $process_dir/$base_project_name/pom.xml -Dprofile=$profile install
 check "mvn构建all"
 
 for (( i = 0; i < ${#apps[@]}; i++)); do

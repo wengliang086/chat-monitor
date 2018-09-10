@@ -51,7 +51,7 @@ if [ $1 ]; then
                 echo "${attr[0]}不需要重启"
             elif [ ${p_type} = "4" ]; then
                 #SpringBoot Jar 项目
-                springboot_restart.sh ${p_port} ${p_name}
+                ./springboot_restart.sh ${p_port} ${p_name}
             else
                 #平常web项目
                 if [ ${p_name} != "access_web" ]; then
