@@ -32,14 +32,18 @@ function setAppJavaMemOps() {
 }
 
 echo "总项目数="${#apps[@]}
+
+target_project="all"
+deploy_dir=$4
+
 flag=1
-if [ $1 ]; then
+if [ $target_project ]; then
     for ((i = 0; i < ${#apps[@]}; i++)); do
         attr=(${apps[$i]})
         p_name=${attr[0]}
         p_type=${attr[1]}
         p_port=${attr[2]}
-        if [ $p_name = $1 ] || [ $1 = "all" ]; then
+        if [ $p_name = $target_project ] || [ $target_project = "all" ]; then
             setJavaMemOps $p_name
             flag=0
             echo "-------------------------------------------------------------"
@@ -51,7 +55,7 @@ if [ $1 ]; then
                 echo "${attr[0]}不需要重启"
             elif [ ${p_type} = "4" ]; then
                 #SpringBoot Jar 项目
-                ./springboot_restart.sh ${p_port} ${p_name}
+                ./springboot_restart.sh ${p_port} ${p_name} $deploy_dir
             else
                 #平常web项目
                 if [ ${p_name} != "access_web" ]; then

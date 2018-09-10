@@ -13,6 +13,7 @@ source util.sh
 
 SERVER_PORT=$1
 project_name=$2
+deploy_dir=$3
 profile="test"
 
 stop() {
@@ -56,7 +57,7 @@ if [ ! -d $APP_LOGS/$project_name ]; then
     mkdir -p $APP_LOGS/$project_name
 fi
 STDOUT_FILE=$APP_LOGS/$project_name/stdout.log
-nohup java -jar ${project_name}-1.0-SNAPSHOT.jar --spring.profiles.active=$profile >${STDOUT_FILE} 2>&1 &
+nohup java -jar ${deploy_dir}/${project_name}-1.0-SNAPSHOT.jar --spring.profiles.active=$profile >${STDOUT_FILE} 2>&1 &
 
 COUNT=0
 while [ $COUNT -lt 1 ]; do
