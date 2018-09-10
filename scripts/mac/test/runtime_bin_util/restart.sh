@@ -31,35 +31,37 @@ function setAppJavaMemOps() {
 	fi
 }
 
-echo ${#apps[@]}
+echo "总项目数="${#apps[@]}
 flag=1
 if [ $1 ]; then
     for ((i = 0; i < ${#apps[@]}; i++)); do
         attr=(${apps[$i]})
-        if [ ${attr[0]} = $1 ] || [ $1 = "all" ]; then
-            setJavaMemOps ${attr[0]}
+        p_name=${attr[0]}
+        p_type=${attr[1]}
+        p_port=${attr[2]}
+        if [ $p_name = $1 ] || [ $1 = "all" ]; then
+            setJavaMemOps $p_name
             flag=0
             echo "-------------------------------------------------------------"
-            if [ ${attr[1]} = "1" ]; then
+            if [ ${p_type} = "1" ]; then
                 #非web项目
-                $baseDir/runtime/app/${attr[0]}/bin/restart.sh skip
-            elif [ ${attr[1]} = "3" ]; then
+                $baseDir/runtime/app/${p_name}/bin/restart.sh skip
+            elif [ ${p_type} = "3" ]; then
                 #非启动项目
                 echo "${attr[0]}不需要重启"
-            elif [ ${attr[1]} = "4" ]; then
+            elif [ ${p_type} = "4" ]; then
                 #SpringBoot Jar 项目
-                restart_web ${attr[2]} ${attr[0]} $baseDir/runtime/app/${attr[0]} skip
-                springboot_restart.sh
+                springboot_restart.sh ${p_port} ${p_name}
             else
                 #平常web项目
-                if [ "${attr[0]}" != "access_web" ]; then
-                    restart_web ${attr[2]} ${attr[0]} $baseDir/runtime/app/${attr[0]} skip
+                if [ ${p_name} != "access_web" ]; then
+                    restart_web ${p_port} ${p_name} $baseDir/runtime/app/${p_name} skip
                 else
                     skip=$2
                     if [ "$skip" = "" ]; then
                         skip="not_skip"
                     fi
-                    restart_web ${attr[2]} ${attr[0]} $baseDir/runtime/app/${attr[0]} skip "use_config"
+                    restart_web ${p_port} ${p_name} $baseDir/runtime/app/${p_name} skip "use_config"
                 fi
             fi
         fi

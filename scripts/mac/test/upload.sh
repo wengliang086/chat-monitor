@@ -11,7 +11,7 @@ source runtime_bin_util/util.sh
 
 deploy_dir=$4
 
-for ((i = 0; i < ${apps[@]}; i++)); do
+for (( i = 0; i < ${#apps[@]}; i++ )); do
 	app=(${apps[$i]})
 	#    cp $process_dir/$app/${app}-1.0-SNAPSHOT.jar $deploy_dir
 	echo "app="$app
