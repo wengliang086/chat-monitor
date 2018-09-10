@@ -1,7 +1,12 @@
 #!/bin/sh
 
-svn_url=http://svn.hoolai.com/access-platform/trunk/fast_access/scripts/mac/test
-svn_dir=/Users/access/scripts/
+basePath=$(cd `dirname $0`; pwd)
+echo $basePath
+
+git_url=http://code.hoolai.com/git/liyongxiang/chat-monitor.git
+#这里可以使用 指定目录 或者 当前目录
+#basePath=/Users/access/scripts/
+base_project_name=chat-monitor
 
 check(){
   if [ $? -ne 0 ];then
@@ -11,12 +16,22 @@ check(){
    echo "===================$1,执行成功========================"
 }
 
-if [ ! -d $svn_dir ];then
-  svn co $svn_url $svn_dir
-  check "检出SVN"
+#指定basePath时，目录可能需要创建
+if [ ! -d $basePath ]; then
+    mkdir -p $basePath
+    cd $basePath
+fi
+
+if [ -d $base_project_name ];then
+  cd $base_project_name
+  git pull
+  check "Git Pull"
 else
-  svn update $svn_dir
-  check "更新SVN"
+  git init
+  git remote add origin $git_url
+  git clone $git_url
+  check "Git Clone"
+  cd $base_project_name
 fi
 
 chmod -R +x scripts
@@ -28,7 +43,10 @@ if [ $# -eq 0 ];then
   exit 1;
 fi
 
-./$1 $2 $3 $4 $5 $6 $7 $8
+process_dir=${basePath}/targetDir
+deploy_dir=${basePath}/deployDir
+./scripts/mac/test/$1 $git_url $process_dir $base_project_name $deploy_dir
+#./$1 $2 $3 $4 $5 $6 $7 $8
 
 
 
