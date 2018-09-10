@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   datasource:
@@ -35,9 +35,9 @@ mybatis:
 
 
 # 打印sql
-logging:
-  level:
-  - com.hoolai.chatmonitor.open.dao.mybatis.mapper: info
-  - com.hoolai.chatmonitor: info
-  - root: info
-  file: logs/api.log
+#logging:
+#  level:
+#  - com.hoolai.chatmonitor.open.dao.mybatis.mapper: info
+#  - com.hoolai.chatmonitor: info
+#  - root: info
+#  file: logs/api.log

@@ -34,7 +34,6 @@ stop_web() {
 	WEBAPP_NAME=$2
 	check_port_use $PORT 1
 	if [ $? = 0 ]; then
-
 		$JAVA_HOME/bin/java -jar -DSTOP.PORT=$PORT -DSTOP.KEY=$WEBAPP_NAME /root/workspace/common/jetty-9.2.10/start.jar --stop
 	fi
 }

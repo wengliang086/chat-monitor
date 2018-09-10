@@ -25,4 +25,4 @@ check "4、部署"
 
 echo "5、重启"
 cd $basepath
-#runtime_bin_util/restart.sh $1
+runtime_bin_util/restart.sh $1

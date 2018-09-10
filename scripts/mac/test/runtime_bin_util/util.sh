@@ -16,7 +16,6 @@ check_and_create() {
 	if [ ! -d $1 ]; then
 		mkdir -p $1
 	fi
-
 }
 
 check_port_use() {
@@ -85,7 +84,6 @@ check_web_port() {
 	echo "启动失败"
 	echo ""
 	return 1
-
 }
 
 print_line() {
@@ -96,7 +94,6 @@ print_line() {
 INTERNAL_IP=$(/sbin/ifconfig -a | grep inet | grep -v 127.0.0.1 | grep -v 169.254.104.174 | grep -v inet6 | awk '{print $2}' | head -n1)
 
 dump() {
-
 	SERVER_NAME=$1
 	LOGS_DIR=$APP_LOGS
 
@@ -184,6 +181,7 @@ stop_web() {
 	WEBAPP_NAME=$2
 	WEBAPP_PATH=$3
 	check_port_use $STOP_PORT 1
+	# 判断check_port_use的return值是不是等于0
 	if [ $? = 0 ]; then
 		if [ "$4" != "skip" ]; then
 			dump $WEBAPP_NAME
@@ -258,6 +256,8 @@ start_web() {
 
 	check_web_port "端口$PORT" $INTERNAL_IP $PORT
 }
+
+#参数 1、端口，2、项目名称，3、web app 路径，4、skip 为跳过dump
 restart_web() {
 	stop_web $@
 	start_web $@

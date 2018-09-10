@@ -34,9 +34,9 @@ pagehelper:
   params: count=countSql
   row-bounds-with-count: true
 # 打印sql
-logging:
-  level:
-  - com.hoolai.chatmonitor.provider.process.dao.mybatis.mapper: debug
-  - com.hoolai.chatmonitor: info
-  - root: info
-  file: logs/process_provider.log
+#logging:
+#  level:
+#  - com.hoolai.chatmonitor.provider.process.dao.mybatis.mapper: debug
+#  - com.hoolai.chatmonitor: info
+#  - root: info
+#  file: logs/process_provider.log
