@@ -27,5 +27,5 @@ check "mvn构建all"
 for (( i = 0; i < ${#apps[@]}; i++)); do
 	app=(${apps[$i]})
 	check_and_create $deploy_dir
-	cp $process_dir/$base_project_name/$app/${app}-1.0-SNAPSHOT.jar $deploy_dir
+	cp $process_dir/$base_project_name/$app/target/${app}-1.0-SNAPSHOT.jar $deploy_dir
 done
