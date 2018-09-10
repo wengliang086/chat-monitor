@@ -20,7 +20,7 @@ echo "3、上传"
 check "3、上传"
 
 echo "4、部署"
-./deploy.sh $1
+./deploy.sh $*
 check "4、部署"
 
 echo "5、重启"
