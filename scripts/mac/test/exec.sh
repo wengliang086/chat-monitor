@@ -7,6 +7,8 @@ basePath=$(
 #这里可以使用 指定目录 或者 当前目录
 #basePath=/Users/access/scripts/
 #echo $basePath
+process_dir=${basePath}/targetDir
+deploy_dir=${basePath}/deployDir
 
 #指定basePath时，目录可能需要创建
 if [ ! -d $basePath ]; then
@@ -21,6 +23,10 @@ if [ $# -eq 0 ]; then
     echo "\033[0;31m 未输入操作名 \033[0m  \033[0;34m {all|server|front|update} \033[0m"
 	exit 1
 fi
+
+# front t1 dev
+t1=$2
+env=$3
 
 git_url=http://code.hoolai.com/git/liyongxiang/chat-monitor.git
 base_project_name=`echo ${git_url##*/} | sed 's/.git//'`
@@ -53,19 +59,32 @@ function update() {
 
 #服务器端部署 参数（1、脚本名称）
 server() {
-    process_dir=${basePath}/targetDir
-    deploy_dir=${basePath}/deployDir
+    update
     ./scripts/mac/test/$1 $git_url $process_dir $base_project_name $deploy_dir
 }
 
 #部署前端
 front() {
+    update
     cp -r ./admin/admin ${deploy_dir}
     cd $deploy_dir/admin
+
+    test_url="10.1.1.236:20090"
+    if [ $t1 = "test" ]; then
+        test_url="10.1.1.253:20090"
+    fi
+    #test_url="10.1.1.253:20090"
+    sed -i "_bak" "s/127.0.0.1:8090/$test_url/" index.js
+    echo `pwd`
     if [ ! -d "node_modules" ]; then
+        echo "npm install start ..."
         npm install
     fi
+    echo "npm build start ..."
     npm run build
+    if [ $env = "dev" ]; then
+        npm run dev
+    fi
 }
 
 all() {
