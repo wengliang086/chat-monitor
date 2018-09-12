@@ -22,6 +22,7 @@ Vue.use(Vuex)
 
 const router = new VueRouter({
   mode: 'history',
+  base:'chat-admin',
   routes
 })
 

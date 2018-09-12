@@ -44,7 +44,8 @@ axios.interceptors.response.use(response => {
     return Promise.reject(err.response.data.msg);
 })
 
-let base = '/api/admin';
+// let base = '/api/admin';
+let base = process.env.API_BASE_URL + "/admin";
 export const requestLoginPost = params => { return axios.post(`${base}/user/loginByAccount`, params) };
 export const requestLogin = params => { return axios.get(`${base}/user/loginByAccount`, { params: params }).then(res => res.data); };
 /**
