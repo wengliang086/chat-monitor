@@ -13,8 +13,9 @@ deploy_dir=$4
 
 for (( i = 0; i < ${#apps[@]}; i++ )); do
 	app=(${apps[$i]})
-	#    cp $process_dir/$app/${app}-1.0-SNAPSHOT.jar $deploy_dir
 	echo "app="$app
 done
 
-echo "upload 忽略"
+scp $deploy_dir/*.jar fastsdk@119.29.21.153:/home/fastsdk/deploy/chat-moniter/
+check "上传所有包到正式环境online_tx"
+#echo "upload 忽略"

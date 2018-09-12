@@ -88,6 +88,15 @@ front() {
         mkdir $deploy_dir/chat-admin
     fi
     cp -r ./dist/ $deploy_dir/chat-admin/
+
+    if [ -f $deploy_dir/chat-admin.zip ]; then
+        rm -f $deploy_dir/chat-admin.zip
+    fi
+
+    cd $deploy_dir
+    zip -r chat-admin.zip ./chat-admin
+    scp chat-admin.zip fastsdk@119.29.21.153:/home/fastsdk/deploy/chat-moniter/
+    check "上传 chat-admin.zip 到正式环境 online_tx"
 }
 
 all() {
