@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#Jdk 版本
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
+echo $JAVA_HOME
+
 basePath=$(
 	cd $(dirname $0)
 	pwd
@@ -24,9 +28,8 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-# front t1 dev
+# front t1
 t1=$2
-env=$3
 
 git_url=http://code.hoolai.com/git/liyongxiang/chat-monitor.git
 base_project_name=`echo ${git_url##*/} | sed 's/.git//'`
@@ -69,12 +72,10 @@ front() {
     cp -r ./admin/admin ${deploy_dir}
     cd $deploy_dir/admin
 
-    test_url="10.1.1.236:20090"
     if [ $t1 = "test" ]; then
-        test_url="10.1.1.253:20090"
+        sed -i "_bak" "s/10.1.1.236:20090/10.1.1.253:20090/" ./config/prod.env.js
     fi
-    #test_url="10.1.1.253:20090"
-    sed -i "_bak" "s/127.0.0.1:8090/$test_url/" index.js
+
     echo `pwd`
     if [ ! -d "node_modules" ]; then
         echo "npm install start ..."
@@ -82,9 +83,11 @@ front() {
     fi
     echo "npm build start ..."
     npm run build
-    if [ $env = "dev" ]; then
-        npm run dev
+
+    if [ ! -d $deploy_dir/chat-admin ]; then
+        mkdir $deploy_dir/chat-admin
     fi
+    cp -r ./dist/ $deploy_dir/chat-admin/
 }
 
 all() {
