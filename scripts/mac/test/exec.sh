@@ -69,6 +69,9 @@ server() {
 #部署前端
 front() {
     update
+    if [ -d ${deploy_dir}/admin ]; then
+        rm -rf $deploy_dir/admin
+    fi
     cp -r ./admin/admin ${deploy_dir}
     cd $deploy_dir/admin
 

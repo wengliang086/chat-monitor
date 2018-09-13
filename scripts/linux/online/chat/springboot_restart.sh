@@ -6,8 +6,8 @@ basepath=$(
 )
 cd $basepath
 
-source env.sh
-source util.sh
+source ./env.sh
+source ./util.sh
 
 #新版本管理台部署 参数（1、profile；2、项目名称）
 
