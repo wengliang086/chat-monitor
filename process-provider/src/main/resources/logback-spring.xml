@@ -3,9 +3,10 @@
 
     <!--application.yml 传递参数，不能使用logback 自带的<property>标签 -->
     <springProperty scope="context" name="appName" source="logback.appName"/>
+    <springProperty scope="context" name="logbackDir" source="logback.dir"/>
 
     <contextName>${appName}</contextName>
-    <property name="logback.logDir" value="logs/${appName}"/>
+    <property name="logback.logDir" value="${logbackDir}/${appName}"/>
     <property name="logback.appName" value="${appName}"/>
 
     <!--输出到控制台 ConsoleAppender-->
