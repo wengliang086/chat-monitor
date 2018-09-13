@@ -18,7 +18,7 @@ profile="online"
 
 stop() {
 	SERVER_NAME=$1
-	PIDS=$(ps -ef | grep java | grep "$SERVER_NAME" | awk '{print $2}')
+	PIDS=$(ps -ef | grep java | grep jdk1.8 | grep "$SERVER_NAME" | awk '{print $2}')
 	if [ -z "$PIDS" ]; then
 		echo "ERROR: The $SERVER_NAME does not started!"
 		#        exit 1
