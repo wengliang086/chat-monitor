@@ -18,7 +18,7 @@ profile="test"
 
 stop() {
 	SERVER_NAME=$1
-	PIDS=$(ps -ef | grep java | grep "$SERVER_NAME" | awk '{print $2}')
+	PIDS=$(ps -ef | grep java | grep '\-\-spring.profiles' | grep "$SERVER_NAME" | awk '{print $2}')
 	if [ -z "$PIDS" ]; then
 		echo "ERROR: The $SERVER_NAME does not started!"
 		#        exit 1
