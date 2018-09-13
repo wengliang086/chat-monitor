@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://10.66.156.22:3306/chat_monitor?characterEncoding=utf-8&connectTimeout=3000
+      username: root
+      password: Hoolai@321
