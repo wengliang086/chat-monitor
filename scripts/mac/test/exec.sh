@@ -72,8 +72,8 @@ front() {
     cp -r ./admin/admin ${deploy_dir}
     cd $deploy_dir/admin
 
-    if [ $t1 = "test" ]; then
-        sed -i "_bak" "s/10.1.1.236:20090/10.1.1.253:20090/" ./config/prod.env.js
+    if [ $t1 = "online" ]; then
+        sed -i "_bak" "s/10.1.1.253:20090/10.250.188.34:20090/" ./config/prod.env.js
     fi
 
     echo `pwd`

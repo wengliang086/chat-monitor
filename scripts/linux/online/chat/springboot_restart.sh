@@ -63,7 +63,7 @@ COUNT=0
 while [ $COUNT -lt 1 ]; do
 	echo -e ".\c"
 	sleep 1
-	COUNT=`ps -ef | grep java | grep "$project_name" | awk '{print $2}' | wc -l`
+	COUNT=`ps -ef | grep java | grep jdk1.8 | grep "$project_name" | awk '{print $2}' | wc -l`
 	#COUNT=$(netstat -an | grep $SERVER_PORT | wc -l)
 	if [ $COUNT -gt 0 ]; then
 		break
@@ -71,5 +71,5 @@ while [ $COUNT -lt 1 ]; do
 done
 
 echo "OK!"
-PIDS=$(ps -ef | grep java | grep "$project_name" | awk '{print $2}')
+PIDS=$(ps -ef | grep java | grep jdk1.8 | grep "$project_name" | awk '{print $2}')
 echo "PID: $PIDS"
