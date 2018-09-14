@@ -1,11 +1,8 @@
 #!/bin/bash
 
-source $WORKSPACE_HOME/runtime/bin/env.sh
-source $WORKSPACE_HOME/runtime/bin/util.sh
-source /data/bin/common_env.sh
-source $WORKSPACE_HOME/runtime/bin/common_env.sh
+ips=("$server_s7 1 15" "$server_s8 2 15")
 
-flag=1
+deploy_dir=/home/fastsdk/deploy/chat-moniter
 
 nginx_switch_restart() {
 	group=$1

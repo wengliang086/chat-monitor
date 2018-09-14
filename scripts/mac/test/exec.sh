@@ -70,13 +70,14 @@ server() {
 front() {
     update
     if [ -d ${deploy_dir}/admin ]; then
-        rm -rf $deploy_dir/admin
+        #rm -rf $deploy_dir/admin
+        echo "忽略删除，否则会重新 npm install"
     fi
     cp -r ./admin/admin ${deploy_dir}
     cd $deploy_dir/admin
 
     if [ $t1 = "online" ]; then
-        sed -i "_bak" "s/10.1.1.253:20090/10.250.188.34:20090/" ./config/prod.env.js
+        sed -i "_bak" "s/10.1.1.253:20090/119.29.21.153/" ./config/prod.env.js
     fi
 
     echo `pwd`
