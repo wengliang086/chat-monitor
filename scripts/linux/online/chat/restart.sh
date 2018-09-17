@@ -33,7 +33,7 @@ function setAppJavaMemOps() {
 
 echo "总项目数="${#apps[@]}
 
-target_project="all"
+target_project=$1
 deploy_dir=$4
 
 flag=1

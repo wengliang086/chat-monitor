@@ -48,7 +48,7 @@ if [ $1 ]; then
 
 		if [ ! "$2" = "skip_deploy" ]; then
 			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' /data/bin/chat/ root@$ip:/data/bin/chat/
-			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' ${deploy_dir} root@$ip:${deploy_dir}
+			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' ${deploy_dir}/ root@$ip:${deploy_dir}/
 		fi
 		# 切换标记，避免每部署一个WEB应用，都要执行所有机器的Nginx切换（每台机器，只切换一次 === 其实感觉 每组部署只需要切换一次？？？）
 		nginx_is_switch=0
@@ -66,10 +66,10 @@ if [ $1 ]; then
 						check "切换nginx到group"$group_switch
 						sleep 2s
 					fi
-					./shell_remote.sh $ip "/data/bin/chat/deploy_chat_master.sh ${app}"
+					./shell_remote.sh $ip "cd /data/bin/chat/ && /data/bin/chat/deploy_chat_master.sh ${app}"
 				else
 				    # Provider 项目，分发通过 Zookeeper
-					./shell_remote.sh $ip "/data/bin/chat/deploy_chat_master.sh ${app}"
+					./shell_remote.sh $ip "cd /data/bin/chat/ && /data/bin/chat/deploy_chat_master.sh ${app}"
 				fi
 			fi
 		done
