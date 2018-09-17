@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ips=("$server_s7 1 15" "$server_s8 2 15")
+ipConfigs=("$server_s7 1 15" "$server_s8 2 15")
 source ./env.sh
 
 deploy_dir=/home/fastsdk/deploy/chat-moniter
@@ -11,22 +11,22 @@ nginx_switch_restart() {
 	if [ "$group" = "0" ]; then
 	    # 恢复本机访问
 		group=""
-		sed -i "s/app_proxy_pass\/group.*\//app_proxy_pass\/group\//g" /usr/local/services/nginx/conf/nginx.conf
+		sed -i "s/app_proxy_pass\/group.*\/open-api\.conf/app_proxy_pass\/group\/open-api\.conf/g" /usr/local/services/nginx/conf/nginx.conf
 	else
 	    # 把本机的访问转发到对应group的机器
-		sed -i "s/app_proxy_pass\/group.*\//app_proxy_pass\/group$group\//g" /usr/local/services/nginx/conf/nginx.conf
+		sed -i "s/app_proxy_pass\/group.*\/open-api\.conf/app_proxy_pass\/group$group\/open-api\.conf/g" /usr/local/services/nginx/conf/nginx.conf
 	fi
 	/usr/local/services/nginx/sbin/nginx -s reload
 	# 部署特定的一台服务器时，有没有必要 切换其它机器的 Nginx ？？？？？
 	# 1、如果不循环切换，同一时间一直会有7（n-1）台机器运行。（有新版本，有旧版本）
 	# 2、如果执行循环切换，同一时间会有一个group的机器运行。（只有新版本 或者 只有旧版本）
 	# 2正确，不过可以不用每台机器执行，每组部署开始执行一次就行
-	for ((n = 0; n < ${#ips[@]}; n++)); do
-		nginx_ip=(${ips[$n]})
-		nginx_ip=(${nginx_ip[0]})
-		echo "nginx远程重启$nginx_ip"
-		./rsync_nginx.sh $nginx_ip
-	done
+#	for ((n = 0; n < ${#ipConfigs[@]}; n++)); do
+#		ipConfig=(${ipConfigs[$n]})
+#		nginx_ip=(${ipConfig[0]})
+#		echo "nginx远程重启$nginx_ip"
+#		./rsync_nginx.sh $nginx_ip
+#	done
 }
 
 #1、依次部署每一台机器
@@ -34,11 +34,11 @@ nginx_switch_restart() {
 
 flag=1
 if [ $1 ]; then
-	echo "ips $ips"
-	for ((m = 0; m < ${#ips[@]}; m++)); do
-		ip=(${ips[$m]})
-		group=(${ip[1]})
-		ip=(${ip[0]})
+	echo "ipConfigs $ipConfigs"
+	for ((m = 0; m < ${#ipConfigs[@]}; m++)); do
+		ipConfig=(${ipConfigs[$m]})
+		group=(${ipConfig[1]})
+		ip=(${ipConfig[0]})
 
 		group_switch="2"
 
@@ -47,8 +47,8 @@ if [ $1 ]; then
 		fi
 
 		if [ ! "$2" = "skip_deploy" ]; then
-			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' /root/.bash_profile root@$ip:/root/.bash_profile
-			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' /data/workspace/ root@$ip:/data/workspace/
+			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' /data/bin/chat/ root@$ip:/data/bin/chat/
+			rsync -avzr --progress --delete --exclude '.svn' -e'ssh -p 22' ${deploy_dir} root@$ip:${deploy_dir}
 		fi
 		# 切换标记，避免每部署一个WEB应用，都要执行所有机器的Nginx切换（每台机器，只切换一次 === 其实感觉 每组部署只需要切换一次？？？）
 		nginx_is_switch=0
@@ -56,7 +56,7 @@ if [ $1 ]; then
 			attr=(${apps[$i]})
 			app=${attr[0]}
 			type=${attr[1]}
-			if [ ${attr[0]} = $1 ] || [ $1 = "all" ]; then
+			if [ ${app} = $1 ] || [ $1 = "all" ]; then
 				flag=0
 				if [ "$type" = "2" ]; then
 				    # Web项目 分发通过 Nginx
@@ -66,10 +66,10 @@ if [ $1 ]; then
 						check "切换nginx到group"$group_switch
 						sleep 2s
 					fi
-					./shell_remote.sh $ip "source /root/.bash_profile && /data/workspace/runtime/bin/restart.sh ${app}"
+					./shell_remote.sh $ip "/data/bin/chat/deploy_chat_master.sh ${app}"
 				else
 				    # Provider 项目，分发通过 Zookeeper
-					./shell_remote.sh $ip "source /root/.bash_profile && /data/workspace/runtime/bin/restart.sh ${app}"
+					./shell_remote.sh $ip "/data/bin/chat/deploy_chat_master.sh ${app}"
 				fi
 			fi
 		done
