@@ -34,6 +34,11 @@ public class AuthAspect {
         return concurrentHashSet.get(request.getHeader(ACCESS_TOKEN));
     }
 
+    public static Integer getGroupId(HttpServletRequest request) {
+        UserLoginResponse userLoginResponse = get(request);
+        return userLoginResponse == null ? null : userLoginResponse.getGroupId();
+    }
+
     @Pointcut("execution(public * com.hoolai.chatmonitor.open.controller.*.*(..))")
     public void loginCheck() {
     }

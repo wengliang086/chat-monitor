@@ -1,5 +1,6 @@
 package com.hoolai.chatmonitor.open.controller;
 
+import com.hoolai.chatmonitor.open.aspect.AuthAspect;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
@@ -83,20 +84,13 @@ public class AdminUserController {
     /**
      * 用户列表
      *
-     * @param groupId groupId (可选)
      * @param account account (可选)
      * @param email   email (可选)
      * @param phone   phone (可选)
      */
     @GetMapping("list")
-    public List<Map<String, Object>> list(HttpServletRequest request, Integer groupId, String account, String email, String phone) {
-//        if ((groupId == null || groupId == 0)) {
-//            AdminUser user = LoginContext.getLoginUser(request);
-//            if (!user.getAccount().equals("admin")) {
-//                groupId = user.getGroupId();
-//            }
-//        }
-        return adminUserService.selectUserMapList(account, email, phone, groupId);
+    public List<Map<String, Object>> list(HttpServletRequest request, String account, String email, String phone) {
+        return adminUserService.selectUserMapList(account, email, phone, AuthAspect.getGroupId(request));
     }
 
 }

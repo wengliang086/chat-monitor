@@ -42,12 +42,7 @@ public class AdminGameController {
      */
     @GetMapping("list")
     public List<AdminGame> list(HttpServletRequest request, String name) {
-        UserLoginResponse user = AuthAspect.get(request);
-        Integer groupId = 0;
-        if (user != null) {
-            groupId = user.getGroupId();
-        }
-        return adminGameService.get(null, name, groupId);
+        return adminGameService.get(null, name, AuthAspect.getGroupId(request));
     }
 
 }

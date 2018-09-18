@@ -6,11 +6,21 @@
 
 <script>
 export default {
-	methods: {
-		onLogout() {
-			alert('ddd');
-		}
-	}
-}
+  methods: {
+    onLogout() {
+      var _this = this;
+      this.$confirm("确认退出吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        // type: "warning"
+      })
+        .then(() => {
+          sessionStorage.removeItem("user");
+          _this.$router.push("/login");
+        })
+        .catch(() => {});
+    }
+  }
+};
 </script>
 

@@ -48,6 +48,7 @@ public enum HExceptionEnum implements ReturnCode {
 
     SUSPICIOUS_ID_IS_NULL(16, "可疑信息标识不能为空"),
     SUSPICIOUS_NOT_EXIST(17, "可疑信息不存在"),
+    PERMISSION_DENIED(18, "权限被拒绝"),
     //===============================
 
     SYSTEM_EXCEPTION(500, "服务器异常");

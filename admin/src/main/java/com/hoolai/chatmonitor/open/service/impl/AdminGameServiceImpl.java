@@ -66,17 +66,12 @@ public class AdminGameServiceImpl implements AdminGameService {
             throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_ID_IS_NULL).build();
         }
         AdminGame game = adminGameDao.get(gameId);
-
         if (game == null) {
             throw HExceptionBuilder.newBuilder(HExceptionEnum.GAME_NOT_IEXIST).build();
         }
-
+        existGroup(groupId);//检测group是否存
+        game.setGroupId(groupId);
         game.setGameName(Strings.isNullOrEmpty(gameName) ? game.getGameName() : gameName);
-
-        if (!(null == groupId || groupId == 0)) {
-            existGroup(groupId);//检测group是否存
-            game.setGroupId(groupId);
-        }
 
         adminGameDao.update(game);
         return game;

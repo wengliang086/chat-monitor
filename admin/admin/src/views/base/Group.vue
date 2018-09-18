@@ -28,7 +28,7 @@
 		<el-table-column label="操作" width="180">
 			<template slot-scope="scope">
 				<el-button size="small" @click="showEditGroupDialog(scope.$index, scope.row)">编辑</el-button>
-				<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+				<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)" :disabled="true">删除</el-button>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -131,7 +131,13 @@ export default {
           this.total = res.length;
         })
         .catch(error => {
+          this.listLoading = false;
           console.info(error);
+          // alert(error);
+          this.$message({
+            message: error,
+            type: "error"
+          });
         });
     },
     selsChange(sels) {
