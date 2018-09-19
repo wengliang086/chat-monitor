@@ -49,13 +49,13 @@
                 <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
                     <!-- 二级菜单展开 -->
                     <li v-for="(child,index2) in item.children" :key="index2">
-                        <ul v-if="child.children">
-                            <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index+''+index2,true)" @mouseout="showMenu(index+''+index2,false)">{{child.name}}</div>
+                        <ul v-if="child.children" style="-webkit-padding-start: 0px;">
+                            <div class="el-submenu__title" style="padding-left: 40px;" @mouseover="showMenu(index+''+index2,true)" @mouseout="showMenu(index+''+index2,false)">{{child.name}}-></div>
                             <ul class="el-menu submenu2" :class="'submenu-hook-'+index+''+index2" @mouseover="showMenu(index+''+index2,true)" @mouseout="showMenu(index+''+index2,false)">
                                 <!-- 三级菜单展开 -->
                                 <li v-for="(child2,index3) in child.children" :key="index3">
-                                    <ul v-if="child2.children">
-                                        <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index+''+index2+''+index3,true)" @mouseout="showMenu(index+''+index2+''+index3,false)">{{child2.name}}</div>
+                                    <ul v-if="child2.children" style="-webkit-padding-start: 0px;">
+                                        <div class="el-submenu__title" style="padding-left: 40px;" @mouseover="showMenu(index+''+index2+''+index3,true)" @mouseout="showMenu(index+''+index2+''+index3,false)">{{child2.name}}-></div>
                                         <ul class="el-menu submenu2" :class="'submenu-hook-'+index+''+index2+''+index3" @mouseover="showMenu(index+''+index2+''+index3,true)" @mouseout="showMenu(index+''+index2+''+index3,false)">
                                             <!-- 四级菜单展开 -->
                                             <li v-for="(child3,index4) in child2.children" :key="index4">
