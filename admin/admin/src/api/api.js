@@ -1,5 +1,6 @@
 import axios from 'axios';
 import router from '../main'
+import { getStore, setStore } from '@/libs/storage'
 
 axios.defaults.timeout = 5000
 // axios.defaults.baseURL = '/api/admin'
@@ -85,3 +86,83 @@ export const getSuspiciousList = params => { return axios.get(`${base}/suspiciou
 export const editSuspicious = params => { return axios.get(`${base}/suspicious/msgSure?` + params); };
 
 //export const editUser = params => { return axios.get(`${base}/user/updateUserInfo?` + params); };
+
+
+
+
+
+export const getRequest = (url, params) => {
+    let accessToken = getStore('accessToken');
+    return axios({
+        method: 'get',
+        url: `${base}${url}`,
+        params: params,
+        headers: {
+            'accessTocken' : accessToken
+        }
+    });
+};
+
+export const postRequest = (url, params) => {
+    let accessToken = getStore('accessToken');
+    return axios({
+        method: 'post',
+        url: `${base}${url}`,
+        params: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+            }
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'accessTocken' : accessToken
+        }
+    });
+};
+
+export const putRequest = (url, params) => {
+    let accessToken = getStore('accessToken');
+    return axios({
+        method: 'put',
+        url: `${base}${url}`,
+        params: params,
+        transformRequest: [function (data) {
+            let ret = '';
+            for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
+            }
+            return ret;
+        }],
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'accessTocken' : accessToken
+        }
+    });
+};
+
+export const deleteRequest = (url, params) => {
+    let accessToken = getStore('accessToken');
+    return axios({
+        method: 'delete',
+        url: `${base}${url}`,
+        params: params,
+        headers: {
+            'accessTocken' : accessToken
+        }
+    });
+};
+
+export const uploadFileRequest = (url, params) => {
+    let accessToken = getStore('accessToken');
+    return axios({
+        method: 'post',
+        url: `${base}${url}`,
+        params: params,
+        headers: {
+            'accessToken': accessToken
+        }
+    });
+};
