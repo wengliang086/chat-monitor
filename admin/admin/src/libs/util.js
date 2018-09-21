@@ -11,17 +11,16 @@ util.initRouter = function (vm) {
 
     // 404路由需要和动态路由一起注入
     const otherRouter = [{
-        path: '/*',
+        path: '*',
         name: 'error-404',
-        meta: {
-            title: '404-页面不存在'
-        },
-        component: 'error-page/404'
+        hidden: true,
+        redirect: { path: '/404' },
+        component: "/404"
     }];
 
     // let menuData = res.result;
     // util.initRouterNode(constRoutes, menuData);
-    // util.initRouterNode(otherRoutes, otherRouter);
+    util.initRouterNode(otherRoutes, otherRouter);
 
     // test
     let testData = {
@@ -38,6 +37,8 @@ util.initRouter = function (vm) {
 
     // 添加主界面路由
     vm.$store.commit('updateAppRouter', constRoutes);
+    // 添加全局路由
+    vm.$store.commit('updateDefaultRouter', otherRoutes);
 }
 
 // 生成路由节点
