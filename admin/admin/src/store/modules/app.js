@@ -1,5 +1,5 @@
-import { otherRouter } from '@/router/router';
-import { router } from '@/router/index';
+import { otherRouter } from '../../router/router';
+import { router } from '../../router/index';
 import Vue from 'vue'
 
 const app = {
@@ -13,8 +13,10 @@ const app = {
     mutations: {
         // 动态添加主界面路由，需要缓存
         updateAppRouter(state, routes) {
-            state.routers.push(...routes);
+            // state.routers.push(...routes);
+            // console.log(router);
             router.addRoutes(routes);
+            router.options.routes.push(...routes);
         },
         // 动态添加全局路由，不需要缓存
         updateDefaultRouter(state, routes) {

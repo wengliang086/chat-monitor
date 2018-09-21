@@ -1,4 +1,5 @@
 import axios from 'axios';
+import lazyLoading from './lazyLoading'
 
 let util = {};
 
@@ -17,6 +18,26 @@ util.initRouter = function (vm) {
         },
         component: 'error-page/404'
     }];
+
+    // let menuData = res.result;
+    // util.initRouterNode(constRoutes, menuData);
+    // util.initRouterNode(otherRoutes, otherRouter);
+
+    // test
+    let testData = {
+        path: '/',
+        component: "Home",
+        name: '动态添加测试',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/form3', component: "dynamicNavTest/Form1", name: 'Form3' },
+            { path: '/page6', component: 'dynamicNavTest/Page6', name: 'Page6' }
+        ]
+    };
+    util.initRouterNode(constRoutes, [testData]);
+
+    // 添加主界面路由
+    vm.$store.commit('updateAppRouter', constRoutes);
 }
 
 // 生成路由节点
@@ -34,7 +55,7 @@ util.initRouterNode = function (routers, data) {
         let meta = {};
         // 给页面添加权限、标题、第三方网页链接
         meta.permTypes = menu.permTypes ? menu.permTypes : null;
-        meta.title = menu.title ? menu.title + " - X-Boot前后端分离开发平台 By: Exrick" : null;
+        meta.title = menu.title ? menu.title + " - 前后端分离开发平台" : null;
         meta.url = menu.url ? menu.url : null;
         menu.meta = meta;
 

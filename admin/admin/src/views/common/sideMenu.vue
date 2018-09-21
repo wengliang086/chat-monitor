@@ -1,7 +1,7 @@
 <template>
 <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
     <!--导航菜单-->
-    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router v-show="!collapsed" :style="collapsed ? 'width: 60px; overflow: hidden;' : 'width: 230px; overflow: hidden;'">
+    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" router v-show="!collapsed" :style="collapsed ? 'width: 60px; overflow: hidden;' : 'width: 230px; overflow: hidden;'">
         <!-- 一级菜单展开 -->
         <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :index="index+''" v-if="!item.leaf" :key="index+''">

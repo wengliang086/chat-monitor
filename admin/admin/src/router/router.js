@@ -8,7 +8,6 @@ import User from '../views/base/User.vue'
 import Suspicious from '../views/base/Suspicious.vue'
 import ChangePassword from '../views/systemManagement/ChangePassword.vue'
 import Logout from '../views/systemManagement/Logout.vue'
-import Page6 from '../views/nav3/Page6.vue'
 import echarts from '../views/statistics/echarts.vue'
 
 let routes = [
