@@ -31,7 +31,11 @@ public class AuthAspect {
     private static ConcurrentHashMap<String, UserLoginResponse> concurrentHashSet = new ConcurrentHashMap<>();
 
     public static UserLoginResponse get(HttpServletRequest request) {
-        return concurrentHashSet.get(request.getHeader(ACCESS_TOKEN));
+        String accessToken = request.getHeader(ACCESS_TOKEN);
+        if (accessToken == null) {
+            return null;
+        }
+        return concurrentHashSet.get(accessToken);
     }
 
     public static Integer getGroupId(HttpServletRequest request) {

@@ -45,6 +45,7 @@ export default {
         }
     },
     mounted() {
+        console.log("挂载Home页")
         var user = sessionStorage.getItem("user");
         if (user) {
             user = JSON.parse(user);

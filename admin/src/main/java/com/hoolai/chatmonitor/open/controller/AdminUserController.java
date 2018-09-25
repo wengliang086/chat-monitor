@@ -3,11 +3,12 @@ package com.hoolai.chatmonitor.open.controller;
 import com.hoolai.chatmonitor.open.aspect.AuthAspect;
 import com.hoolai.chatmonitor.open.auth.PermissionAnnotation;
 import com.hoolai.chatmonitor.open.auth.PermissionType;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminPermission;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.log.OperateLog;
 import com.hoolai.chatmonitor.open.model.UserLoginResponse;
 import com.hoolai.chatmonitor.open.service.AdminUserService;
-
+import com.hoolai.chatmonitor.open.vo.Menu;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,4 +94,34 @@ public class AdminUserController {
         return adminUserService.selectUserMapList(account, email, phone, AuthAspect.getGroupId(request));
     }
 
+    @PermissionAnnotation(PermissionType.PUBLIC)
+    @GetMapping("getMenuList")
+    public List<Menu> getMenuList(HttpServletRequest request) {
+        boolean isAdmin = true;
+        UserLoginResponse userLoginResponse = AuthAspect.get(request);
+        if (userLoginResponse == null || !userLoginResponse.getAccount().equals("admin")) {
+            isAdmin = false;
+        }
+        List<AdminPermission> permissions = adminUserService.getPermissions(isAdmin);
+        List<Menu> menuList = new ArrayList<>();
+        for (AdminPermission p : permissions) {
+            if (p.getParentId() == null) {
+                Menu menu = new Menu(p);
+                menu.setRedirect("{ path: \"/game\" }");
+                constructMenu(menu, p, permissions);
+                menuList.add(menu);
+            }
+        }
+        return menuList;
+    }
+
+    private void constructMenu(Menu parentMenu, AdminPermission parentPermission, List<AdminPermission> permissions) {
+        for (AdminPermission p : permissions) {
+            if (p.getParentId() == parentPermission.getId()) {
+                Menu menu = new Menu(p);
+                constructMenu(menu, p, permissions);
+                parentMenu.addChildren(menu);
+            }
+        }
+    }
 }

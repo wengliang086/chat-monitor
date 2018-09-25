@@ -22,6 +22,28 @@ util.initRouter = function (vm) {
     // util.initRouterNode(constRoutes, menuData);
     util.initRouterNode(otherRoutes, otherRouter);
 
+    let staticRouters = [
+        {
+            path: '/',
+            component: "Home",
+            name: '统计分析',
+            iconCls: 'fa fa-bar-chart',
+            children: [
+                { path: '/echarts', component: "statistics/echarts", name: 'echarts' }
+            ]
+        },
+        {
+            path: '/',
+            component: "Home",
+            name: '系统管理',
+            iconCls: 'fa fa-id-card-o',
+            children: [
+                { path: '/changePassword', component: "systemManagement/ChangePassword", name: '修改密码' },
+                { path: '/logout', component: "systemManagement/Logout", name: '注销' }
+            ]
+        },
+    ];
+
     // test
     let testData = {
         path: '/',
@@ -33,12 +55,20 @@ util.initRouter = function (vm) {
             { path: '/page6', component: 'dynamicNavTest/Page6', name: 'Page6' }
         ]
     };
-    util.initRouterNode(constRoutes, [testData]);
+    // 加载菜单
+    let baseUrl = process.env.API_BASE_URL;
+    axios.get(baseUrl + "/admin/user/getMenuList").then(res => {
+        util.initRouterNode(constRoutes, [res[0]]);
+        util.initRouterNode(constRoutes, staticRouters);
+        util.initRouterNode(constRoutes, [testData]);
 
-    // 添加主界面路由
-    vm.$store.commit('updateAppRouter', constRoutes);
-    // 添加全局路由
-    vm.$store.commit('updateDefaultRouter', otherRoutes);
+        // 添加主界面路由
+        vm.$store.commit('updateAppRouter', constRoutes);
+        // 添加全局路由
+        vm.$store.commit('updateDefaultRouter', otherRoutes);
+    }).catch(errMsg => {
+        alert("加载菜单失败: " + errMsg);
+    });
 }
 
 // 生成路由节点

@@ -37,12 +37,16 @@
         <table schema="chat_monitor" tableName="admin_user" domainObjectName="AdminUser">
             <generatedKey column="uid" sqlStatement="MySql" identity="true"/>
         </table> -->
-        
-         <table schema="chat_monitor" tableName="admin_log" domainObjectName="AdminLog">
+        <!--
+        <table schema="chat_monitor" tableName="admin_log" domainObjectName="AdminLog">
             <generatedKey column="log_id" sqlStatement="MySql" identity="true"/>
+        </table>
+        -->
+        <table schema="chat_monitor" tableName="admin_permission" domainObjectName="AdminPermission">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 
     </context>
-    
+
 </generatorConfiguration>
 

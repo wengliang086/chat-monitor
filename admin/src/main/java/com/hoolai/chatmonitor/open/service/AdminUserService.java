@@ -1,6 +1,7 @@
 package com.hoolai.chatmonitor.open.service;
 
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminPermission;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 
 import java.util.List;
@@ -43,4 +44,6 @@ public interface AdminUserService {
 
     //后台操作用户列表
     List<Map<String, Object>> selectUserMapList(String account, String email, String phone, Integer groupId);
+
+    List<AdminPermission> getPermissions(boolean isAdmin);
 }

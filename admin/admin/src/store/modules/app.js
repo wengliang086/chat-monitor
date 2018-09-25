@@ -17,6 +17,7 @@ const app = {
             // console.log(router);
             router.addRoutes(routes);
             router.options.routes.push(...routes);
+            console.log("Menu加载完成")
         },
         // 动态添加全局路由，不需要缓存
         updateDefaultRouter(state, routes) {

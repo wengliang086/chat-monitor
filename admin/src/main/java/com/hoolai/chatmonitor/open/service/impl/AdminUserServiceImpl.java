@@ -7,8 +7,10 @@ import com.hoolai.chatmonitor.common.returnvalue.exception.HException;
 import com.hoolai.chatmonitor.common.returnvalue.exception.HException.HExceptionBuilder;
 import com.hoolai.chatmonitor.common.returnvalue.exception.enums.HExceptionEnum;
 import com.hoolai.chatmonitor.open.dao.AdminGroupDao;
+import com.hoolai.chatmonitor.open.dao.AdminPermissionDao;
 import com.hoolai.chatmonitor.open.dao.AdminUserDao;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminGroup;
+import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminPermission;
 import com.hoolai.chatmonitor.open.dao.mybatis.vo.AdminUser;
 import com.hoolai.chatmonitor.open.service.AdminUserService;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Resource
     private AdminGroupDao adminGropuDao;
+
+    @Resource
+    private AdminPermissionDao adminPermissionDao;
 
     //根据uid获取用户信息
     @Override
@@ -196,4 +201,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         return list;
     }
 
+    @Override
+    public List<AdminPermission> getPermissions(boolean isAdmin) {
+        return adminPermissionDao.getPermissions(isAdmin);
+    }
 }

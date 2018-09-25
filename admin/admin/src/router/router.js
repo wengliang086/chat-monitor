@@ -24,26 +24,26 @@ let routes = [
         hidden: true
     },
     //{ path: '/main', component: Main },
-    {
-        path: '/',
-        component: Home,
-        name: '基础功能',
-        iconCls: 'fa el-icon-message',//图标样式class
-        children: [
-            { path: '/main', component: Main, name: '主页', hidden: true, children: [
-                { path: '/main1', component: Main, name: '主页1', children: [
-                    { path: '/main11', component: Main, name: '主页11' },
-                    { path: '/main12', component: Main, name: '主页12' }
-                ] },
-                { path: '/main2', component: Main, name: '主页2' }
-            ] },
-            { path: '/game', component: Game, name: '游戏列表' },
-            { path: '/group', component: Group, name: '用户组列表' },
-            { path: '/user', component: User, name: '用户列表' },
-            { path: '/suspicious', component: Suspicious, name: '可疑信息' },
-        ],
-        redirect: { path: "/game" }
-    },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '基础功能',
+    //     iconCls: 'fa el-icon-message',//图标样式class
+    //     children: [
+    //         { path: '/main', component: Main, name: '主页', hidden: true, children: [
+    //             { path: '/main1', component: Main, name: '主页1', children: [
+    //                 { path: '/main11', component: Main, name: '主页11' },
+    //                 { path: '/main12', component: Main, name: '主页12' }
+    //             ] },
+    //             { path: '/main2', component: Main, name: '主页2' }
+    //         ] },
+    //         { path: '/game', component: Game, name: '游戏列表' },
+    //         { path: '/group', component: Group, name: '用户组列表' },
+    //         { path: '/user', component: User, name: '用户列表' },
+    //         { path: '/suspicious', component: Suspicious, name: '可疑信息' },
+    //     ],
+    //     redirect: { path: "/game" }
+    // },
     // {
     //     path: '/',
     //     component: Home,
@@ -54,25 +54,25 @@ let routes = [
     //         { path: '/page6', component: Page6, name: '导航三' }
     //     ]
     // },
-    {
-        path: '/',
-        component: Home,
-        name: '统计分析',
-        iconCls: 'fa fa-bar-chart',
-        children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '系统管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            { path: '/changePassword', component: ChangePassword, name: '修改密码' },
-            { path: '/logout', component: Logout, name: '注销' }
-        ]
-    },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '统计分析',
+    //     iconCls: 'fa fa-bar-chart',
+    //     children: [
+    //         { path: '/echarts', component: echarts, name: 'echarts' }
+    //     ]
+    // },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '系统管理',
+    //     iconCls: 'fa fa-id-card-o',
+    //     children: [
+    //         { path: '/changePassword', component: ChangePassword, name: '修改密码' },
+    //         { path: '/logout', component: Logout, name: '注销' }
+    //     ]
+    // },
     // {
     //     path: '*',
     //     hidden: true,
