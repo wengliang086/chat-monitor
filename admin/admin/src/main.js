@@ -5,7 +5,7 @@ import { router } from './router/index'
 import store from './store'
 import util from './libs/util';
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
 //import './assets/theme/theme-green/index.css'
 //import NProgress from 'nprogress'
 //import 'nprogress/nprogress.css'

@@ -52,7 +52,7 @@ util.initRouter = function (vm) {
         iconCls: 'fa fa-bar-chart',
         children: [
             { path: '/form3', component: "dynamicNavTest/Form1", name: 'Form3' },
-            { path: '/page6', component: 'dynamicNavTest/Page6', name: 'Page6' }
+            { path: '/department', component: 'dynamicNavTest/treeTest', name: '部门管理' }
         ]
     };
     // 加载菜单
