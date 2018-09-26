@@ -9,6 +9,8 @@ const app = {
         routers: [
             otherRouter
         ],
+        tabsList: [],
+        activeTabIndex: ""
     },
     mutations: {
         // 动态添加主界面路由，需要缓存
@@ -26,6 +28,26 @@ const app = {
         updateMenulist(state, routes) {
             state.menuList = routes;
         },
+        // Tab 操作
+        addTab(state, data) {
+            // 注意：这里加上this就需要加.app，不加this就不需要，即 下面两行效果相同
+            state.tabsList.push(data);
+            // this.state.app.tabsList.push(data);
+        },
+        deleteTab(state, route) {
+            let index = 0;
+            for (const tab of state.tabsList) {
+                if (tab.route === route) {
+                    break;
+                }
+                index++;
+            }
+            this.state.app.tabsList.splice(index, 1);
+        },
+        setActiveTab(state, index) {
+            // console.log("setActiveTab value=" + index);
+            this.state.app.activeTabIndex = index;
+        }
     }
 };
 

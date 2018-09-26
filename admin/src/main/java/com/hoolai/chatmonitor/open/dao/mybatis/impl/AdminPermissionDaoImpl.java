@@ -46,6 +46,7 @@ public class AdminPermissionDaoImpl implements AdminPermissionDao {
 	public List<AdminPermission> getPermissions(boolean isAdmin) {
 		AdminPermissionExample example = new AdminPermissionExample();
 		AdminPermissionExample.Criteria criteria = example.createCriteria();
+		criteria.andDelFlagIsNull();
 		if (!isAdmin) {
 			criteria.andAdminIsNull();
 		}

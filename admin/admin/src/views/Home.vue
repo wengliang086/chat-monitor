@@ -4,6 +4,7 @@
     <el-col :span="24" class="main">
         <imp-side-menu v-bind:collapsed="collapsed"></imp-side-menu>
         <section class="content-container">
+            <imp-tag-page></imp-tag-page>
             <div class="grid-content bg-purple-light">
                 <el-col :span="24" class="breadcrumb-container">
                     <strong class="title">{{$route.name}}</strong>
@@ -27,11 +28,13 @@
 <script>
 import impHeader from "./common/header";
 import impSideMenu from "./common/sideMenu";
+import impTagPage from "./common/tagPage";
 
 export default {
     components: {
         impHeader,
-        impSideMenu
+        impSideMenu,
+        impTagPage
     },
     data() {
         return {
@@ -43,6 +46,8 @@ export default {
         updateCollapse(collapse) {
             this.collapsed = collapse;
         }
+    },
+    computed: {
     },
     mounted() {
         console.log("挂载Home页")

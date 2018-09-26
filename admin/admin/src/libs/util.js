@@ -60,7 +60,7 @@ util.initRouter = function (vm) {
     axios.get(baseUrl + "/admin/user/getMenuList").then(res => {
         util.initRouterNode(constRoutes, [res[0]]);
         util.initRouterNode(constRoutes, staticRouters);
-        util.initRouterNode(constRoutes, [testData]);
+        // util.initRouterNode(constRoutes, [testData]);
 
         // 添加主界面路由
         vm.$store.commit('updateAppRouter', constRoutes);
