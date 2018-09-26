@@ -49,7 +49,7 @@
 	</el-col>
 
 	<!--编辑界面-->
-	<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+	<el-dialog title="编辑" :visible="editFormVisible" :close-on-click-modal="false">
 		<el-form :inline="true" :model="editForm" label-width="96px" :rules="editFormRules" ref="editForm">
 			<el-form-item label="用户名称" prop="account">
 				<el-input v-model="editForm.account" auto-complete="off"></el-input>
@@ -82,7 +82,7 @@
 	</el-dialog>
 
 	<!--新增界面-->
-	<el-dialog title="新增用户" v-model="addFormVisible" :close-on-click-modal="false">
+	<el-dialog title="新增用户" :visible="addFormVisible" :close-on-click-modal="false">
 		<el-form :inline="true" :model="addForm" label-width="96px" :rules="addFormRules" ref="addForm" size="mini">
 			<el-form-item label="用户名称" prop="account">
 				<el-input v-model="addForm.account" auto-complete="off"></el-input>

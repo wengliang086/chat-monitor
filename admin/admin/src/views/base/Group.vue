@@ -41,7 +41,7 @@
 	</el-col>
 
 	<!--编辑界面-->
-	<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+	<el-dialog title="编辑" :visible="editFormVisible" :close-on-click-modal="false">
 		<el-form :model="editForm" label-width="96px" :rules="editFormRules" ref="editForm">
 			<el-form-item label="用户组名称" prop="groupName">
 				<el-input v-model="editForm.groupName" auto-complete="off"></el-input>
@@ -57,7 +57,7 @@
 	</el-dialog>
 
 	<!--新增界面-->
-	<el-dialog title="新增用户组" v-model="addFormVisible" :close-on-click-modal="false">
+	<el-dialog title="新增用户组" :visible="addFormVisible" :close-on-click-modal="false">
 		<el-form :model="addForm" label-width="96px" :rules="addFormRules" ref="addForm">
 			<el-form-item label="用户组名称" prop="groupName">
 				<el-input v-model="addForm.groupName" auto-complete="off"></el-input>

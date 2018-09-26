@@ -43,7 +43,7 @@
 		</el-col>
 
 		<!--编辑界面-->
-		<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+		<el-dialog title="编辑" :visible="editFormVisible" :close-on-click-modal="false">
 			<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
 				<el-form-item label="游戏名称" prop="gameName">
 					<el-input v-model="editForm.gameName" auto-complete="off"></el-input>
@@ -59,7 +59,7 @@
 		</el-dialog>
 
 		<!--新增界面-->
-		<el-dialog title="新增游戏" v-model="addFormVisible" :close-on-click-modal="false">
+		<el-dialog title="新增游戏" :visible="addFormVisible" :close-on-click-modal="false">
 			<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
 				<el-form-item label="游戏名称" prop="gameName">
 					<el-input v-model="addForm.gameName" auto-complete="off"></el-input>
