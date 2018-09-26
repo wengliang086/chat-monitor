@@ -1,6 +1,7 @@
 <template>
 <el-col :span="24" class="header">
     <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+        <img src="../../assets/hoolai_logo.png" alt="12">
         {{collapsed?'':subSysName}}
     </el-col>
     <el-col :span="10">
@@ -102,16 +103,16 @@ export default {
         //width:230px;
         height: 60px;
         font-size: 22px;
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
         border-color: rgba(238, 241, 146, 0.3);
         border-right-width: 1px;
         border-right-style: solid;
 
         img {
-            width: 40px;
+            width: 30px;
             float: left;
-            margin: 10px 10px 10px 18px;
+            margin: 20px 5px 10px 5px;
         }
 
         .txt {
