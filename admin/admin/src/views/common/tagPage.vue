@@ -34,32 +34,31 @@ export default {
         },
         handleTabsEdit(targetName, action) {
             // alert(targetName + " " + action);
-            if (action === "add") {
-                let newTabName = ++this.tabIndex + '';
-                this.tagPageList.push({
-                    name: newTabName,
-                    content: 'newTab'
-                });
-                this.editableTabsValue = newTabName;
-            }
             if (action === 'remove') {
-                let tabs = this.tagPageList;
-                let activeName = this.editableTabsValue;
-                if (activeName === targetName) {
-                    alert(activeName + " - " + targetName);
-                    tabs.forEach((tab, index) => {
-                        alert(tab.name + " - " + targetName);
-                        if (tab.name === targetName) {
-                            let nextTab = tabs[index + 1] || tabs[index - 1];
-                            if (nextTab) {
-                                activeName = nextTab.name;
-                            }
-                        }
-                    });
-                }
-                this.editableTabsValue = activeName;
-                this.tagPageList = tabs.filter(tab => tab.name !== targetName);
+                this.handleTabsDel(targetName);
             }
+        },
+        handleTabsDel(targetName) {
+            // alert("del " + targetName);
+            // 首页不可删除
+            if (targetName == '/game') {
+                return;
+            }
+            if (this.activeTabIndex === targetName) {
+                // 设置当前激活的路由
+                this.tabsList.forEach((tab, index) => {
+                    if (tab.route === targetName) {
+                        let nextTab = this.tabsList[index + 1] || this.tabsList[index - 1];
+                        if (nextTab) {
+                            this.$store.commit('setActiveTab', nextTab.route);
+                            this.$router.push({
+                                path: nextTab.route
+                            });
+                        }
+                    }
+                });
+            }
+            this.$store.commit('deleteTab', targetName);
         }
     },
     watch: {
@@ -81,6 +80,23 @@ export default {
                 });
                 this.$store.commit('setActiveTab', toPath);
             }
+        }
+    },
+    mounted() {
+        // 加入首页
+        const firstRoute = '/game';
+        this.$store.commit('addTab', {
+            route: firstRoute,
+            name: "游戏列表"
+        });
+        if (this.$route.path === firstRoute) {
+            this.$store.commit('setActiveTab', firstRoute);
+        } else {
+            this.$store.commit('addTab', {
+                route: this.$route.path,
+                name: this.$route.name
+            });
+            this.$store.commit('setActiveTab', this.$route.path);
         }
     }
 };
