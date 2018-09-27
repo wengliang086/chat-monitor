@@ -15,7 +15,7 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" v-on:click="getSuspiciousList">查询</el-button>
+                <el-button type="primary" v-on:click="getSuspiciousList" icon="el-icon-search">查询</el-button>
             </el-form-item>
 
         </el-form>
@@ -65,8 +65,8 @@
 
         <el-table-column label="操作" width="180">
             <template slot-scope="scope">
-                <el-button size="small" @click="handleEdit(scope.$index, scope.row,1)" v-if="Object.assign({},scope.row).status==null">审核</el-button>
-                <el-button size="small" @click="handleEdit(scope.$index, scope.row,0)" v-else>查看</el-button>
+                <el-button size="small" @click="handleEdit(scope.$index, scope.row,1)" v-if="Object.assign({},scope.row).status==null" icon="el-icon-check">审核</el-button>
+                <el-button size="small" @click="handleEdit(scope.$index, scope.row,0)" v-else icon="el-icon-view">查看</el-button>
             </template>
 
         </el-table-column>

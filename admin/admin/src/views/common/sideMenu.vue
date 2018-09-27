@@ -108,6 +108,9 @@ export default {
 aside {
     flex: 0 0 230px;
     width: 230px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     // position: absolute;
     // top: 0px;

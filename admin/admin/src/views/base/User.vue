@@ -7,10 +7,10 @@
 				<el-input v-model="filters.userName" placeholder="用户名称"></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="getUserList">查询</el-button>
+				<el-button type="primary" @click="getUserList" icon="el-icon-search">查询</el-button>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="showAddUserDialog">新增</el-button>
+				<el-button type="primary" @click="showAddUserDialog" icon="el-icon-plus">新增</el-button>
 			</el-form-item>
 		</el-form>
 	</el-col>
@@ -35,8 +35,8 @@
 		</el-table-column>
 		<el-table-column label="操作" width="180">
 			<template slot-scope="scope">
-				<el-button size="small" @click="showEditUserDialog(scope.$index, scope.row)">编辑</el-button>
-				<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)" :disabled="true">删除</el-button>
+				<el-button size="small" @click="showEditUserDialog(scope.$index, scope.row)" icon="el-icon-edit">编辑</el-button>
+				<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)" :disabled="true" icon="el-icon-delete">删除</el-button>
 			</template>
 		</el-table-column>
 	</el-table>
