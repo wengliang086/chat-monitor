@@ -1,21 +1,21 @@
 <template>
 <div>
-    <el-card>
+    <el-card class="el-card">
         <el-row>
             <el-button type="primary" icon="el-icon-plus">添加子部门</el-button>
             <el-button icon="el-icon-plus">添加一级部门</el-button>
             <el-button icon="el-icon-delete">批量删除</el-button>
             <el-button icon="el-icon-refresh">刷新</el-button>
         </el-row>
-        <el-row :gutter="20">
-            <el-col span="6">
+        <el-row :gutter="20" style="margin-top: 15px;">
+            <el-col :span="6">
                 <el-alert title="当前选择编辑：" show-icon :closable="false">
                     <span>已选择部门</span>
                     <a href="">取消选择</a>
                 </el-alert>
-                <el-tree :data="data"></el-tree>
+                <el-tree :data="data" style="margin-top: 15px;"></el-tree>
             </el-col>
-            <el-col span="9" type="flex">
+            <el-col :span="9" type="flex">
                 <el-form label-width="85" :inline="false">
                     <el-form-item label="上级部门">
                         <el-input type="text" />
@@ -83,3 +83,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.el-card {
+    margin-top: 12px;
+    margin-left: 0px;
+}
+</style>

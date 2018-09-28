@@ -1,4 +1,5 @@
 <template>
+<!-- <el-scrollbar style="overflow-x: hidden;"> -->
 <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
     <!--导航菜单-->
     <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" router v-show="!collapsed" :style="collapsed ? 'width: 60px; overflow: hidden;' : 'width: 230px; overflow: hidden;'">
@@ -30,7 +31,7 @@
                             </el-menu-item>
                         </template>
                     </el-submenu>
-                    <el-menu-item :index="child.path" :key="child.path" v-else>
+                    <el-menu-item class="el-menu-vertical-demo2" :index="child.path" :key="child.path" v-else>
                         {{child.name}}
                     </el-menu-item>
                 </template>
@@ -80,6 +81,7 @@
         </li>
     </ul>
 </aside>
+<!-- </el-scrollbar> -->
 </template>
 
 <script>
@@ -111,12 +113,13 @@ aside {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    background-color: rgb(238, 240, 246);
 
     // position: absolute;
     // top: 0px;
     // bottom: 0px;
     .el-menu {
-        height: 100%;
+        height: auto;
     }
 
     .collapsed {
@@ -144,6 +147,14 @@ aside {
             display: none;
         }
     }
+
+    .el-menu-vertical-demo {
+        background-color: rgb(238, 240, 246);
+    }
+
+    .el-menu-vertical-demo2 {
+        background-color: rgb(228, 231, 240);
+    }
 }
 
 .menu-collapsed {
@@ -154,5 +165,15 @@ aside {
 .menu-expanded {
     flex: 0 0 230px;
     width: 230px;
+}
+
+// 在common.css中添加
+.el-scrollbar__wrap {
+    overflow-x: hidden;
+}
+
+.el-scrollbar__view {
+    height: 100%;
+    overflow-x: hidden;
 }
 </style>
