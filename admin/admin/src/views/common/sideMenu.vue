@@ -2,12 +2,13 @@
 <!-- <el-scrollbar style="overflow-x: hidden;"> -->
 <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
     <!--导航菜单-->
-    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect" router v-show="!collapsed" :style="collapsed ? 'width: 60px; overflow: hidden;' : 'width: 230px; overflow: hidden;'">
+    <el-menu :default-active="$route.path" background-color="#eef0f6" router :collapse="collapsed">
         <!-- 一级菜单展开 -->
         <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :index="index+''" v-if="!item.leaf" :key="index+''">
                 <template slot="title">
-                    <i :class="item.iconCls"></i>{{item.name}}
+                    <i :class="item.iconCls"></i>
+                    <span slot="title">{{item.name}}</span>
                 </template>
                 <!-- 二级菜单展开 -->
                 <template v-for="(child,index1) in item.children" v-if="!child.hidden">
@@ -41,45 +42,6 @@
             </el-menu-item>
         </template>
     </el-menu>
-    <!--导航菜单-折叠后-->
-    <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-        <!-- 一级菜单展开 -->
-        <li v-for="(item,index) in $router.options.routes" :key="index" v-if="!item.hidden" class="el-submenu item">
-            <template v-if="!item.leaf">
-                <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
-                <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                    <!-- 二级菜单展开 -->
-                    <li v-for="(child,index2) in item.children" :key="index2">
-                        <ul v-if="child.children" style="-webkit-padding-start: 0px;">
-                            <div class="el-submenu__title" style="padding-left: 40px;" @mouseover="showMenu(index+''+index2,true)" @mouseout="showMenu(index+''+index2,false)">{{child.name}}-></div>
-                            <ul class="el-menu submenu2" :class="'submenu-hook-'+index+''+index2" @mouseover="showMenu(index+''+index2,true)" @mouseout="showMenu(index+''+index2,false)">
-                                <!-- 三级菜单展开 -->
-                                <li v-for="(child2,index3) in child.children" :key="index3">
-                                    <ul v-if="child2.children" style="-webkit-padding-start: 0px;">
-                                        <div class="el-submenu__title" style="padding-left: 40px;" @mouseover="showMenu(index+''+index2+''+index3,true)" @mouseout="showMenu(index+''+index2+''+index3,false)">{{child2.name}}-></div>
-                                        <ul class="el-menu submenu2" :class="'submenu-hook-'+index+''+index2+''+index3" @mouseover="showMenu(index+''+index2+''+index3,true)" @mouseout="showMenu(index+''+index2+''+index3,false)">
-                                            <!-- 四级菜单展开 -->
-                                            <li v-for="(child3,index4) in child2.children" :key="index4">
-                                                <ul class="el-menu-item" style="padding-left: 40px;height: 56px;" :class="$route.path==child3.path?'is-active':''" @click="$router.push(child3.path)">{{child3.name}}</ul>
-                                            </li>
-                                        </ul>
-                                    </ul>
-                                    <ul v-else class="el-menu-item" style="padding-left: 40px;height: 56px;" :class="$route.path==child2.path?'is-active':''" @click="$router.push(child2.path)">{{child2.name}}</ul>
-                                </li>
-                            </ul>
-                        </ul>
-                        <ul v-else class="el-menu-item" style="padding-left: 40px;height: 56px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</ul>
-                    </li>
-                </ul>
-                <!-- <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>		<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">		<li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>		</ul> -->
-            </template>
-            <template v-else>
-        <li class="el-submenu">
-            <div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
-        </li>
-        </template>
-        </li>
-    </ul>
 </aside>
 <!-- </el-scrollbar> -->
 </template>
@@ -88,13 +50,6 @@
 export default {
     props: ["collapsed"],
     methods: {
-        handleopen() {
-            // console.log("handleopen");
-        },
-        handleclose() {
-            // console.log("handleclose");
-        },
-        handleselect: function (a, b) {},
         showMenu(i, status) {
             this.$refs.menuCollapsed.getElementsByClassName(
                 "submenu-hook-" + i
@@ -146,14 +101,6 @@ aside {
             height: auto;
             display: none;
         }
-    }
-
-    .el-menu-vertical-demo {
-        background-color: rgb(238, 240, 246);
-    }
-
-    .el-menu-vertical-demo2 {
-        background-color: rgb(228, 231, 240);
     }
 }
 
