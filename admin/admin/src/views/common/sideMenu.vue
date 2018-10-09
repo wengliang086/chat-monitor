@@ -38,7 +38,8 @@
                 </template>
             </el-submenu>
             <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path" :key="item.children[0].path">
-                <i :class="item.iconCls"></i>{{item.children[0].name}}
+                <i :class="item.iconCls"></i>
+                <span slot="title">{{item.children[0].name}}</span>
             </el-menu-item>
         </template>
     </el-menu>

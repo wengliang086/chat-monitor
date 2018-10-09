@@ -28,6 +28,7 @@ util.initRouter = function (vm) {
             component: "Home",
             name: '统计分析',
             iconCls: 'fa fa-bar-chart',
+            leaf: true,//只有一个节点
             children: [
                 { path: '/echarts', component: "statistics/echarts", name: 'echarts' }
             ]
@@ -52,7 +53,9 @@ util.initRouter = function (vm) {
         iconCls: 'fa fa-bar-chart',
         children: [
             { path: '/form3', component: "dynamicNavTest/Form1", name: 'Form3' },
-            { path: '/department', component: 'dynamicNavTest/treeTest', name: '部门管理' }
+            { path: '/department', component: 'dynamicNavTest/treeTest', name: '部门管理' },
+            { path: '/table', component: 'dynamicNavTest/tableTest', name: '表格'},
+            { path: '/menu', component: 'dynamicNavTest/testMenu', name: '导航菜单'}
         ]
     };
     // 加载菜单
