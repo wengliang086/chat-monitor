@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ipConfigs=("$server_log 1 15")
+#ipConfigs=("$server_log 1 15")
+ipConfigs=("$server_admin 1 15")
 source ./env.sh
 
 deploy_dir=/home/fastsdk/deploy

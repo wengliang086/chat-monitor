@@ -10,10 +10,13 @@
     </el-table-column>
     <el-table-column prop="address" label="地址">
     </el-table-column>
+    <el-table-column label="操作" class-name="el-table">
+        <template slot-scope="scope" class-name="el-table">
+            <el-button size="small" class-name="el-table">编辑</el-button>
+        </template>
+    </el-table-column>
 </el-table>
 </template>
-
-  
 
 <script>
 export default {
@@ -40,3 +43,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.el-table td, .el-table th {
+    padding-top: 1px;
+}
+</style>
